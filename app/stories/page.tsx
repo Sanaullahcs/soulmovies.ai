@@ -103,7 +103,7 @@ export default function StoriesPage() {
         <div className="container px-6">
           <div className="max-w-4xl mx-auto">
             <ParallaxSection direction="up" speed={0.1}>
-              <div id="emma-thompson" className="bg-violet-50 rounded-3xl p-8 md:p-12 shadow-md">
+              <div id="emma-thompson" className="bg-white rounded-2xl p-8 md:p-10 shadow-lg border border-slate-100">
                 <div className="flex items-center mb-8">
                   <div className="relative w-16 h-16 rounded-full overflow-hidden mr-4 ring-2 ring-violet-200">
                     <Image
@@ -117,12 +117,11 @@ export default function StoriesPage() {
                     <h3 className="text-xl font-medium text-slate-800">Emma Thompson</h3>
                     <p className="text-violet-600">New York, NY</p>
                   </div>
-                </div>
-
-                <div className="flex mb-6">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} size={18} className="text-yellow-400 fill-yellow-400" />
-                  ))}
+                  <div className="ml-auto flex">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} size={18} className="text-yellow-400 fill-yellow-400" />
+                    ))}
+                  </div>
                 </div>
 
                 <h2 className="text-2xl md:text-3xl font-medium text-slate-800 mb-6">
@@ -160,7 +159,7 @@ export default function StoriesPage() {
       </section>
 
       {/* More Stories */}
-      <section className="py-20 bg-violet-50">
+      <section className="py-20 bg-slate-50">
         <div className="container px-6">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <ParallaxSection direction="up" speed={0.1}>
@@ -171,15 +170,15 @@ export default function StoriesPage() {
             </ParallaxSection>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-8">
-            {testimonials.slice(1, 5).map((testimonial, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
+            {testimonials.slice(1, 7).map((testimonial, index) => (
               <ParallaxSection key={index} direction="up" speed={0.15} delay={index * 0.1}>
                 <div
                   id={testimonial.name.toLowerCase().replace(/\s+/g, "-")}
-                  className="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-100 flex flex-col h-full"
+                  className="bg-white rounded-2xl p-6 pb-8 shadow-lg border border-slate-100 flex flex-col h-full hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                 >
-                  <div className="flex items-center mb-6">
-                    <div className="relative w-12 h-12 rounded-full overflow-hidden mr-4 ring-2 ring-violet-100">
+                  <div className="flex items-center mb-4">
+                    <div className="relative w-10 h-10 rounded-full overflow-hidden mr-3 ring-1 ring-violet-100">
                       <Image
                         src={testimonial.imageSrc || "/placeholder.svg"}
                         alt={testimonial.name}
@@ -188,33 +187,32 @@ export default function StoriesPage() {
                       />
                     </div>
                     <div>
-                      <h3 className="text-lg font-medium text-slate-800">{testimonial.name}</h3>
-                      <p className="text-sm text-violet-600">{testimonial.location}</p>
+                      <h3 className="text-base font-medium text-slate-800">{testimonial.name}</h3>
+                      <p className="text-xs text-violet-600">{testimonial.location}</p>
+                    </div>
+                    <div className="ml-auto flex">
+                      {Array.from({ length: testimonial.rating }).map((_, i) => (
+                        <Star key={i} size={14} className="text-yellow-400 fill-yellow-400" />
+                      ))}
                     </div>
                   </div>
 
-                  <div className="flex mb-4">
-                    {Array.from({ length: testimonial.rating }).map((_, i) => (
-                      <Star key={i} size={16} className="text-yellow-400 fill-yellow-400" />
-                    ))}
+                  <div className="bg-violet-50 rounded-xl p-4 mb-4">
+                    <p className="text-slate-600 text-sm italic">
+                      {testimonial.quote.length > 180
+                        ? `"${testimonial.quote.substring(0, 180)}..."`
+                        : `"${testimonial.quote}"`}
+                    </p>
                   </div>
 
-                  <p className="text-slate-600 mb-6 italic">
-                    {testimonial.quote.length > 180
-                      ? `"${testimonial.quote.substring(0, 180)}..."`
-                      : `"${testimonial.quote}"`}
-                  </p>
-
-                  <div className="space-y-4 flex-grow mb-2">
-                    <p className="text-slate-600 line-clamp-3">{testimonial.story}</p>
+                  <div className="mt-auto">
+                    <div className="flex items-center text-xs text-slate-500">
+                      <span className="inline-block px-2 py-1 bg-violet-100 text-violet-700 rounded-full mr-2">
+                        {index % 3 === 0 ? "Anxiety" : index % 3 === 1 ? "Mindfulness" : "Personal Growth"}
+                      </span>
+                      <span>Verified Client</span>
+                    </div>
                   </div>
-
-                  <Button
-                    variant="link"
-                    className="text-violet-600 p-0 h-auto font-medium hover:text-violet-800 transition-colors mt-6 self-start"
-                  >
-                    Read Full Story
-                  </Button>
                 </div>
               </ParallaxSection>
             ))}
@@ -223,59 +221,57 @@ export default function StoriesPage() {
       </section>
 
       {/* Video Testimonials */}
-      <section className="py-20 bg-gradient-to-b from-white to-violet-50">
+      <section className="py-20 bg-white">
         <div className="container px-6">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <ParallaxSection direction="up" speed={0.1}>
               <h2 className="text-3xl md:text-4xl font-medium text-slate-800 mb-4">Hear Their Stories</h2>
-              <p className="text-slate-600">
+              <p className="text-slate-600 mb-8">
                 Watch video testimonials from clients who have experienced transformation
               </p>
             </ParallaxSection>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
             {/* Video 1 */}
             <ParallaxSection direction="up" speed={0.15} delay={0.1}>
-              <div className="bg-white rounded-3xl overflow-hidden shadow-lg border border-violet-100/30 group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                <div className="relative h-64 overflow-hidden">
-                  <Image
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=600&auto=format&fit=crop"
-                    alt="Emma Thompson's Journey"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-violet-900/60 to-transparent flex items-end">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
-                        <div className="w-0 h-0 border-t-8 border-b-8 border-l-12 border-transparent border-l-violet-600 ml-1"></div>
-                      </div>
+              <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div className="relative aspect-video w-full">
+                  <iframe
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+                    title="Emma Thompson's Journey"
+                    className="absolute inset-0 w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+                <div className="p-5">
+                  <div className="flex items-center mb-3">
+                    <div className="relative w-10 h-10 rounded-full overflow-hidden mr-3 ring-1 ring-violet-100">
+                      <Image
+                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop"
+                        alt="Emma Thompson"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-medium text-slate-800">Emma Thompson</h3>
+                      <p className="text-xs text-violet-600">New York, NY</p>
                     </div>
                   </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-medium text-slate-800 mb-2">Emma's Journey to Inner Peace</h3>
-                  <p className="text-slate-600 mb-4 line-clamp-2">
+                  <h4 className="text-lg font-medium text-slate-800 mb-2">Finding Inner Peace</h4>
+                  <p className="text-slate-600 text-sm mb-3 line-clamp-2">
                     "After struggling with anxiety for over a decade, I've found a sense of peace I didn't know was
                     possible."
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-violet-600 font-medium">5:24</span>
-                    <button className="text-violet-600 hover:text-violet-800 transition-colors text-sm font-medium flex items-center">
-                      Watch Video
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 ml-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H3a1 1 0 110-2h9.586l-2.293-2.293a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
+                    <div className="flex">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star key={i} size={14} className="text-yellow-400 fill-yellow-400" />
+                      ))}
+                    </div>
+                    <span className="text-xs text-violet-600 font-medium">5:24</span>
                   </div>
                 </div>
               </div>
@@ -283,45 +279,42 @@ export default function StoriesPage() {
 
             {/* Video 2 */}
             <ParallaxSection direction="up" speed={0.15} delay={0.2}>
-              <div className="bg-white rounded-3xl overflow-hidden shadow-lg border border-violet-100/30 group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                <div className="relative h-64 overflow-hidden">
-                  <Image
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop"
-                    alt="Michael Chen's Journey"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-violet-900/60 to-transparent flex items-end">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
-                        <div className="w-0 h-0 border-t-8 border-b-8 border-l-12 border-transparent border-l-violet-600 ml-1"></div>
-                      </div>
+              <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div className="relative aspect-video w-full">
+                  <iframe
+                    src="https://www.youtube.com/embed/jNQXAC9IVRw?rel=0"
+                    title="Michael Chen's Journey"
+                    className="absolute inset-0 w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+                <div className="p-5">
+                  <div className="flex items-center mb-3">
+                    <div className="relative w-10 h-10 rounded-full overflow-hidden mr-3 ring-1 ring-violet-100">
+                      <Image
+                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop"
+                        alt="Michael Chen"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-medium text-slate-800">Michael Chen</h3>
+                      <p className="text-xs text-violet-600">San Francisco, CA</p>
                     </div>
                   </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-medium text-slate-800 mb-2">Michael's Mindfulness Journey</h3>
-                  <p className="text-slate-600 mb-4 line-clamp-2">
-                    "The mindfulness techniques helped me manage stress and find joy in everyday moments, even as a busy
-                    executive."
+                  <h4 className="text-lg font-medium text-slate-800 mb-2">Mindfulness Journey</h4>
+                  <p className="text-slate-600 text-sm mb-3 line-clamp-2">
+                    "The mindfulness techniques helped me manage stress and find joy in everyday moments."
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-violet-600 font-medium">7:12</span>
-                    <button className="text-violet-600 hover:text-violet-800 transition-colors text-sm font-medium flex items-center">
-                      Watch Video
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 ml-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H3a1 1 0 110-2h9.586l-2.293-2.293a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
+                    <div className="flex">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star key={i} size={14} className="text-yellow-400 fill-yellow-400" />
+                      ))}
+                    </div>
+                    <span className="text-xs text-violet-600 font-medium">7:12</span>
                   </div>
                 </div>
               </div>
@@ -329,45 +322,42 @@ export default function StoriesPage() {
 
             {/* Video 3 */}
             <ParallaxSection direction="up" speed={0.15} delay={0.3}>
-              <div className="bg-white rounded-3xl overflow-hidden shadow-lg border border-violet-100/30 group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                <div className="relative h-64 overflow-hidden">
-                  <Image
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop"
-                    alt="Sophia Rodriguez's Journey"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-violet-900/60 to-transparent flex items-end">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
-                        <div className="w-0 h-0 border-t-8 border-b-8 border-l-12 border-transparent border-l-violet-600 ml-1"></div>
-                      </div>
+              <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div className="relative aspect-video w-full">
+                  <iframe
+                    src="https://www.youtube.com/embed/9bZkp7q19f0?rel=0"
+                    title="Sophia Rodriguez's Journey"
+                    className="absolute inset-0 w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+                <div className="p-5">
+                  <div className="flex items-center mb-3">
+                    <div className="relative w-10 h-10 rounded-full overflow-hidden mr-3 ring-1 ring-violet-100">
+                      <Image
+                        src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&auto=format&fit=crop"
+                        alt="Sophia Rodriguez"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-medium text-slate-800">Sophia Rodriguez</h3>
+                      <p className="text-xs text-violet-600">Austin, TX</p>
                     </div>
                   </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-medium text-slate-800 mb-2">Sophia's Path to Authenticity</h3>
-                  <p className="text-slate-600 mb-4 line-clamp-2">
-                    "The personalized approach made all the difference. After years of feeling disconnected, I finally
-                    feel like myself again."
+                  <h4 className="text-lg font-medium text-slate-800 mb-2">Path to Authenticity</h4>
+                  <p className="text-slate-600 text-sm mb-3 line-clamp-2">
+                    "The personalized approach made all the difference. I finally feel like myself again."
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-violet-600 font-medium">6:45</span>
-                    <button className="text-violet-600 hover:text-violet-800 transition-colors text-sm font-medium flex items-center">
-                      Watch Video
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 ml-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H3a1 1 0 110-2h9.586l-2.293-2.293a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
+                    <div className="flex">
+                      {Array.from({ length: 4 }).map((_, i) => (
+                        <Star key={i} size={14} className="text-yellow-400 fill-yellow-400" />
+                      ))}
+                    </div>
+                    <span className="text-xs text-violet-600 font-medium">6:45</span>
                   </div>
                 </div>
               </div>

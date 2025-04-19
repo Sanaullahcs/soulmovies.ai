@@ -284,13 +284,11 @@ export default function Home() {
       >
         <div className="container px-4 sm:px-6 max-w-7xl mx-auto">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <ParallaxSection direction="up" speed={0.1}>
-              <h2 className="text-3xl md:text-4xl font-medium text-slate-800 mb-4">How We Help</h2>
-              <p className="text-slate-600">
-                Our comprehensive support services are designed to guide you on your journey toward emotional well-being
-                and personal growth.
-              </p>
-            </ParallaxSection>
+            <h2 className="text-3xl md:text-4xl font-medium text-slate-800 mb-4">How We Help</h2>
+            <p className="text-slate-600">
+              Our comprehensive support services are designed to guide you on your journey toward emotional well-being
+              and personal growth.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-16">

@@ -12,7 +12,7 @@ interface Particle {
   color: string
 }
 
-const FloatingParticles = () => {
+const FloatingParticles = ({ className = "" }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const particles = useRef<Particle[]>([])
   const animationFrameId = useRef<number>()
@@ -97,7 +97,7 @@ const FloatingParticles = () => {
     }
   }, [])
 
-  return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full pointer-events-none z-0" />
+  return <canvas ref={canvasRef} className={`fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${className}`} />
 }
 
 export default FloatingParticles

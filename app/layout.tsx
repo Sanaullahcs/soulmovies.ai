@@ -28,6 +28,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Preload critical images */}
+        <link rel="preload" href="/hero-bg.jpg" as="image" type="image/jpeg" />
+        <link rel="preload" href="/services-hero-bg.jpg" as="image" type="image/jpeg" />
+      </head>
       <body className={cn("min-h-screen bg-background font-sans antialiased overflow-x-hidden", poppins.variable)}>
         <ThemeProvider attribute="class" defaultTheme="light">
           <div className="relative flex min-h-screen flex-col">
