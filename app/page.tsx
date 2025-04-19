@@ -52,8 +52,8 @@ export default function Home() {
     // Encode the message for WhatsApp URL
     const encodedMessage = encodeURIComponent(message)
 
-    // Open WhatsApp with the pre-filled message
-    window.open(`https://wa.me/15551234567?text=${encodedMessage}`, "_blank")
+    // Open WhatsApp with the pre-filled message - update with your actual WhatsApp number
+    window.open(`https://wa.me/923418349814?text=${encodedMessage}`, "_blank")
 
     // Reset form
     setContactFormData({
@@ -636,7 +636,7 @@ export default function Home() {
 
       {/* WhatsApp Button */}
       <a
-        href="https://wa.me/15551234567"
+        href="https://wa.me/923418349814"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 left-6 z-40 flex items-center justify-center w-12 h-12 rounded-full bg-green-500 text-white shadow-lg hover:shadow-xl hover:bg-green-600 transition-all group"
@@ -655,9 +655,6 @@ export default function Home() {
         >
           <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
         </svg>
-        <span className="absolute left-full ml-2 px-2 py-1 text-xs font-medium text-white bg-green-600 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-          Chat with us
-        </span>
       </a>
     </>
   )

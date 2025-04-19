@@ -35,11 +35,13 @@ const Navigation = () => {
     window.location.href = "/booking"
   }
 
+  // Update the navItems array to have simpler names
   const navItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Services", path: "/services" },
     { name: "Stories", path: "/stories" },
+    { name: "PlayGround", path: "/mind-exercises" },
     { name: "Contact", path: "/contact" },
   ]
 
