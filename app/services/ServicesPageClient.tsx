@@ -65,9 +65,7 @@ export default function ServicesPageClient() {
                 <Button className="bg-white text-violet-700 hover:bg-white/90">Explore Services</Button>
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button variant="outline" className="border-white text-white hover:bg-white/10">
-                  Book Consultation
-                </Button>
+                <Button className="bg-white text-violet-700 hover:bg-white/90">Book Consultation</Button>
               </motion.div>
             </motion.div>
           </motion.div>
