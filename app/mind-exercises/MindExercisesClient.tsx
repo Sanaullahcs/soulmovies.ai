@@ -68,7 +68,7 @@ export default function MindExercisesClient() {
       category: "meditation",
       difficulty: "beginner",
       duration: "3 min",
-      imageSrc: "https://images.unsplash.com/photo-1474418397713-2f1091953b6a?q=80&w=500&auto=format&fit=crop",
+      imageSrc: "https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=500&auto=format&fit=crop",
     },
     {
       id: "breathing-rhythm",
@@ -119,7 +119,7 @@ export default function MindExercisesClient() {
       category: "hypnosis",
       difficulty: "intermediate",
       duration: "12 min",
-      imageSrc: "https://images.unsplash.com/photo-1515894274780-af5d4d90b30f?q=80&w=500&auto=format&fit=crop",
+      imageSrc: "https://images.unsplash.com/photo-1497561813398-8fcc7a37b567?q=80&w=500&auto=format&fit=crop",
     },
     {
       id: "loving-kindness",
@@ -170,7 +170,7 @@ export default function MindExercisesClient() {
       category: "emotional",
       difficulty: "intermediate",
       duration: "7 min",
-      imageSrc: "https://images.unsplash.com/photo-1517091879745-a3ebf08d8ca7?q=80&w=500&auto=format&fit=crop",
+      imageSrc: "https://images.unsplash.com/photo-1535295972055-1c762f4483e5?q=80&w=500&auto=format&fit=crop",
     },
     {
       id: "focus-flow",
@@ -290,7 +290,7 @@ export default function MindExercisesClient() {
       category: "emotional",
       difficulty: "beginner",
       duration: "7 min",
-      imageSrc: "https://images.unsplash.com/photo-1472552944129-b035e9ea9851?q=80&w=500&auto=format&fit=crop",
+      imageSrc: "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=500&auto=format&fit=crop",
     },
     {
       id: "nature-connection",
