@@ -152,11 +152,11 @@ export default function Home() {
           </motion.div>
 
           {/* Scroll indicator - helps users know there's more content below */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+          <div className="absolute bottom-12 left-0 right-0 z-10 flex justify-center">
             <motion.div
               animate={{ y: [0, 8, 0] }}
               transition={{ repeat: Number.POSITIVE_INFINITY, duration: 1.5, ease: "easeInOut" }}
-              className="flex flex-col items-center cursor-pointer bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 hover:bg-white/20 transition-colors"
+              className="flex flex-col items-center cursor-pointer bg-white/15 backdrop-blur-sm rounded-full px-5 py-3 hover:bg-white/25 transition-colors shadow-lg"
               onClick={() => {
                 const aboutSection = document.getElementById("about-section")
                 if (aboutSection) {
@@ -167,8 +167,8 @@ export default function Home() {
                 }
               }}
             >
-              <span className="text-white/90 text-sm mb-1 tracking-wider font-medium">Discover More</span>
-              <ChevronDown size={20} className="text-white/90" />
+              <span className="text-white text-sm mb-1 tracking-wider font-medium">Discover More</span>
+              <ChevronDown size={20} className="text-white" />
             </motion.div>
           </div>
         </motion.div>
@@ -651,7 +651,8 @@ export default function Home() {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9" />\
+          <path d="M3 11.5a8.38 8.38 0 0 0 .9 3.8 8.5 8.5 0 0 0 7.6 4.7 8.38 8.38 0 0 0 3.8-.9" />
         </svg>
       </a>
     </>
