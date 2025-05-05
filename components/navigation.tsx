@@ -60,13 +60,20 @@ const Navigation = () => {
     <header
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-500",
-        isScrolled || isInnerPage ? "py-2 bg-white/95 backdrop-blur-md shadow-md" : "py-4 bg-transparent",
+        isScrolled || isInnerPage ? "bg-white/95 backdrop-blur-md shadow-md" : "bg-transparent",
       )}
     >
       <div className="container mx-auto max-w-7xl flex items-center justify-between">
         <Link href="/" className="flex items-center group relative z-10">
-          <div className="relative h-10 w-10 md:h-12 md:w-12 transition-transform duration-300 group-hover:scale-110">
-            <Image src="/logo.png" alt="SoulMovies.ai Logo" width={56} height={56} className="object-contain" />
+          <div className="relative h-14 w-14 md:h-20 md:w-20 transition-transform duration-300 group-hover:scale-110 mt-4">
+            <Image
+              src="/logo-new.png"
+              alt="SoulMovies.ai Logo"
+              width={80}
+              height={80}
+              className="object-contain"
+              priority
+            />
           </div>
           <div className="ml-2.5 flex flex-col">
             <span
@@ -156,13 +163,13 @@ const Navigation = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="md:hidden fixed top-[56px] left-0 w-full bg-white shadow-lg flex flex-col z-50 overflow-hidden"
+            className="md:hidden fixed top-[60px] left-0 w-full bg-white shadow-lg flex flex-col z-50 overflow-hidden"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <div className="max-h-[calc(100vh-56px)] overflow-y-auto py-2">
+            <div className="max-h-[calc(100vh-60px)] overflow-y-auto py-2">
               {navItems.map((item, index) => {
                 const isActive = isActivePath(item.path)
 

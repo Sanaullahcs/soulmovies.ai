@@ -10,7 +10,7 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center">
               <div className="relative h-12 w-12 mr-2">
-                <Image src="/logo.png" alt="SoulMovies.ai Logo" width={48} height={48} className="object-contain" />
+                <Image src="/logo-new.png" alt="SoulMovies.ai Logo" width={48} height={48} className="object-contain" />
               </div>
               <h3 className="text-xl font-medium text-blue-600">SoulMovies.ai</h3>
             </div>
