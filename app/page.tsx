@@ -690,29 +690,6 @@ export default function Home() {
                   </p>
                 </motion.div>
 
-                {/* Achievements */}
-                <motion.div
-                  className="space-y-3"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6, duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  {[
-                    "15+ Years in Mindfulness",
-                    "Trained in Nepal & Tibet",
-                    "1000+ Students Guided",
-                    "Published Meditation Author",
-                  ].map((achievement, index) => (
-                    <div key={index} className="flex items-center space-x-3">
-                      <div className="w-6 h-6 bg-gradient-to-br from-violet-500 to-pink-500 rounded-full flex items-center justify-center">
-                        <div className="w-2 h-2 bg-white rounded-full"></div>
-                      </div>
-                      <span className="text-slate-700 font-medium">{achievement}</span>
-                    </div>
-                  ))}
-                </motion.div>
-
                 <motion.div
                   className="pt-4"
                   initial={{ opacity: 0, y: 20 }}
@@ -1081,7 +1058,7 @@ export default function Home() {
               <span className="text-violet-700 font-medium text-sm">FAQ</span>
             </motion.div>
             <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-8 text-balance">
-              We're <span className="gradient-text">Here For You</span>
+              We're <span className="gradient-text">Here</span> <span className="text-white">For You</span>
             </h2>
             <p className="text-xl text-white leading-relaxed text-balance">
               Find answers to commonly asked questions about our services and approach. Still have questions? We're here
@@ -1106,7 +1083,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <p className="text-lg text-slate-600 mb-8">Still have questions? We're here to help you on your journey.</p>
+            <p className="text-lg text-white mb-12">Still have questions? We're here to help you on your journey.</p>
             <Link href="/contact">
               <motion.div whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
                 <Button className="btn-premium text-white rounded-2xl text-lg px-12 py-4 h-auto shadow-large font-semibold group">

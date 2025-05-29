@@ -113,23 +113,17 @@ const ParallaxBackground = ({
 
       {/* Enhanced overlay layer with multiple gradients */}
       <motion.div
-        className="absolute inset-0 z-10 will-change-transform"
-        style={{ y: overlayY }}
+        className="absolute inset-0 z-10"
         initial={{ opacity: 0.7 }}
         animate={{ opacity: 0.9 }}
-        transition={{ duration: isMobile ? 0.5 : 1, delay: 0.3 }}
+        transition={{ duration: isMobile ? 0.8 : 1.2, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
       >
         <div
           className={`absolute inset-0 ${overlayColor}`}
           style={{
             height: "100%",
-            background: `
-            linear-gradient(135deg, rgba(124, 58, 237, 0.6) 0%, rgba(219, 39, 119, 0.4) 100%),
-            radial-gradient(circle at 30% 20%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
-            radial-gradient(circle at 70% 80%, rgba(236, 72, 153, 0.3) 0%, transparent 50%)
-          `,
-            mixBlendMode: "soft-light",
-            opacity: 0.85,
+            background: `linear-gradient(135deg, rgba(124, 58, 237, 0.4) 0%, rgba(219, 39, 119, 0.3) 100%)`,
+            transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
             backdropFilter: isMobile ? "blur(1px)" : "blur(2px)",
             WebkitBackdropFilter: isMobile ? "blur(1px)" : "blur(2px)",
           }}

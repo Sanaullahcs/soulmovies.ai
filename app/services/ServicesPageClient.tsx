@@ -196,9 +196,9 @@ export default function ServicesPageClient() {
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeIn}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-800">Our Packages</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-800">Choose Your Package</h2>
             <p className="text-lg text-slate-600">
-              Select the package that best fits your needs and begin your transformative journey today.
+              Professional soul movie creation tailored to your transformation goals.
             </p>
           </motion.div>
 
@@ -209,7 +209,7 @@ export default function ServicesPageClient() {
             viewport={{ once: true, amount: 0.2 }}
             variants={staggerContainer}
           >
-            {/* Free Consultation Package */}
+            {/* Discovery Package */}
             <motion.div
               className="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 flex flex-col h-full"
               variants={fadeIn}
@@ -218,25 +218,22 @@ export default function ServicesPageClient() {
               animate="rest"
               variants={cardHover}
             >
-              <div className="p-6 bg-gradient-to-br from-violet-50 to-slate-50">
-                <h3 className="text-xl font-bold text-slate-800 mb-2">Free Initial Consultation</h3>
+              <div className="p-6 bg-gradient-to-br from-slate-50 to-violet-50">
+                <h3 className="text-xl font-bold text-slate-800 mb-2">Discovery</h3>
                 <div className="flex items-end gap-1 mb-4">
-                  <span className="text-3xl font-bold text-violet-600">$0</span>
-                  <span className="text-slate-600 mb-1">free</span>
+                  <span className="text-3xl font-bold text-violet-600">Free</span>
+                  <span className="text-slate-600 mb-1">consultation</span>
                 </div>
-                <p className="text-slate-600 mb-4">
-                  Get to know us and explore how soul movies can transform your life.
-                </p>
+                <p className="text-slate-600 mb-4">Explore your transformation goals with our experts.</p>
               </div>
 
               <div className="p-6 flex-grow">
                 <ul className="space-y-3 mb-6">
                   {[
                     "30-minute personal consultation",
-                    "Understand your goals and vision",
-                    "Explore how soul movies work",
-                    "Personalized recommendations",
-                    "No obligation to purchase",
+                    "Goal assessment & vision mapping",
+                    "Custom recommendations",
+                    "No purchase obligation",
                   ].map((feature, index) => (
                     <li key={index} className="flex items-start">
                       <CheckIcon className="h-5 w-5 text-violet-500 mr-2 mt-0.5 flex-shrink-0" />
@@ -248,12 +245,12 @@ export default function ServicesPageClient() {
 
               <div className="p-6 pt-0 mt-auto">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button className="w-full bg-violet-600 hover:bg-violet-700 text-white">Book Consultation</Button>
+                  <Button className="w-full bg-violet-600 hover:bg-violet-700 text-white">Schedule Call</Button>
                 </motion.div>
               </div>
             </motion.div>
 
-            {/* Premium Package */}
+            {/* Professional Package */}
             <motion.div
               className="bg-white rounded-xl shadow-lg overflow-hidden border border-violet-200 flex flex-col h-full relative"
               variants={fadeIn}
@@ -270,26 +267,23 @@ export default function ServicesPageClient() {
                 MOST POPULAR
               </motion.div>
               <div className="p-6 bg-gradient-to-br from-violet-100 to-rose-50">
-                <h3 className="text-xl font-bold text-slate-800 mb-2">Soul Movies Premium</h3>
+                <h3 className="text-xl font-bold text-slate-800 mb-2">Professional</h3>
                 <div className="flex items-end gap-1 mb-4">
-                  <span className="text-3xl font-bold text-violet-600">$199</span>
+                  <span className="text-3xl font-bold text-violet-600">$297</span>
                   <span className="text-slate-600 mb-1">one-time</span>
                 </div>
-                <p className="text-slate-600 mb-4">
-                  Enhanced experience with additional customization and premium features.
-                </p>
+                <p className="text-slate-600 mb-4">Complete soul movie with professional production quality.</p>
               </div>
 
               <div className="p-6 flex-grow">
                 <ul className="space-y-3 mb-6">
                   {[
-                    "Personalized 5-8 minute soul movie",
-                    "Custom soundtrack creation",
-                    "Advanced visual effects and transitions",
-                    "Two rounds of revisions",
-                    "Digital delivery within 5 days",
+                    "Custom 5-8 minute soul movie",
+                    "Professional soundtrack & effects",
+                    "2 revision rounds included",
+                    "5-day delivery guarantee",
                     "Personal consultation session",
-                    "Extended license for commercial use",
+                    "HD digital delivery",
                   ].map((feature, index) => (
                     <li key={index} className="flex items-start">
                       <CheckIcon className="h-5 w-5 text-violet-500 mr-2 mt-0.5 flex-shrink-0" />
@@ -302,13 +296,13 @@ export default function ServicesPageClient() {
               <div className="p-6 pt-0 mt-auto">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button className="w-full bg-gradient-to-r from-violet-600 to-rose-500 hover:from-violet-700 hover:to-rose-600 text-white">
-                    Choose Premium
+                    Get Started
                   </Button>
                 </motion.div>
               </div>
             </motion.div>
 
-            {/* Ultimate Package */}
+            {/* Premium Package */}
             <motion.div
               className="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 flex flex-col h-full"
               variants={fadeIn}
@@ -318,26 +312,25 @@ export default function ServicesPageClient() {
               variants={cardHover}
             >
               <div className="p-6 bg-gradient-to-br from-violet-50 to-slate-50">
-                <h3 className="text-xl font-bold text-slate-800 mb-2">Soul Movies Ultimate</h3>
+                <h3 className="text-xl font-bold text-slate-800 mb-2">Premium</h3>
                 <div className="flex items-end gap-1 mb-4">
-                  <span className="text-3xl font-bold text-violet-600">$349</span>
+                  <span className="text-3xl font-bold text-violet-600">$497</span>
                   <span className="text-slate-600 mb-1">one-time</span>
                 </div>
-                <p className="text-slate-600 mb-4">The complete transformative experience with all premium features.</p>
+                <p className="text-slate-600 mb-4">Elite experience with unlimited revisions & priority support.</p>
               </div>
 
               <div className="p-6 flex-grow">
                 <ul className="space-y-3 mb-6">
                   {[
-                    "Personalized 8-12 minute soul movie",
-                    "Fully custom soundtrack creation",
-                    "Premium visual effects and transitions",
+                    "Custom 8-12 minute soul movie",
+                    "Premium effects & transitions",
                     "Unlimited revisions",
-                    "Digital delivery within 3 days",
-                    "Two personal consultation sessions",
-                    "Extended license for commercial use",
-                    "Exclusive access to premium templates",
-                    "Lifetime updates and support",
+                    "3-day priority delivery",
+                    "Two consultation sessions",
+                    "4K ultra-HD delivery",
+                    "Commercial usage rights",
+                    "Lifetime support included",
                   ].map((feature, index) => (
                     <li key={index} className="flex items-start">
                       <CheckIcon className="h-5 w-5 text-violet-500 mr-2 mt-0.5 flex-shrink-0" />
@@ -349,7 +342,7 @@ export default function ServicesPageClient() {
 
               <div className="p-6 pt-0 mt-auto">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button className="w-full bg-violet-600 hover:bg-violet-700 text-white">Choose Ultimate</Button>
+                  <Button className="w-full bg-violet-600 hover:bg-violet-700 text-white">Choose Premium</Button>
                 </motion.div>
               </div>
             </motion.div>
