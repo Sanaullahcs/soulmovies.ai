@@ -6,7 +6,7 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Menu, X, ChevronRight } from "lucide-react"
+import { Menu, X, ChevronRight, Sparkles } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const Navigation = () => {
@@ -19,23 +19,31 @@ const Navigation = () => {
       setIsScrolled(window.scrollY > 10)
     }
 
-    // Set initial scroll state
     handleScroll()
-
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Close menu when route changes
   useEffect(() => {
     setIsMenuOpen(false)
   }, [pathname])
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "unset"
+    }
+
+    return () => {
+      document.body.style.overflow = "unset"
+    }
+  }, [isMenuOpen])
 
   const handleBookNow = () => {
     window.location.href = "/booking"
   }
 
-  // Update the navItems array to have simpler names
   const navItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
@@ -45,7 +53,6 @@ const Navigation = () => {
     { name: "Contact", path: "/contact" },
   ]
 
-  // Add or update this function to check for active links more precisely
   const isActivePath = (itemPath: string) => {
     if (itemPath === "/") {
       return pathname === "/"
@@ -53,192 +60,313 @@ const Navigation = () => {
     return pathname === itemPath || pathname.startsWith(`${itemPath}/`)
   }
 
-  // Determine if we're on an inner page (not the homepage)
   const isInnerPage = pathname !== "/"
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-700 ease-out",
-        isScrolled || isInnerPage
-          ? "bg-white/98 backdrop-blur-xl shadow-lg border-b border-violet-100/50"
-          : "bg-transparent",
-      )}
-    >
-      <div className="container mx-auto max-w-7xl flex items-center justify-between px-4 py-3">
-        <Link href="/" className="flex items-center group relative z-10">
-          <div className="relative h-14 w-14 md:h-18 md:w-18 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
-            <div className="absolute inset-0 bg-gradient-to-br from-violet-400/20 to-pink-400/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-            <Image
-              src="/logo-new.png"
-              alt="SoulMovies.ai Logo"
-              width={72}
-              height={72}
-              className="object-contain relative z-10 drop-shadow-lg"
-              priority
-            />
-          </div>
-          <div className="ml-3 flex flex-col">
-            <span
-              className={cn(
-                "text-xl font-bold transition-all duration-500 tracking-tight",
-                isScrolled || isInnerPage ? "text-slate-800" : "text-white drop-shadow-lg",
-              )}
+    <>
+      <header
+        className={cn(
+          "fixed top-0 w-full z-50 transition-all duration-700 ease-out",
+          isScrolled || isInnerPage
+            ? "bg-white/95 backdrop-blur-xl shadow-lg border-b border-violet-100/50"
+            : "bg-transparent",
+        )}
+      >
+        <div className="container mx-auto max-w-7xl flex items-center justify-between px-4 py-3">
+          {/* Logo */}
+          <Link href="/" className="flex items-center group relative z-10">
+            <div
+              className="relative h-12 w-12 md:h-16 md:w-16 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3"
+              style={{ marginTop: "15px" }}
             >
-              SoulMovies.ai
-            </span>
-            <span
-              className={cn(
-                "text-xs -mt-0.5 transition-all duration-500 hidden sm:block font-medium tracking-wide",
-                isScrolled || isInnerPage ? "text-violet-600" : "text-white/90 drop-shadow-md",
-              )}
-            >
-              Reconnect with your true self
-            </span>
-          </div>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-2">
-          {navItems.map((item) => {
-            const isActive = isActivePath(item.path)
-
-            return (
-              <Link
-                key={item.name}
-                href={item.path}
+              <div className="absolute inset-0 bg-gradient-to-br from-violet-400/20 to-pink-400/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+              <Image
+                src="/logo-new.png"
+                alt="SoulMovies.ai Logo"
+                width={64}
+                height={64}
+                className="object-contain relative z-10 drop-shadow-lg"
+                priority
+              />
+            </div>
+            <div className="ml-3 flex flex-col">
+              <span
                 className={cn(
-                  "text-sm font-semibold transition-all duration-300 relative py-3 px-4 rounded-xl group",
-                  isActive
-                    ? isScrolled || isInnerPage
-                      ? "text-violet-700 bg-gradient-to-r from-violet-50 to-pink-50 shadow-soft"
-                      : "text-white bg-white/15 backdrop-blur-sm shadow-glow"
-                    : isScrolled || isInnerPage
-                      ? "text-slate-700 hover:text-violet-700 hover:bg-gradient-to-r hover:from-violet-50/50 hover:to-pink-50/50"
-                      : "text-white/90 hover:text-white hover:bg-white/10 backdrop-blur-sm",
+                  "text-lg md:text-xl font-bold transition-all duration-500 tracking-tight",
+                  isScrolled || isInnerPage ? "text-slate-800" : "text-white drop-shadow-lg",
                 )}
-                onClick={() => window.scrollTo(0, 0)}
               >
-                {item.name}
-                {isActive && (
-                  <motion.div
-                    className="absolute bottom-1 left-1/2 w-1.5 h-1.5 bg-current rounded-full"
-                    layoutId="navIndicator"
-                    initial={{ x: "-50%", scale: 0 }}
-                    animate={{ x: "-50%", scale: 1 }}
-                    transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
-                  />
+                SoulMovies.ai
+              </span>
+              <span
+                className={cn(
+                  "text-xs -mt-0.5 transition-all duration-500 hidden sm:block font-medium tracking-wide",
+                  isScrolled || isInnerPage ? "text-violet-600" : "text-white/90 drop-shadow-md",
                 )}
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/5 group-hover:to-pink-400/5 transition-all duration-300"></div>
-              </Link>
-            )
-          })}
-        </nav>
+              >
+                Reconnect with your true self
+              </span>
+            </div>
+          </Link>
 
-        <div className="flex items-center gap-3 md:gap-4">
-          <Button
-            onClick={handleBookNow}
-            className={cn(
-              "hidden md:inline-flex h-auto rounded-2xl px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-base font-semibold border-0 relative overflow-hidden group",
-              isScrolled || isInnerPage
-                ? "bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 text-white"
-                : "bg-white/20 backdrop-blur-md hover:bg-white/30 text-white border border-white/30",
-            )}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/20 group-hover:to-pink-400/20 transition-all duration-300"></div>
-            <span className="relative z-10">Book Now</span>
-          </Button>
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-2">
+            {navItems.map((item) => {
+              const isActive = isActivePath(item.path)
 
-          {/* Mobile Menu Button */}
-          <button
-            className={cn(
-              "md:hidden flex items-center justify-center w-12 h-12 rounded-2xl transition-all duration-300 group",
-              isScrolled || isInnerPage
-                ? "text-slate-800 hover:bg-violet-50 hover:text-violet-700"
-                : "text-white hover:bg-white/10 backdrop-blur-sm",
-            )}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-            aria-expanded={isMenuOpen}
-          >
-            <div className="relative">{isMenuOpen ? <X size={24} /> : <Menu size={24} />}</div>
-          </button>
+              return (
+                <Link
+                  key={item.name}
+                  href={item.path}
+                  className={cn(
+                    "text-sm font-semibold transition-all duration-300 relative py-3 px-4 rounded-xl group",
+                    isActive
+                      ? isScrolled || isInnerPage
+                        ? "text-violet-700 bg-gradient-to-r from-violet-50 to-pink-50 shadow-soft"
+                        : "text-white bg-white/15 backdrop-blur-sm shadow-glow"
+                      : isScrolled || isInnerPage
+                        ? "text-slate-700 hover:text-violet-700 hover:bg-gradient-to-r hover:from-violet-50/50 hover:to-pink-50/50"
+                        : "text-white/90 hover:text-white hover:bg-white/10 backdrop-blur-sm",
+                  )}
+                  onClick={() => window.scrollTo(0, 0)}
+                >
+                  {item.name}
+                  {isActive && (
+                    <motion.div
+                      className="absolute bottom-1 left-1/2 w-1.5 h-1.5 bg-current rounded-full"
+                      layoutId="navIndicator"
+                      initial={{ x: "-50%", scale: 0 }}
+                      animate={{ x: "-50%", scale: 1 }}
+                      transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
+                    />
+                  )}
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/5 group-hover:to-pink-400/5 transition-all duration-300"></div>
+                </Link>
+              )
+            })}
+          </nav>
+
+          <div className="flex items-center gap-3 md:gap-4">
+            <Button
+              onClick={handleBookNow}
+              className={cn(
+                "hidden lg:inline-flex h-auto rounded-2xl px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-base font-semibold border-0 relative overflow-hidden group",
+                isScrolled || isInnerPage
+                  ? "bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 text-white"
+                  : "bg-white/20 backdrop-blur-md hover:bg-white/30 text-white border border-white/30",
+              )}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/20 group-hover:to-pink-400/20 transition-all duration-300"></div>
+              <span className="relative z-10">Book Now</span>
+            </Button>
+
+            {/* Mobile Menu Button */}
+            <button
+              className={cn(
+                "lg:hidden flex items-center justify-center w-12 h-12 rounded-2xl transition-all duration-300 group relative overflow-hidden",
+                isScrolled || isInnerPage
+                  ? "text-slate-800 hover:bg-violet-50 hover:text-violet-700"
+                  : "text-white hover:bg-white/10 backdrop-blur-sm",
+              )}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
+            >
+              <motion.div
+                className="relative"
+                animate={{ rotate: isMenuOpen ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </motion.div>
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/10 group-hover:to-pink-400/10 transition-all duration-300"></div>
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation Overlay */}
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div
-            className="md:hidden fixed inset-0 bg-white/98 backdrop-blur-xl shadow-2xl z-50 overflow-hidden flex items-center justify-center"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-          >
-            <div className="w-full max-w-md mx-auto px-6">
-              {navItems.map((item, index) => {
-                const isActive = isActivePath(item.path)
+          <>
+            {/* Backdrop */}
+            <motion.div
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={() => setIsMenuOpen(false)}
+            />
 
-                return (
+            {/* Mobile Menu */}
+            <motion.div
+              className="fixed inset-y-0 right-0 w-full max-w-sm bg-gradient-to-br from-slate-900 via-violet-900/95 to-slate-900 backdrop-blur-xl shadow-2xl z-50 lg:hidden overflow-hidden"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            >
+              {/* Parallax Background Elements */}
+              <div className="absolute inset-0 overflow-hidden">
+                <motion.div
+                  className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-violet-500/20 to-pink-500/20 rounded-full blur-3xl"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    rotate: [0, 180, 360],
+                  }}
+                  transition={{
+                    duration: 20,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "linear",
+                  }}
+                />
+                <motion.div
+                  className="absolute -bottom-20 -left-20 w-32 h-32 bg-gradient-to-br from-pink-500/20 to-violet-500/20 rounded-full blur-3xl"
+                  animate={{
+                    scale: [1.2, 1, 1.2],
+                    rotate: [360, 180, 0],
+                  }}
+                  transition={{
+                    duration: 15,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "linear",
+                  }}
+                />
+                <motion.div
+                  className="absolute top-1/2 left-1/2 w-24 h-24 bg-gradient-to-br from-violet-400/10 to-pink-400/10 rounded-full blur-2xl"
+                  animate={{
+                    x: [-50, 50, -50],
+                    y: [-50, 50, -50],
+                    scale: [1, 1.5, 1],
+                  }}
+                  transition={{
+                    duration: 12,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "easeInOut",
+                  }}
+                />
+              </div>
+
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-white/10">
+                <div className="flex items-center space-x-3">
                   <motion.div
-                    key={item.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1, duration: 0.3 }}
+                    className="relative h-10 w-10"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <Link
-                      href={item.path}
-                      className={cn(
-                        "flex items-center justify-between text-2xl font-bold transition-all duration-300 py-6 px-8 mx-0 rounded-3xl mb-4",
-                        isActive
-                          ? "text-violet-700 bg-gradient-to-r from-violet-50 to-pink-50 shadow-soft"
-                          : "text-slate-700 hover:text-violet-700 hover:bg-gradient-to-r hover:from-violet-50/50 hover:to-pink-50/50",
-                      )}
-                      onClick={() => {
-                        setIsMenuOpen(false)
-                        window.scrollTo(0, 0)
+                    <Image
+                      src="/logo-new.png"
+                      alt="SoulMovies.ai Logo"
+                      width={40}
+                      height={40}
+                      className="object-contain drop-shadow-lg"
+                    />
+                  </motion.div>
+                  <div>
+                    <h2 className="text-white font-bold text-lg">SoulMovies.ai</h2>
+                    <p className="text-white/70 text-xs">Reconnect with yourself</p>
+                  </div>
+                </div>
+                <motion.button
+                  className="p-2 rounded-xl bg-white/10 hover:bg-white/20 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <X size={20} className="text-white" />
+                </motion.button>
+              </div>
+
+              {/* Navigation Items */}
+              <div className="flex-1 px-6 py-8 space-y-2">
+                {navItems.map((item, index) => {
+                  const isActive = isActivePath(item.path)
+
+                  return (
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        delay: index * 0.1,
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 20,
                       }}
                     >
-                      <span>{item.name}</span>
-                      {isActive ? (
-                        <div className="w-3 h-3 rounded-full bg-gradient-to-r from-violet-500 to-pink-500 shadow-glow"></div>
-                      ) : (
-                        <ChevronRight size={20} className="text-slate-400" />
-                      )}
-                    </Link>
-                  </motion.div>
-                )
-              })}
+                      <Link
+                        href={item.path}
+                        className={cn(
+                          "group flex items-center justify-between p-4 rounded-2xl transition-all duration-300 relative overflow-hidden",
+                          isActive
+                            ? "bg-gradient-to-r from-violet-600/80 to-pink-600/80 text-white shadow-lg"
+                            : "text-white/90 hover:bg-white/10 hover:text-white",
+                        )}
+                        onClick={() => {
+                          setIsMenuOpen(false)
+                          window.scrollTo(0, 0)
+                        }}
+                      >
+                        {/* Background Effect */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-violet-500/0 to-pink-500/0 group-hover:from-violet-500/20 group-hover:to-pink-500/20 transition-all duration-300 rounded-2xl" />
 
-              <div className="px-0 py-8 border-t border-violet-100/50 mt-8">
-                <Button
-                  onClick={() => {
-                    handleBookNow()
-                    setIsMenuOpen(false)
-                  }}
-                  className="bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 rounded-3xl w-full h-auto py-6 px-8 shadow-lg text-white text-xl font-bold transition-all duration-300 border-0 relative overflow-hidden group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/20 group-hover:to-pink-400/20 transition-all duration-300"></div>
-                  <span className="relative z-10">Book Now</span>
-                </Button>
+                        <div className="flex items-center space-x-4 relative z-10">
+                          <motion.div
+                            className={cn(
+                              "w-2 h-2 rounded-full transition-all duration-300",
+                              isActive ? "bg-white shadow-glow" : "bg-white/30 group-hover:bg-white/60",
+                            )}
+                            animate={isActive ? { scale: [1, 1.2, 1] } : {}}
+                            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                          />
+                          <span className="text-lg font-semibold">{item.name}</span>
+                        </div>
+
+                        <motion.div
+                          className="relative z-10"
+                          whileHover={{ x: 5 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                        >
+                          {isActive ? (
+                            <Sparkles size={20} className="text-white" />
+                          ) : (
+                            <ChevronRight size={20} className="text-white/60 group-hover:text-white" />
+                          )}
+                        </motion.div>
+                      </Link>
+                    </motion.div>
+                  )
+                })}
               </div>
-            </div>
-          </motion.div>
+
+              {/* Book Now Button */}
+              <div className="p-6 border-t border-white/10">
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
+                  <Button
+                    onClick={() => {
+                      handleBookNow()
+                      setIsMenuOpen(false)
+                    }}
+                    className="w-full bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border-0 relative overflow-hidden group"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 to-white/0 group-hover:from-white/10 group-hover:to-white/10 transition-all duration-300" />
+                    <motion.span
+                      className="relative z-10 flex items-center justify-center space-x-2"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      <span>Book Now</span>
+                      <Sparkles size={16} />
+                    </motion.span>
+                  </Button>
+                </motion.div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
-
-      {/* Overlay for mobile menu */}
-      {isMenuOpen && (
-        <motion.div
-          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 md:hidden"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setIsMenuOpen(false)}
-        />
-      )}
-    </header>
+    </>
   )
 }
 
