@@ -90,6 +90,8 @@
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
   }
 
   body {
@@ -100,6 +102,9 @@
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
     line-height: 1.6;
+    width: 100%;
+    max-width: 100vw;
+    position: relative;
   }
 
   h1,
@@ -107,7 +112,7 @@
   h3,
   h4,
   h5,
-  h6 {
+  h5 {
     @apply font-semibold;
     line-height: 1.2;
     letter-spacing: -0.025em;
@@ -623,5 +628,164 @@ html {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Prevent horizontal scroll */
+.no-horizontal-scroll {
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+}
+
+/* Container improvements for mobile */
+.container {
+  width: 100%;
+  max-width: 100vw;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+/* Mobile specific fixes */
+@media (max-width: 768px) {
+  .container-spacing {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .section-padding {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  /* Fix for floating elements that might cause overflow */
+  .absolute {
+    max-width: 100vw;
+  }
+
+  /* Ensure images don't overflow */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Scroll performance optimizations */
+.is-scrolling .animate-float,
+.is-scrolling .animate-pulse-soft,
+.is-scrolling .animate-float-gentle,
+.is-scrolling .animate-float-slow,
+.is-scrolling .animate-shimmer,
+.is-scrolling .animate-glow-pulse,
+.is-scrolling .animate-gradient-shift {
+  animation-play-state: paused;
+}
+
+/* Reduce motion for mobile devices */
+.reduce-motion .animate-float,
+.reduce-motion .animate-pulse-soft,
+.reduce-motion .animate-float-gentle,
+.reduce-motion .animate-float-slow {
+  animation-duration: 10s;
+}
+
+.reduce-motion .animate-shimmer,
+.reduce-motion .animate-glow-pulse,
+.reduce-motion .animate-gradient-shift {
+  animation-duration: 8s;
+}
+
+/* Performance optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.hardware-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize images for performance */
+img {
+  content-visibility: auto;
+}
+
+/* Optimize scrolling */
+@media (max-width: 768px) {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
+
+  .section-padding {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
+/* Optimize rendering performance */
+.optimize-gpu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Reduce animation complexity on mobile */
+@media (max-width: 768px) {
+  .animate-float,
+  .animate-pulse-soft,
+  .animate-float-gentle,
+  .animate-float-slow,
+  .animate-shimmer,
+  .animate-glow-pulse,
+  .animate-gradient-shift {
+    animation-duration: 10s;
+    animation-timing-function: ease-in-out;
+  }
+
+  .transition-elegant,
+  .transition-smooth,
+  .transition-bounce,
+  .transition-spring {
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
   }
 }

@@ -25,9 +25,53 @@ import AudioPlayer from "@/components/audio-player"
 import ServiceCard from "@/components/service-card"
 import TestimonialCard from "@/components/testimonial-card"
 import FaqAccordion from "@/components/faq-accordion"
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
+
+// Add this function near the top of the file, after imports
+function useScrollOptimization() {
+  useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout
+    let isScrolling = false
+    const html = document.documentElement
+
+    const handleScroll = () => {
+      if (!isScrolling) {
+        html.classList.add("is-scrolling")
+        isScrolling = true
+      }
+
+      clearTimeout(scrollTimeout)
+      scrollTimeout = setTimeout(() => {
+        html.classList.remove("is-scrolling")
+        isScrolling = false
+      }, 100)
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      clearTimeout(scrollTimeout)
+    }
+  }, [])
+}
 
 export default function Home() {
+  useScrollOptimization()
+  // Add this near the top of the component, after other useState declarations
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Add this useEffect to detect mobile devices
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
   const { scrollYProgress } = useScroll()
   const heroRef = useRef<HTMLDivElement>(null)
   const aboutRef = useRef<HTMLDivElement>(null)
@@ -41,9 +85,24 @@ export default function Home() {
     offset: ["start start", "end start"],
   })
 
-  const heroY = useSpring(useTransform(heroProgress, [0, 1], ["0%", "30%"]))
-  const heroOpacity = useSpring(useTransform(heroProgress, [0, 0.7], [1, 0]))
-  const heroScale = useSpring(useTransform(heroProgress, [0, 1], [1, 1.05]))
+  // Replace the existing spring configurations with these optimized versions
+  const heroY = useSpring(useTransform(heroProgress, [0, 1], ["0%", "30%"]), {
+    stiffness: isMobile ? 300 : 100,
+    damping: isMobile ? 30 : 20,
+    mass: isMobile ? 0.5 : 1,
+  })
+
+  const heroOpacity = useSpring(useTransform(heroProgress, [0, 0.7], [1, 0]), {
+    stiffness: isMobile ? 300 : 100,
+    damping: isMobile ? 30 : 20,
+    mass: isMobile ? 0.5 : 1,
+  })
+
+  const heroScale = useSpring(useTransform(heroProgress, [0, 1], [1, 1.05]), {
+    stiffness: isMobile ? 300 : 100,
+    damping: isMobile ? 30 : 20,
+    mass: isMobile ? 0.5 : 1,
+  })
 
   // About section with smooth parallax
   const { scrollYProgress: aboutProgress } = useScroll({
@@ -51,7 +110,12 @@ export default function Home() {
     offset: ["start end", "end start"],
   })
 
-  const aboutY = useSpring(useTransform(aboutProgress, [0, 1], ["60px", "-60px"]))
+  // Apply similar optimizations to other spring animations
+  const aboutY = useSpring(useTransform(aboutProgress, [0, 1], ["60px", "-60px"]), {
+    stiffness: isMobile ? 300 : 100,
+    damping: isMobile ? 30 : 20,
+    mass: isMobile ? 0.5 : 1,
+  })
 
   // Services section
   const { scrollYProgress: servicesProgress } = useScroll({
@@ -59,7 +123,11 @@ export default function Home() {
     offset: ["start end", "end start"],
   })
 
-  const servicesY = useSpring(useTransform(servicesProgress, [0, 1], ["40px", "-40px"]))
+  const servicesY = useSpring(useTransform(servicesProgress, [0, 1], ["40px", "-40px"]), {
+    stiffness: isMobile ? 300 : 100,
+    damping: isMobile ? 30 : 20,
+    mass: isMobile ? 0.5 : 1,
+  })
 
   // Stats section
   const { scrollYProgress: statsProgress } = useScroll({
@@ -67,7 +135,11 @@ export default function Home() {
     offset: ["start end", "end start"],
   })
 
-  const statsY = useSpring(useTransform(statsProgress, [0, 1], ["30px", "-30px"]))
+  const statsY = useSpring(useTransform(statsProgress, [0, 1], ["30px", "-30px"]), {
+    stiffness: isMobile ? 300 : 100,
+    damping: isMobile ? 30 : 20,
+    mass: isMobile ? 0.5 : 1,
+  })
 
   // Contact section with enhanced parallax
   const contactSectionRef = useRef<HTMLDivElement>(null)
@@ -76,10 +148,30 @@ export default function Home() {
     offset: ["start end", "end start"],
   })
 
-  const contactScale = useSpring(useTransform(contactScrollProgress, [0, 0.5, 1], [0.98, 1, 1.02]))
-  const contactOpacity = useSpring(useTransform(contactScrollProgress, [0, 0.2, 1], [0.8, 1, 1]))
-  const cardOneY = useSpring(useTransform(contactScrollProgress, [0, 1], [40, -20]))
-  const cardTwoY = useSpring(useTransform(contactScrollProgress, [0, 1], [20, -10]))
+  // Optimize contact section animations
+  const contactScale = useSpring(useTransform(contactScrollProgress, [0, 0.5, 1], [0.98, 1, 1.02]), {
+    stiffness: isMobile ? 300 : 100,
+    damping: isMobile ? 30 : 20,
+    mass: isMobile ? 0.5 : 1,
+  })
+
+  const contactOpacity = useSpring(useTransform(contactScrollProgress, [0, 0.2, 1], [0.8, 1, 1]), {
+    stiffness: isMobile ? 300 : 100,
+    damping: isMobile ? 30 : 20,
+    mass: isMobile ? 0.5 : 1,
+  })
+
+  const cardOneY = useSpring(useTransform(contactScrollProgress, [0, 1], [40, -20]), {
+    stiffness: isMobile ? 300 : 100,
+    damping: isMobile ? 30 : 20,
+    mass: isMobile ? 0.5 : 1,
+  })
+
+  const cardTwoY = useSpring(useTransform(contactScrollProgress, [0, 1], [20, -10]), {
+    stiffness: isMobile ? 300 : 100,
+    damping: isMobile ? 30 : 20,
+    mass: isMobile ? 0.5 : 1,
+  })
 
   const [contactFormData, setContactFormData] = useState({
     name: "",
@@ -139,14 +231,21 @@ export default function Home() {
   ]
 
   return (
-    <>
+    <div className={`no-horizontal-scroll ${isMobile ? "reduce-motion" : ""}`}>
       <FloatingParticles />
       <AudioPlayer />
 
       {/* Completely Redesigned Hero Section */}
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Enhanced Background with Multiple Layers */}
-        <motion.div className="absolute inset-0 z-0" style={{ y: heroY, scale: heroScale }}>
+        <motion.div
+          className="absolute inset-0 z-0"
+          style={{
+            y: heroY,
+            scale: heroScale,
+            willChange: "transform",
+          }}
+        >
           <Image
             src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1920&auto=format&fit=crop"
             alt="Serene landscape with calming atmosphere"
@@ -160,27 +259,31 @@ export default function Home() {
         </motion.div>
 
         {/* Floating Elements */}
-        <div className="absolute inset-0 z-5">
-          <motion.div
-            className="absolute top-20 left-20 w-2 h-2 bg-white/40 rounded-full"
-            animate={{ y: [0, -20, 0], opacity: [0.4, 0.8, 0.4] }}
-            transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="absolute top-40 right-32 w-1 h-1 bg-violet-300/60 rounded-full"
-            animate={{ y: [0, -15, 0], opacity: [0.6, 1, 0.6] }}
-            transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 1 }}
-          />
-          <motion.div
-            className="absolute bottom-32 left-40 w-3 h-3 bg-pink-300/50 rounded-full"
-            animate={{ y: [0, -25, 0], opacity: [0.5, 0.9, 0.5] }}
-            transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 2 }}
-          />
+        <div className="absolute inset-0 z-5 overflow-hidden">
+          {!isMobile && (
+            <>
+              <motion.div
+                className="absolute top-20 left-4 md:left-20 w-2 h-2 bg-white/40 rounded-full"
+                animate={{ y: [0, -20, 0], opacity: [0.4, 0.8, 0.4] }}
+                transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute top-40 right-4 md:right-32 w-1 h-1 bg-violet-300/60 rounded-full"
+                animate={{ y: [0, -15, 0], opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 1 }}
+              />
+              <motion.div
+                className="absolute bottom-32 left-4 md:left-40 w-3 h-3 bg-pink-300/50 rounded-full"
+                animate={{ y: [0, -25, 0], opacity: [0.5, 0.9, 0.5] }}
+                transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 2 }}
+              />
+            </>
+          )}
         </div>
 
         {/* Main Hero Content */}
         <motion.div
-          className="container relative z-10 container-spacing text-center py-20 md:py-28"
+          className="container relative z-10 text-center py-20 md:py-28 px-4 md:px-8"
           style={{ opacity: heroOpacity }}
         >
           {/* Enhanced Main Title */}
@@ -268,7 +371,7 @@ export default function Home() {
           </motion.div>
 
           {/* Enhanced Scroll Indicator */}
-          <div className="absolute bottom-12 right-12 z-10">
+          <div className="absolute bottom-12 right-4 md:right-12 z-10">
             <motion.div
               initial={{ opacity: 0, scale: 0.8, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -327,7 +430,7 @@ export default function Home() {
         ref={statsRef}
         className="py-16 md:py-24 bg-gradient-to-b from-white to-violet-50/30 relative overflow-hidden"
       >
-        <motion.div className="container container-spacing max-w-7xl mx-auto" style={{ y: statsY }}>
+        <motion.div className="container max-w-7xl mx-auto px-4 md:px-8" style={{ y: statsY }}>
           <motion.div
             className="grid grid-cols-2 md:grid-cols-4 gap-8"
             initial={{ opacity: 0, y: 60 }}
@@ -378,7 +481,7 @@ export default function Home() {
         ref={aboutRef}
         className="section-padding bg-gradient-to-b from-violet-50/30 via-white to-violet-50/30 relative"
       >
-        <motion.div className="container container-spacing max-w-7xl mx-auto" style={{ y: aboutY }}>
+        <motion.div className="container max-w-7xl mx-auto px-4 md:px-8" style={{ y: aboutY }}>
           {/* Section Header */}
           <motion.div
             className="max-w-4xl mx-auto text-center mb-20"
@@ -694,11 +797,7 @@ export default function Home() {
         className="section-padding overflow-visible"
         enableParticles={true}
       >
-        <motion.div
-          ref={servicesRef}
-          className="container container-spacing max-w-7xl mx-auto"
-          style={{ y: servicesY }}
-        >
+        <motion.div ref={servicesRef} className="container max-w-7xl mx-auto px-4 md:px-8" style={{ y: servicesY }}>
           {/* Enhanced Section Header */}
           <motion.div
             className="max-w-4xl mx-auto text-center mb-20"
@@ -810,7 +909,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="container container-spacing max-w-7xl mx-auto relative z-10">
+        <div className="container max-w-7xl mx-auto px-4 md:px-8 relative z-10">
           {/* Enhanced header */}
           <motion.div
             className="text-center mb-20"
@@ -957,7 +1056,7 @@ export default function Home() {
         overlayColor="bg-white/95 backdrop-blur-sm"
         className="section-padding"
       >
-        <div className="container container-spacing max-w-7xl mx-auto">
+        <div className="container max-w-7xl mx-auto px-4 md:px-8">
           <motion.div
             className="max-w-4xl mx-auto text-center mb-20"
             initial={{ opacity: 0, y: 60 }}
@@ -1021,7 +1120,7 @@ export default function Home() {
         ref={contactSectionRef}
         className="section-padding bg-gradient-to-b from-white via-violet-50/30 to-white overflow-hidden"
       >
-        <div className="container container-spacing max-w-7xl mx-auto">
+        <div className="container max-w-7xl mx-auto px-4 md:px-8">
           <motion.div
             className="max-w-4xl mx-auto text-center mb-20"
             style={{ scale: contactScale, opacity: contactOpacity }}
@@ -1331,7 +1430,7 @@ export default function Home() {
         className="section-padding"
         enableParticles={true}
       >
-        <div className="container container-spacing relative z-10 text-center">
+        <div className="container max-w-7xl mx-auto px-4 md:px-8 relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 60, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -1444,6 +1543,6 @@ export default function Home() {
           <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
         </motion.svg>
       </motion.a>
-    </>
+    </div>
   )
 }

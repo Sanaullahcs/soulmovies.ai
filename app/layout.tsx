@@ -18,7 +18,7 @@ export const metadata = {
   title: "SoulMovies.ai - Reconnect with Your True Self",
   description:
     "A sanctuary for the soul, offering personalized emotional support, mindfulness guidance, and heart-centered healing.",
-    generator: 'v0.dev'
+  generator: "v0.dev",
 }
 
 export default function RootLayout({
@@ -33,7 +33,7 @@ export default function RootLayout({
         <link rel="preload" href="/hero-bg.jpg" as="image" type="image/jpeg" />
         <link rel="preload" href="/services-hero-bg.jpg" as="image" type="image/jpeg" />
       </head>
-      <body className={cn("min-h-screen bg-background font-sans antialiased overflow-x-hidden", poppins.variable)}>
+      <body className={cn("min-h-screen bg-background font-sans antialiased no-horizontal-scroll", poppins.variable)}>
         <ThemeProvider attribute="class" defaultTheme="light">
           <div className="relative flex min-h-screen flex-col">
             <CursorEffect />
