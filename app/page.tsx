@@ -976,10 +976,7 @@ export default function Home() {
               <span className="text-violet-700 font-medium text-sm">FAQ</span>
             </motion.div>
             <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-8 text-balance">
-              We're{" "}
-              <span className="bg-gradient-to-r from-violet-400 via-pink-400 to-violet-500 bg-clip-text text-transparent font-extrabold">
-                Here For You
-              </span>
+              We're <span className="gradient-text">Here For You</span>
             </h2>
             <p className="text-xl text-white leading-relaxed text-balance">
               Find answers to commonly asked questions about our services and approach. Still have questions? We're here
@@ -1004,7 +1001,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <p className="text-lg text-white mb-8">Still have questions? We're here to help you on your journey.</p>
+            <p className="text-lg text-slate-600 mb-8">Still have questions? We're here to help you on your journey.</p>
             <Link href="/contact">
               <motion.div whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
                 <Button className="btn-premium text-white rounded-2xl text-lg px-12 py-4 h-auto shadow-large font-semibold group">
