@@ -170,13 +170,13 @@ const Navigation = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="md:hidden fixed top-[80px] left-0 w-full bg-white/98 backdrop-blur-xl shadow-2xl border-t border-violet-100/50 z-50 overflow-hidden"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            className="md:hidden fixed inset-0 bg-white/98 backdrop-blur-xl shadow-2xl z-50 overflow-hidden flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
-            <div className="max-h-[calc(100vh-80px)] overflow-y-auto py-4">
+            <div className="w-full max-w-md mx-auto px-6">
               {navItems.map((item, index) => {
                 const isActive = isActivePath(item.path)
 
@@ -190,7 +190,7 @@ const Navigation = () => {
                     <Link
                       href={item.path}
                       className={cn(
-                        "flex items-center justify-between text-lg font-semibold transition-all duration-300 py-4 px-6 mx-4 rounded-2xl",
+                        "flex items-center justify-between text-2xl font-bold transition-all duration-300 py-6 px-8 mx-0 rounded-3xl mb-4",
                         isActive
                           ? "text-violet-700 bg-gradient-to-r from-violet-50 to-pink-50 shadow-soft"
                           : "text-slate-700 hover:text-violet-700 hover:bg-gradient-to-r hover:from-violet-50/50 hover:to-pink-50/50",
@@ -211,13 +211,13 @@ const Navigation = () => {
                 )
               })}
 
-              <div className="px-6 py-6 border-t border-violet-100/50 mt-4 mx-4">
+              <div className="px-0 py-8 border-t border-violet-100/50 mt-8">
                 <Button
                   onClick={() => {
                     handleBookNow()
                     setIsMenuOpen(false)
                   }}
-                  className="bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 rounded-2xl w-full h-auto py-4 px-6 shadow-lg text-white font-semibold transition-all duration-300 border-0 relative overflow-hidden group"
+                  className="bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 rounded-3xl w-full h-auto py-6 px-8 shadow-lg text-white text-xl font-bold transition-all duration-300 border-0 relative overflow-hidden group"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/20 group-hover:to-pink-400/20 transition-all duration-300"></div>
                   <span className="relative z-10">Book Now</span>
