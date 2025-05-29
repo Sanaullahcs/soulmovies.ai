@@ -1,5 +1,7 @@
 "use client"
 
+import type React from "react"
+
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -7,6 +9,8 @@ import { Heart, Brain, Compass, Sparkles, Target, Eye, Award } from "lucide-reac
 
 // First, let's add the necessary imports for animations
 import { motion } from "framer-motion"
+import { useState, useEffect, useRef } from "react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 // Update the component to include smooth animations and transitions
 export default function AboutPageClient() {
@@ -29,6 +33,92 @@ export default function AboutPageClient() {
       },
     },
   }
+
+  // Carousel state and data
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const [isPaused, setIsPaused] = useState(false)
+
+  const carouselImages = [
+    {
+      src: "https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=800&auto=format&fit=crop",
+      alt: "Self-Discovery",
+      title: "Reconnect with Your True Self",
+      description: "Journey back to your authentic essence",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=800&auto=format&fit=crop",
+      alt: "Mindfulness Meditation",
+      title: "Mindfulness",
+      description: "Present moment awareness for inner peace",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=800&auto=format&fit=crop",
+      alt: "Emotional Healing",
+      title: "Emotional Healing",
+      description: "Process and release emotional trauma",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=800&auto=format&fit=crop",
+      alt: "Guided Visualization",
+      title: "Guided Visualization",
+      description: "Transform through the power of imagination",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop",
+      alt: "Yoga Practice",
+      title: "Yoga (spiritual discipline)",
+      description: "Ancient practice for mind-body-spirit unity",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=800&auto=format&fit=crop",
+      alt: "Nature Connection",
+      title: "Nature Connection",
+      description: "Heal through the wisdom of natural environments",
+    },
+  ]
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % carouselImages.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + carouselImages.length) % carouselImages.length)
+  }
+
+  // Handle touch events for mobile
+  const touchStartX = useRef(0)
+  const touchEndX = useRef(0)
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current
+    if (diff > 50) {
+      // Swipe left
+      nextSlide()
+    } else if (diff < -50) {
+      // Swipe right
+      prevSlide()
+    }
+  }
+
+  // Auto-advance carousel
+  useEffect(() => {
+    if (isPaused) return
+
+    const timer = setInterval(() => {
+      nextSlide()
+    }, 4000) // Change slide every 4 seconds
+
+    return () => clearInterval(timer)
+  }, [currentSlide, isPaused])
 
   return (
     <main className="min-h-screen">
@@ -91,22 +181,75 @@ export default function AboutPageClient() {
                 growth.
               </p>
               <p className="text-slate-600">
-                Today, SoulMovies.ai serves thousands of users worldwide, combining the wisdom of traditional healing
-                practices with the precision and personalization that only advanced AI can provide.
+                Today, SoulMovies.ai serves thousands of users across the United States, combining the wisdom of
+                traditional healing practices with the precision and personalization that only advanced AI can provide.
               </p>
             </motion.div>
-            <motion.div
-              className="relative h-[400px] rounded-3xl overflow-hidden shadow-xl"
-              variants={fadeIn}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Image
-                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=800&auto=format&fit=crop"
-                alt="SoulMovies.ai Innovation"
-                fill
-                className="object-cover"
-              />
+            <motion.div className="relative h-[400px] rounded-3xl overflow-hidden shadow-xl" variants={fadeIn}>
+              {/* Carousel Container */}
+              <div
+                className="relative w-full h-full"
+                ref={carouselRef}
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
+                {/* Images */}
+                <div
+                  className="flex transition-transform duration-700 ease-in-out h-full"
+                  style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                >
+                  {carouselImages.map((image, index) => (
+                    <div key={index} className="min-w-full h-full relative">
+                      <Image src={image.src || "/placeholder.svg"} alt={image.alt} fill className="object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                      <div className="absolute bottom-6 left-6 text-white max-w-[80%]">
+                        <h4 className="text-xl font-medium">{image.title}</h4>
+                        <p className="text-sm text-white/90 mt-1">{image.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Navigation Arrows */}
+                <button
+                  onClick={prevSlide}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full p-2 text-white hover:bg-white/30 transition-colors z-10"
+                  aria-label="Previous slide"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full p-2 text-white hover:bg-white/30 transition-colors z-10"
+                  aria-label="Next slide"
+                >
+                  <ChevronRight size={20} />
+                </button>
+
+                {/* Dots Indicator */}
+                <div className="absolute bottom-2 left-0 right-0 flex justify-center space-x-2">
+                  {carouselImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentSlide(index)}
+                      className={`w-2 h-2 rounded-full transition-colors ${
+                        index === currentSlide ? "bg-white" : "bg-white/50"
+                      }`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+
+                {/* Pause/Play Indicator */}
+                {isPaused && (
+                  <div className="absolute top-4 right-4 bg-black/30 backdrop-blur-sm rounded-full px-3 py-1 text-xs text-white">
+                    Paused
+                  </div>
+                )}
+              </div>
             </motion.div>
           </motion.div>
         </div>
@@ -510,8 +653,8 @@ export default function AboutPageClient() {
         >
           <h2 className="text-3xl md:text-4xl font-medium text-white mb-6">Experience Your Personal Soul Movie</h2>
           <p className="text-white/90 max-w-2xl mx-auto mb-8">
-            Join thousands who have transformed their lives through AI-powered emotional healing. Begin your
-            personalized journey with SoulMovies.ai today.
+            Join thousands across America who have transformed their lives through AI-powered emotional healing. Begin
+            your personalized journey with SoulMovies.ai today.
           </p>
           <motion.div
             whileHover={{ scale: 1.05 }}
