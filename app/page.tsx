@@ -526,8 +526,8 @@ export default function Home() {
                   transition={{ duration: 0.4 }}
                 >
                   <Image
-                    src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=800&auto=format&fit=crop"
-                    alt="Founder Sarah Lee"
+                    src="/images/juan-carlos-calzada.png"
+                    alt="Founder Juan Carlos Calzada"
                     fill
                     className="object-cover group-hover:scale-105 transition-elegant duration-700"
                   />
@@ -539,7 +539,7 @@ export default function Home() {
                       transition={{ delay: 0.3, duration: 0.6 }}
                       viewport={{ once: true }}
                     >
-                      <h3 className="text-2xl font-bold text-white mb-2">Sarah Lee</h3>
+                      <h3 className="text-2xl font-bold text-white mb-2">Juan Carlos Calzada</h3>
                       <p className="text-white/90 text-base font-medium mb-4">Founder & Emotional Wellness Guide</p>
                       <div className="flex items-center space-x-4 text-white/80 text-sm">
                         <span>15+ Years Experience</span>
@@ -552,14 +552,14 @@ export default function Home() {
 
                 {/* Floating Quote */}
                 <motion.div
-                  className="absolute -right-8 top-20 glass-premium rounded-2xl p-6 max-w-xs"
+                  className="absolute -right-8 top-48 glass-premium rounded-2xl p-6 max-w-xs mt-20"
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5, duration: 0.6 }}
                   viewport={{ once: true }}
                 >
                   <p className="text-slate-700 italic text-sm leading-relaxed">
-                    "True healing begins when we create a safe space for authentic self-expression."
+                    "True transformation happens when we embrace vulnerability and authentic connection with ourselves."
                   </p>
                 </motion.div>
               </div>
@@ -591,13 +591,14 @@ export default function Home() {
                   viewport={{ once: true }}
                 >
                   <p className="text-lg text-slate-600 leading-relaxed">
-                    At SoulMovies.ai, we believe that true healing comes from reconnecting with your authentic self. Our
-                    approach combines ancient wisdom with modern techniques to create a holistic experience that
-                    nurtures your mind, body, and spirit.
+                    At SoulMovies.ai, Juan Carlos brings a unique blend of emotional intelligence and innovative
+                    therapeutic approaches. His background in psychology and personal transformation has helped
+                    countless individuals reconnect with their authentic selves.
                   </p>
                   <p className="text-lg text-slate-600 leading-relaxed">
                     We understand that each person's journey is unique, which is why we offer personalized guidance
-                    tailored to your specific needs and goals.
+                    tailored to your specific needs and goals, combining evidence-based practices with compassionate
+                    support.
                   </p>
                 </motion.div>
 
@@ -675,8 +676,13 @@ export default function Home() {
                   viewport={{ once: true }}
                 >
                   <p className="text-lg text-slate-600 leading-relaxed">
-                    James brings over 15 years of experience in mindfulness and meditation practices to SoulMovies.ai.
-                    His journey began in the mountains of Nepal, where he studied with master practitioners.
+                    Mirium brings over 15 years of experience in mindfulness and meditation practices to SoulMovies.ai.
+                    Her journey began on the serene beaches of Bali, where she studied with master practitioners.
+                  </p>
+                  <p className="text-lg text-slate-600 leading-relaxed">
+                    Together with Sarah, they've created a unique approach that combines traditional wisdom with
+                    cutting-edge techniques to help individuals navigate life's challenges with grace. techniques to
+                    help individuals navigate life's challenges with grace.
                   </p>
                   <p className="text-lg text-slate-600 leading-relaxed">
                     Together with Sarah, they've created a unique approach that combines traditional wisdom with
@@ -748,8 +754,8 @@ export default function Home() {
                   transition={{ duration: 0.4 }}
                 >
                   <Image
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop"
-                    alt="Co-Founder James Carter"
+                    src="/images/mirium-meditation.jpg"
+                    alt="Co-Founder Mirium"
                     fill
                     className="object-cover group-hover:scale-105 transition-elegant duration-700"
                   />
@@ -761,7 +767,7 @@ export default function Home() {
                       transition={{ delay: 0.3, duration: 0.6 }}
                       viewport={{ once: true }}
                     >
-                      <h3 className="text-2xl font-bold text-white mb-2">James Carter</h3>
+                      <h3 className="text-2xl font-bold text-white mb-2">Mirium</h3>
                       <p className="text-white/90 text-base font-medium mb-4">Co-Founder & Mindfulness Expert</p>
                       <div className="flex items-center space-x-4 text-white/80 text-sm">
                         <span>Master Practitioner</span>
@@ -774,14 +780,14 @@ export default function Home() {
 
                 {/* Floating Quote */}
                 <motion.div
-                  className="absolute -left-8 top-20 glass-premium rounded-2xl p-6 max-w-xs"
+                  className="absolute -left-8 top-5 glass-premium rounded-2xl p-6 max-w-xs mb-[110px]"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5, duration: 0.6 }}
                   viewport={{ once: true }}
                 >
                   <p className="text-slate-700 italic text-sm leading-relaxed">
-                    "Mindfulness is not about emptying the mind, but about being present with what is."
+                    "True meditation is not an escape from life, but a deeper connection with the present moment."
                   </p>
                 </motion.div>
               </div>

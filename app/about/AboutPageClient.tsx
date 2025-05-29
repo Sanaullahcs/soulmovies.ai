@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Heart, Brain, Compass, Users, Sparkles } from "lucide-react"
+import { Heart, Brain, Compass, Sparkles, Target, Eye, Award } from "lucide-react"
 
 // First, let's add the necessary imports for animations
 import { motion } from "framer-motion"
@@ -37,7 +37,7 @@ export default function AboutPageClient() {
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1920&auto=format&fit=crop"
-            alt="About Us Hero"
+            alt="About SoulMovies.ai"
             fill
             className="object-cover"
             priority
@@ -48,13 +48,14 @@ export default function AboutPageClient() {
         <div className="container relative z-10 px-6">
           <motion.div className="max-w-3xl" initial="hidden" animate="visible" variants={staggerContainer}>
             <motion.h1 className="text-4xl md:text-5xl font-medium text-white mb-4" variants={fadeIn}>
-              About Us
+              About SoulMovies.ai
             </motion.h1>
             <motion.p className="text-lg text-white/90 max-w-2xl mb-6" variants={fadeIn}>
-              Learn about our story, mission, values, and the team behind SoulMovies.ai.
+              Pioneering the future of emotional wellness through personalized AI-driven soul movies and transformative
+              mindfulness experiences.
             </motion.p>
             <motion.div variants={fadeIn}>
-              <Button className="bg-white text-violet-700 hover:bg-white/90">Learn More</Button>
+              <Button className="bg-white text-violet-700 hover:bg-white/90">Discover Our Journey</Button>
             </motion.div>
           </motion.div>
         </div>
@@ -73,19 +74,25 @@ export default function AboutPageClient() {
             <motion.div variants={fadeIn}>
               <h2 className="text-3xl md:text-4xl font-medium text-slate-800 mb-6">Our Story</h2>
               <p className="text-slate-600 mb-4">
-                SoulMovies.ai was founded in 2020 with a vision to create a sanctuary where individuals can reconnect
-                with their true selves. Our journey began when our founder, Sarah Lee, experienced the transformative
-                power of visualization and mindfulness in her own life.
+                SoulMovies.ai was born from a revolutionary vision to merge cutting-edge artificial intelligence with
+                ancient wisdom traditions. Founded in 2020 by Juan Carlos Calzada and Mirium, our platform represents a
+                breakthrough in personalized emotional wellness technology.
               </p>
               <p className="text-slate-600 mb-4">
-                After years of studying various mindfulness techniques and working with leading practitioners around the
-                world, Sarah developed a unique approach that combines ancient wisdom with modern technology to create
-                personalized soul movies.
+                After witnessing the transformative power of visualization therapy and mindfulness practices, our
+                founders recognized the potential to scale these healing modalities through AI. SoulMovies.ai creates
+                personalized "soul movies" - immersive visual narratives tailored to each individual's emotional
+                landscape and healing journey.
+              </p>
+              <p className="text-slate-600 mb-4">
+                Our proprietary AI algorithms analyze emotional patterns, personal preferences, and therapeutic goals to
+                generate unique visual experiences that guide users through profound inner transformation. Each soul
+                movie is a carefully crafted journey designed to unlock emotional healing, self-discovery, and personal
+                growth.
               </p>
               <p className="text-slate-600">
-                What started as a small practice has grown into a global community of practitioners and clients who have
-                experienced profound transformation through our services. Today, we continue to innovate and expand our
-                offerings while staying true to our core mission of fostering emotional well-being and personal growth.
+                Today, SoulMovies.ai serves thousands of users worldwide, combining the wisdom of traditional healing
+                practices with the precision and personalization that only advanced AI can provide.
               </p>
             </motion.div>
             <motion.div
@@ -95,8 +102,8 @@ export default function AboutPageClient() {
               transition={{ duration: 0.3 }}
             >
               <Image
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop"
-                alt="Our Story"
+                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=800&auto=format&fit=crop"
+                alt="SoulMovies.ai Innovation"
                 fill
                 className="object-cover"
               />
@@ -125,13 +132,17 @@ export default function AboutPageClient() {
               transition={{ duration: 0.3 }}
             >
               <div className="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center mb-6">
-                <Sparkles className="text-violet-600" size={24} />
+                <Target className="text-violet-600" size={24} />
               </div>
               <h3 className="text-2xl font-medium text-slate-800 mb-4">Our Mission</h3>
+              <p className="text-slate-600 mb-4">
+                To democratize access to personalized emotional healing through AI-powered soul movies that guide
+                individuals on transformative journeys of self-discovery and emotional wellness.
+              </p>
               <p className="text-slate-600">
-                To provide accessible and personalized emotional support, fostering a world where everyone can reconnect
-                with their true self, navigate life's challenges with resilience, and cultivate a deeper sense of
-                purpose and fulfillment.
+                We believe that everyone deserves access to tools that can help them reconnect with their authentic
+                self, process emotional challenges, and cultivate lasting inner peace through the power of personalized
+                visual storytelling.
               </p>
             </motion.div>
             <motion.div
@@ -144,20 +155,24 @@ export default function AboutPageClient() {
               transition={{ duration: 0.3 }}
             >
               <div className="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center mb-6">
-                <Users className="text-violet-600" size={24} />
+                <Eye className="text-violet-600" size={24} />
               </div>
               <h3 className="text-2xl font-medium text-slate-800 mb-4">Our Vision</h3>
+              <p className="text-slate-600 mb-4">
+                To create a world where AI-enhanced emotional wellness is accessible to everyone, fostering a global
+                community of individuals who are empowered to heal, grow, and thrive through personalized soul movie
+                experiences.
+              </p>
               <p className="text-slate-600">
-                A world where emotional wellness is prioritized and accessible to all, where individuals are empowered
-                to transform their inner landscape, and where technology serves as a bridge to deeper human connection
-                and self-understanding.
+                We envision SoulMovies.ai as the leading platform where technology and spirituality converge to create
+                profound healing experiences that transcend traditional therapeutic boundaries.
               </p>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* Core Values Section */}
+      {/* What Makes SoulMovies.ai Unique */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container px-6 max-w-7xl mx-auto">
           <motion.div
@@ -167,8 +182,93 @@ export default function AboutPageClient() {
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeIn}
           >
+            <h2 className="text-3xl md:text-4xl font-medium text-slate-800 mb-4">What Makes SoulMovies.ai Unique</h2>
+            <p className="text-slate-600">
+              Our innovative approach combines cutting-edge AI with proven therapeutic methodologies
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+          >
+            <motion.div
+              className="bg-gradient-to-br from-violet-50 to-rose-50 rounded-3xl p-6 shadow-md border border-violet-100/50 h-full"
+              variants={fadeIn}
+              whileHover={{
+                y: -5,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center mb-4">
+                <Brain className="text-violet-600" size={24} />
+              </div>
+              <h3 className="text-xl font-medium text-slate-800 mb-2">AI-Powered Personalization</h3>
+              <p className="text-slate-600">
+                Our advanced algorithms analyze your emotional patterns, preferences, and therapeutic goals to create
+                completely personalized soul movie experiences that evolve with your journey.
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="bg-gradient-to-br from-rose-50 to-orange-50 rounded-3xl p-6 shadow-md border border-rose-100/50 h-full"
+              variants={fadeIn}
+              whileHover={{
+                y: -5,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center mb-4">
+                <Sparkles className="text-rose-600" size={24} />
+              </div>
+              <h3 className="text-xl font-medium text-slate-800 mb-2">Immersive Visual Storytelling</h3>
+              <p className="text-slate-600">
+                Each soul movie is a cinematic journey crafted with stunning visuals, therapeutic soundscapes, and
+                guided narratives designed to facilitate deep emotional processing and healing.
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="bg-gradient-to-br from-blue-50 to-violet-50 rounded-3xl p-6 shadow-md border border-blue-100/50 h-full"
+              variants={fadeIn}
+              whileHover={{
+                y: -5,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4">
+                <Award className="text-blue-600" size={24} />
+              </div>
+              <h3 className="text-xl font-medium text-slate-800 mb-2">Evidence-Based Methodology</h3>
+              <p className="text-slate-600">
+                Our approach integrates proven therapeutic techniques including visualization therapy, mindfulness-based
+                interventions, and somatic experiencing within our AI-generated experiences.
+              </p>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Core Values Section */}
+      <section className="py-16 md:py-24 bg-violet-50">
+        <div className="container px-6 max-w-7xl mx-auto">
+          <motion.div
+            className="max-w-3xl mx-auto text-center mb-16"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={fadeIn}
+          >
             <h2 className="text-3xl md:text-4xl font-medium text-slate-800 mb-4">Our Core Values</h2>
-            <p className="text-slate-600">These principles guide everything we do at SoulMovies.ai</p>
+            <p className="text-slate-600">
+              These principles guide every aspect of SoulMovies.ai's development and service delivery
+            </p>
           </motion.div>
 
           <motion.div
@@ -190,10 +290,10 @@ export default function AboutPageClient() {
               <div className="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center mb-4">
                 <Heart className="text-violet-600" size={24} />
               </div>
-              <h3 className="text-xl font-medium text-slate-800 mb-2">Compassion</h3>
+              <h3 className="text-xl font-medium text-slate-800 mb-2">Compassionate Innovation</h3>
               <p className="text-slate-600">
-                We approach every interaction with empathy and understanding, recognizing that each person's journey is
-                unique and deserving of care and respect.
+                We develop technology with deep empathy and understanding, ensuring that every feature of SoulMovies.ai
+                serves the highest good of our users' emotional well-being and personal growth.
               </p>
             </motion.div>
 
@@ -209,10 +309,10 @@ export default function AboutPageClient() {
               <div className="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center mb-4">
                 <Brain className="text-violet-600" size={24} />
               </div>
-              <h3 className="text-xl font-medium text-slate-800 mb-2">Mindfulness</h3>
+              <h3 className="text-xl font-medium text-slate-800 mb-2">Mindful Technology</h3>
               <p className="text-slate-600">
-                We cultivate present-moment awareness in all that we do, bringing focused attention and intention to our
-                work and interactions.
+                We believe technology should enhance human consciousness, not diminish it. Our AI is designed to promote
+                mindfulness, self-awareness, and deeper connection with one's authentic self.
               </p>
             </motion.div>
 
@@ -228,10 +328,10 @@ export default function AboutPageClient() {
               <div className="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center mb-4">
                 <Compass className="text-violet-600" size={24} />
               </div>
-              <h3 className="text-xl font-medium text-slate-800 mb-2">Growth</h3>
+              <h3 className="text-xl font-medium text-slate-800 mb-2">Transformational Growth</h3>
               <p className="text-slate-600">
-                We are committed to continuous learning and personal evolution, supporting our clients and ourselves in
-                reaching our full potential.
+                We are committed to facilitating profound personal transformation through our platform, supporting users
+                in their journey toward emotional mastery, spiritual awakening, and authentic self-expression.
               </p>
             </motion.div>
           </motion.div>
@@ -239,7 +339,7 @@ export default function AboutPageClient() {
       </section>
 
       {/* Team Section */}
-      <section className="py-16 md:py-24 bg-violet-50">
+      <section className="py-16 md:py-24 bg-white">
         <div className="container px-6 max-w-7xl mx-auto">
           <motion.div
             className="max-w-3xl mx-auto text-center mb-16"
@@ -248,9 +348,10 @@ export default function AboutPageClient() {
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeIn}
           >
-            <h2 className="text-3xl md:text-4xl font-medium text-slate-800 mb-4">Meet Our Team</h2>
+            <h2 className="text-3xl md:text-4xl font-medium text-slate-800 mb-4">Meet Our Founders</h2>
             <p className="text-slate-600">
-              Our team of experienced practitioners is dedicated to guiding you on your journey.
+              Visionary leaders combining expertise in technology, psychology, and spiritual wellness to revolutionize
+              emotional healing.
             </p>
           </motion.div>
 
@@ -272,18 +373,23 @@ export default function AboutPageClient() {
             >
               <div className="relative h-80">
                 <Image
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop"
-                  alt="Sarah Lee"
+                  src="/images/juan-carlos-calzada.png"
+                  alt="Juan Carlos Calzada"
                   fill
-                  className="object-cover transition-transform duration-700 hover:scale-105"
+                  className="object-cover object-[center_-80px] transition-transform duration-700 hover:scale-105"
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-medium text-slate-800 mb-1">Sarah Lee</h3>
-                <p className="text-violet-600 mb-4">Founder & Emotional Wellness Guide</p>
+                <h3 className="text-xl font-medium text-slate-800 mb-1">Juan Carlos Calzada</h3>
+                <p className="text-violet-600 mb-4">Founder & Chief Emotional Wellness Officer</p>
+                <p className="text-sm text-slate-600 mb-3">
+                  With over 15 years of experience in emotional wellness and AI development, Juan Carlos pioneered the
+                  concept of AI-generated soul movies. His background in psychology and machine learning enables him to
+                  bridge the gap between technology and human consciousness.
+                </p>
                 <p className="text-sm text-slate-600">
-                  With over 15 years of experience in emotional wellness and personal development, Sarah founded
-                  SoulMovies.ai to create a sanctuary for those seeking deeper connection and growth.
+                  Juan Carlos holds certifications in various therapeutic modalities and has dedicated his career to
+                  making transformational healing accessible through innovative technology solutions.
                 </p>
               </div>
             </motion.div>
@@ -299,19 +405,23 @@ export default function AboutPageClient() {
             >
               <div className="relative h-80">
                 <Image
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=800&auto=format&fit=crop"
-                  alt="James Carter"
+                  src="/images/mirium-meditation.jpg"
+                  alt="Mirium"
                   fill
                   className="object-cover transition-transform duration-700 hover:scale-105"
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-medium text-slate-800 mb-1">James Carter</h3>
-                <p className="text-violet-600 mb-4">Co-Founder & Mindfulness Expert</p>
+                <h3 className="text-xl font-medium text-slate-800 mb-1">Mirium</h3>
+                <p className="text-violet-600 mb-4">Co-Founder & Chief Mindfulness Officer</p>
+                <p className="text-sm text-slate-600 mb-3">
+                  Mirium brings profound expertise in mindfulness, meditation, and somatic healing to SoulMovies.ai.
+                  Having trained with master teachers in Bali and studied ancient wisdom traditions, she ensures our AI
+                  maintains the sacred essence of traditional healing practices.
+                </p>
                 <p className="text-sm text-slate-600">
-                  James brings his extensive background in mindfulness and meditation practices to SoulMovies.ai, having
-                  studied with master practitioners in Nepal and developed innovative approaches to mind-body
-                  connection.
+                  Her role involves infusing spiritual wisdom into our technological framework, creating soul movies
+                  that honor both innovation and the timeless principles of emotional healing.
                 </p>
               </div>
             </motion.div>
@@ -320,7 +430,7 @@ export default function AboutPageClient() {
       </section>
 
       {/* Our Approach Section */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-violet-50">
         <div className="container px-6 max-w-7xl mx-auto">
           <motion.div
             className="max-w-3xl mx-auto text-center mb-16"
@@ -329,9 +439,9 @@ export default function AboutPageClient() {
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeIn}
           >
-            <h2 className="text-3xl md:text-4xl font-medium text-slate-800 mb-4">Our Approach</h2>
+            <h2 className="text-3xl md:text-4xl font-medium text-slate-800 mb-4">The SoulMovies.ai Methodology</h2>
             <p className="text-slate-600">
-              How we combine ancient wisdom with modern techniques to create a holistic experience
+              Our proprietary approach combines AI precision with heart-centered healing wisdom
             </p>
           </motion.div>
 
@@ -343,28 +453,31 @@ export default function AboutPageClient() {
             variants={staggerContainer}
           >
             <motion.div className="space-y-5" variants={fadeIn}>
-              <h3 className="text-2xl font-medium text-slate-800">Heart-Centered Methodology</h3>
+              <h3 className="text-2xl font-medium text-slate-800">AI-Enhanced Soul Movie Creation</h3>
               <p className="text-slate-600">
-                Our approach begins with the understanding that true healing comes from reconnecting with your heart's
-                wisdom. We integrate practices that help you tune into your body's innate intelligence and emotional
-                signals.
+                Our revolutionary approach begins with comprehensive emotional assessment using advanced AI algorithms
+                that understand your unique psychological landscape, trauma patterns, and healing aspirations.
               </p>
               <p className="text-slate-600">
-                Through a combination of mindfulness, somatic awareness, and emotional processing techniques, we help
-                you develop a deeper relationship with yourself and access your inner guidance system.
+                The AI then generates personalized visual narratives that guide you through transformative experiences,
+                incorporating elements of visualization therapy, guided meditation, and somatic healing practices.
               </p>
-              <ul className="space-y-2 mt-4">
+              <ul className="space-y-3 mt-4">
                 <li className="flex items-start">
-                  <span className="text-violet-600 mr-2">•</span>
-                  <span className="text-slate-600">Heart-brain coherence practices</span>
+                  <span className="text-violet-600 mr-3 mt-1">•</span>
+                  <span className="text-slate-600">Personalized emotional profiling and assessment</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-violet-600 mr-2">•</span>
-                  <span className="text-slate-600">Embodied mindfulness techniques</span>
+                  <span className="text-violet-600 mr-3 mt-1">•</span>
+                  <span className="text-slate-600">AI-generated therapeutic visual narratives</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-violet-600 mr-2">•</span>
-                  <span className="text-slate-600">Emotional intelligence development</span>
+                  <span className="text-violet-600 mr-3 mt-1">•</span>
+                  <span className="text-slate-600">Adaptive healing journeys that evolve with progress</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-violet-600 mr-3 mt-1">•</span>
+                  <span className="text-slate-600">Integration of mindfulness and somatic practices</span>
                 </li>
               </ul>
             </motion.div>
@@ -377,7 +490,7 @@ export default function AboutPageClient() {
             >
               <Image
                 src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=800&auto=format&fit=crop"
-                alt="Heart-Centered Methodology"
+                alt="SoulMovies.ai Methodology"
                 fill
                 className="object-cover transition-transform duration-700 hover:scale-105"
               />
@@ -395,10 +508,10 @@ export default function AboutPageClient() {
           viewport={{ once: true, amount: 0.2 }}
           variants={fadeIn}
         >
-          <h2 className="text-3xl md:text-4xl font-medium text-white mb-6">Ready to Begin Your Journey?</h2>
+          <h2 className="text-3xl md:text-4xl font-medium text-white mb-6">Experience Your Personal Soul Movie</h2>
           <p className="text-white/90 max-w-2xl mx-auto mb-8">
-            Take the first step toward reconnecting with your true self and discovering a life of emotional balance and
-            fulfillment.
+            Join thousands who have transformed their lives through AI-powered emotional healing. Begin your
+            personalized journey with SoulMovies.ai today.
           </p>
           <motion.div
             whileHover={{ scale: 1.05 }}
@@ -406,7 +519,7 @@ export default function AboutPageClient() {
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
             <Button className="bg-white text-violet-700 hover:bg-white/90" asChild>
-              <Link href="/booking">Book a Session</Link>
+              <Link href="/booking">Start Your Soul Movie Journey</Link>
             </Button>
           </motion.div>
         </motion.div>
