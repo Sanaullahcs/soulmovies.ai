@@ -66,25 +66,29 @@ const Navigation = () => {
     <>
       <header
         className={cn(
-          "fixed top-0 w-full z-50 transition-all duration-700 ease-out",
+          "fixed top-0 w-full z-50 transition-all duration-700 ease-out border-b border-transparent",
           isScrolled || isInnerPage
-            ? "bg-white/95 backdrop-blur-xl shadow-lg border-b border-violet-100/50"
-            : "bg-transparent",
+            ? "bg-white/80 backdrop-blur-2xl shadow-xl border-violet-100/30"
+            : "bg-transparent backdrop-blur-sm",
         )}
+        style={{
+          boxShadow:
+            isScrolled || isInnerPage ? "0 8px 32px rgba(139, 92, 246, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1)" : "none",
+        }}
       >
-        <div className="container mx-auto max-w-7xl flex items-center justify-between px-4 py-3">
+        <div className="container mx-auto max-w-7xl flex items-center justify-between px-3 py-2">
           {/* Logo */}
           <Link href="/" className="flex items-center group relative z-10">
             <div
-              className="relative h-12 w-12 md:h-16 md:w-16 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3"
-              style={{ marginTop: "15px" }}
+              className="relative h-10 w-10 md:h-12 md:w-12 transition-all duration-500 group-hover:scale-105 group-hover:rotate-2"
+              style={{ marginTop: "8px" }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-violet-400/20 to-pink-400/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
               <Image
                 src="/logo-new.png"
                 alt="SoulMovies.ai Logo"
-                width={64}
-                height={64}
+                width={48}
+                height={48}
                 className="object-contain relative z-10 drop-shadow-lg"
                 priority
               />
@@ -119,11 +123,11 @@ const Navigation = () => {
                   key={item.name}
                   href={item.path}
                   className={cn(
-                    "text-sm font-semibold transition-all duration-300 relative py-3 px-4 rounded-xl group",
+                    "text-sm font-semibold transition-all duration-300 relative py-2 px-3 rounded-xl group hover:scale-105 hover:-translate-y-0.5",
                     isActive
                       ? isScrolled || isInnerPage
-                        ? "text-violet-700 bg-gradient-to-r from-violet-50 to-pink-50 shadow-soft"
-                        : "text-white bg-white/15 backdrop-blur-sm shadow-glow"
+                        ? "text-violet-700 bg-gradient-to-r from-violet-50 to-pink-50 shadow-lg"
+                        : "text-white bg-white/15 backdrop-blur-sm shadow-lg"
                       : isScrolled || isInnerPage
                         ? "text-slate-700 hover:text-violet-700 hover:bg-gradient-to-r hover:from-violet-50/50 hover:to-pink-50/50"
                         : "text-white/90 hover:text-white hover:bg-white/10 backdrop-blur-sm",
@@ -163,7 +167,7 @@ const Navigation = () => {
             {/* Mobile Menu Button */}
             <button
               className={cn(
-                "lg:hidden flex items-center justify-center w-12 h-12 rounded-2xl transition-all duration-300 group relative overflow-hidden",
+                "lg:hidden flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 group relative overflow-hidden hover:scale-110",
                 isScrolled || isInnerPage
                   ? "text-slate-800 hover:bg-violet-50 hover:text-violet-700"
                   : "text-white hover:bg-white/10 backdrop-blur-sm",
@@ -201,7 +205,7 @@ const Navigation = () => {
 
             {/* Mobile Menu */}
             <motion.div
-              className="fixed inset-y-0 right-0 w-full max-w-sm bg-gradient-to-br from-slate-900 via-violet-900/95 to-slate-900 backdrop-blur-xl shadow-2xl z-50 lg:hidden overflow-hidden"
+              className="fixed inset-y-0 right-0 w-full max-w-xs bg-gradient-to-br from-slate-900/95 via-violet-900/90 to-slate-900/95 backdrop-blur-3xl shadow-2xl z-50 lg:hidden overflow-hidden border-l border-white/10"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -249,7 +253,7 @@ const Navigation = () => {
               </div>
 
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-white/10">
+              <div className="flex items-center justify-between p-4 border-b border-white/10">
                 <div className="flex items-center space-x-3">
                   <motion.div
                     className="relative h-10 w-10"
@@ -280,7 +284,7 @@ const Navigation = () => {
               </div>
 
               {/* Navigation Items */}
-              <div className="flex-1 px-6 py-8 space-y-2">
+              <div className="flex-1 px-4 py-6 space-y-1">
                 {navItems.map((item, index) => {
                   const isActive = isActivePath(item.path)
 
@@ -299,7 +303,7 @@ const Navigation = () => {
                       <Link
                         href={item.path}
                         className={cn(
-                          "group flex items-center justify-between p-4 rounded-2xl transition-all duration-300 relative overflow-hidden",
+                          "group flex items-center justify-between p-3 rounded-xl transition-all duration-300 relative overflow-hidden hover:scale-105 hover:-translate-y-0.5",
                           isActive
                             ? "bg-gradient-to-r from-violet-600/80 to-pink-600/80 text-white shadow-lg"
                             : "text-white/90 hover:bg-white/10 hover:text-white",
@@ -342,7 +346,7 @@ const Navigation = () => {
               </div>
 
               {/* Book Now Button */}
-              <div className="p-6 border-t border-white/10">
+              <div className="p-4 border-t border-white/10">
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
                   <Button
                     onClick={() => {
