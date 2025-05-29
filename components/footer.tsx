@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="space-y-4">
             <div className="flex items-center">
-              <div className="relative h-12 w-12 mr-2">
+              <div className="relative h-12 w-12 mr-2 mt-1">
                 <Image src="/logo-new.png" alt="SoulMovies.ai Logo" width={48} height={48} className="object-contain" />
               </div>
               <h3 className="text-xl font-medium text-blue-600">SoulMovies.ai</h3>

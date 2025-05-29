@@ -6,7 +6,7 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Menu, X, ChevronRight } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const Navigation = () => {
@@ -67,7 +67,7 @@ const Navigation = () => {
     >
       <div className="container mx-auto max-w-7xl flex items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center group relative z-10">
-          <div className="relative h-14 w-14 md:h-18 md:w-18 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
+          <div className="relative h-14 w-14 md:h-18 md:w-18 mt-1 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
             <div className="absolute inset-0 bg-gradient-to-br from-violet-400/20 to-pink-400/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
             <Image
               src="/logo-new.png"
@@ -170,59 +170,97 @@ const Navigation = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="md:hidden fixed inset-0 bg-white/98 backdrop-blur-xl shadow-2xl z-50 overflow-hidden flex items-center justify-center"
+            className="md:hidden fixed inset-0 bg-gradient-to-br from-violet-900/95 via-purple-900/95 to-pink-900/95 backdrop-blur-xl shadow-2xl z-50 overflow-hidden flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
-            <div className="w-full max-w-md mx-auto px-6">
-              {navItems.map((item, index) => {
-                const isActive = isActivePath(item.path)
+            {/* Close button */}
+            <button
+              className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
+              onClick={() => setIsMenuOpen(false)}
+              aria-label="Close menu"
+            >
+              <X size={24} />
+            </button>
 
-                return (
-                  <motion.div
-                    key={item.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1, duration: 0.3 }}
-                  >
-                    <Link
-                      href={item.path}
-                      className={cn(
-                        "flex items-center justify-between text-2xl font-bold transition-all duration-300 py-6 px-8 mx-0 rounded-3xl mb-4",
-                        isActive
-                          ? "text-violet-700 bg-gradient-to-r from-violet-50 to-pink-50 shadow-soft"
-                          : "text-slate-700 hover:text-violet-700 hover:bg-gradient-to-r hover:from-violet-50/50 hover:to-pink-50/50",
-                      )}
-                      onClick={() => {
-                        setIsMenuOpen(false)
-                        window.scrollTo(0, 0)
-                      }}
+            <div className="w-full max-w-sm mx-auto px-6 text-center">
+              {/* Logo section */}
+              <motion.div
+                className="mb-12"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
+              >
+                <div className="flex items-center justify-center mb-4">
+                  <div className="relative h-16 w-16">
+                    <div className="absolute inset-0 bg-gradient-to-br from-violet-400/30 to-pink-400/30 rounded-2xl blur-xl"></div>
+                    <Image
+                      src="/logo-new.png"
+                      alt="SoulMovies.ai Logo"
+                      width={64}
+                      height={64}
+                      className="object-contain relative z-10 drop-shadow-lg"
+                      priority
+                    />
+                  </div>
+                </div>
+                <h3 className="text-white text-xl font-bold">SoulMovies.ai</h3>
+                <p className="text-white/80 text-sm">Reconnect with your true self</p>
+              </motion.div>
+
+              {/* Navigation items */}
+              <nav className="space-y-3 mb-12">
+                {navItems.map((item, index) => {
+                  const isActive = isActivePath(item.path)
+
+                  return (
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: (index + 2) * 0.1, duration: 0.3 }}
                     >
-                      <span>{item.name}</span>
-                      {isActive ? (
-                        <div className="w-3 h-3 rounded-full bg-gradient-to-r from-violet-500 to-pink-500 shadow-glow"></div>
-                      ) : (
-                        <ChevronRight size={20} className="text-slate-400" />
-                      )}
-                    </Link>
-                  </motion.div>
-                )
-              })}
+                      <Link
+                        href={item.path}
+                        className={cn(
+                          "flex items-center justify-center text-2xl font-bold transition-all duration-300 py-4 px-8 rounded-2xl relative group",
+                          isActive
+                            ? "text-white bg-white/20 backdrop-blur-sm shadow-glow border border-white/30"
+                            : "text-white/90 hover:text-white hover:bg-white/10 backdrop-blur-sm border border-transparent hover:border-white/20",
+                        )}
+                        onClick={() => {
+                          setIsMenuOpen(false)
+                          window.scrollTo(0, 0)
+                        }}
+                      >
+                        <span className="relative z-10">{item.name}</span>
+                        {isActive && <div className="absolute right-4 w-2 h-2 rounded-full bg-white shadow-glow"></div>}
+                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/10 group-hover:to-pink-400/10 transition-all duration-300"></div>
+                      </Link>
+                    </motion.div>
+                  )
+                })}
+              </nav>
 
-              <div className="px-0 py-8 border-t border-violet-100/50 mt-8">
+              {/* Book Now button */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.3 }}
+              >
                 <Button
                   onClick={() => {
                     handleBookNow()
                     setIsMenuOpen(false)
                   }}
-                  className="bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 rounded-3xl w-full h-auto py-6 px-8 shadow-lg text-white text-xl font-bold transition-all duration-300 border-0 relative overflow-hidden group"
+                  className="bg-white text-violet-700 hover:bg-white/90 rounded-2xl w-full h-auto py-4 px-8 shadow-lg text-xl font-bold transition-all duration-300 border-0 relative overflow-hidden group"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/20 group-hover:to-pink-400/20 transition-all duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/10 group-hover:to-pink-400/10 transition-all duration-300"></div>
                   <span className="relative z-10">Book Now</span>
                 </Button>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         )}
