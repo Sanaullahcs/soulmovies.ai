@@ -419,7 +419,7 @@ export default function Home() {
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-violet-900/90 via-violet-900/30 to-transparent" />
-                <motion.div 
+                <motion.div
                   className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-violet-500 to-pink-500"
                   initial={{ scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
@@ -436,13 +436,17 @@ export default function Home() {
                     <h3 className="text-3xl font-black text-white mb-3">Juan Carlos Calzada</h3>
                     <p className="text-white/90 text-lg font-semibold mb-6">Founder & Emotional Wellness Guide</p>
                     <div className="flex items-center space-x-6 text-white/80 text-base">
-                      <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10">15+ Years Experience</span>
-                      <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10">Certified Therapist</span>
+                      <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10">
+                        15+ Years Experience
+                      </span>
+                      <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10">
+                        Certified Therapist
+                      </span>
                     </div>
                   </motion.div>
                 </div>
               </motion.div>
-              
+
               <motion.div
                 className="absolute -right-6 -bottom-6 w-32 h-32 bg-gradient-to-br from-violet-500/30 to-pink-500/30 rounded-full blur-2xl z-0"
                 animate={{
@@ -1203,5 +1207,124 @@ export default function Home() {
                     </motion.div>
                   </motion.div>
                 </form>
-              </motion.div>\
+              </motion.div>
             </motion.div>
+
+            {/* Right Card - Quick Contact */}
+            <motion.div
+              className="relative z-10"
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <motion.div
+                className="bg-white/90 backdrop-blur-xl rounded-[2.5rem] shadow-2xl p-12 border border-white/50 h-full flex flex-col group hover:shadow-3xl transition-all duration-500"
+                whileHover={{ y: -8, scale: 1.02 }}
+              >
+                <div className="flex items-center space-x-4 mb-10">
+                  <motion.div
+                    className="w-16 h-16 bg-gradient-to-br from-pink-500 to-violet-500 rounded-3xl flex items-center justify-center"
+                    whileHover={{ scale: 1.1, rotate: -5 }}
+                  >
+                    <MessageSquare size={24} className="text-white" />
+                  </motion.div>
+                  <h3 className="text-3xl font-black text-slate-800">Quick Contact</h3>
+                </div>
+
+                <form onSubmit={handleContactSubmit} className="space-y-8 flex-grow">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                    viewport={{ once: true }}
+                  >
+                    <label htmlFor="name" className="block text-lg font-bold text-slate-700 mb-4">
+                      Your name
+                    </label>
+                    <motion.input
+                      type="text"
+                      id="name"
+                      value={contactFormData.name}
+                      onChange={handleContactInputChange}
+                      className="w-full px-8 py-5 rounded-3xl border-2 border-slate-200 focus:outline-none focus:ring-4 focus:ring-violet-500/20 focus:border-violet-500 bg-white shadow-lg transition-all duration-300 text-lg"
+                      placeholder="Enter your name"
+                      required
+                      whileFocus={{ scale: 1.02 }}
+                    />
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.6 }}
+                    viewport={{ once: true }}
+                  >
+                    <label htmlFor="email" className="block text-lg font-bold text-slate-700 mb-4">
+                      Email address
+                    </label>
+                    <motion.input
+                      type="email"
+                      id="email"
+                      value={contactFormData.email}
+                      onChange={handleContactInputChange}
+                      className="w-full px-8 py-5 rounded-3xl border-2 border-slate-200 focus:outline-none focus:ring-4 focus:ring-violet-500/20 focus:border-violet-500 bg-white shadow-lg transition-all duration-300 text-lg"
+                      placeholder="Enter your email"
+                      required
+                      whileFocus={{ scale: 1.02 }}
+                    />
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    viewport={{ once: true }}
+                  >
+                    <label htmlFor="message" className="block text-lg font-bold text-slate-700 mb-4">
+                      Message
+                    </label>
+                    <motion.textarea
+                      id="message"
+                      value={contactFormData.message}
+                      onChange={handleContactInputChange}
+                      rows={4}
+                      className="w-full px-8 py-5 rounded-3xl border-2 border-slate-200 focus:outline-none focus:ring-4 focus:ring-violet-500/20 focus:border-violet-500 bg-white shadow-lg transition-all duration-300 text-lg resize-none"
+                      placeholder="Tell us how we can help you..."
+                      required
+                      whileFocus={{ scale: 1.02 }}
+                    />
+                  </motion.div>
+
+                  <motion.div
+                    className="pt-8 mt-auto"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.6 }}
+                    viewport={{ once: true }}
+                  >
+                    <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }} className="group">
+                      <Button
+                        type="submit"
+                        className="w-full bg-gradient-to-r from-pink-600 to-violet-600 hover:from-pink-700 hover:to-violet-700 text-white rounded-3xl text-xl px-10 py-6 h-auto shadow-2xl font-bold border-0 relative overflow-hidden"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 to-white/0 group-hover:from-white/20 group-hover:to-white/10 transition-all duration-500" />
+                        <span className="relative z-10 flex items-center justify-center">
+                          Send Message
+                          <MessageSquare
+                            size={20}
+                            className="ml-3 group-hover:scale-110 transition-transform duration-300"
+                          />
+                        </span>
+                      </Button>
+                    </motion.div>
+                  </motion.div>
+                </form>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
