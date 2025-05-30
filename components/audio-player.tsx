@@ -9,7 +9,7 @@ const AudioPlayer = () => {
   const audioContextRef = useRef<AudioContext | null>(null)
   const soundNodesRef = useRef<any[]>([])
 
-  const createEnhancedForestAmbience = async () => {
+  const createForestAmbience = async () => {
     try {
       audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)()
 
@@ -20,18 +20,18 @@ const AudioPlayer = () => {
       const ctx = audioContextRef.current
       const nodes: any[] = []
 
-      // 🌊 DISTANT WATERFALL/FLOWING STREAM - Enhanced with echo
+      // 🌊 DISTANT WATERFALL/FLOWING STREAM - Background water sounds
       const waterfallNoise = ctx.createBufferSource()
       const waterfallBuffer = ctx.createBuffer(2, ctx.sampleRate * 15, ctx.sampleRate)
 
       for (let channel = 0; channel < 2; channel++) {
         const waterfallData = waterfallBuffer.getChannelData(channel)
         for (let i = 0; i < waterfallData.length; i++) {
+          // Create distant waterfall texture
           const noise = (Math.random() * 2 - 1) * 0.4
           const cascade = Math.sin(i * 0.001) * Math.sin(i * 0.0008) * 0.7
           const flow = Math.sin(i * 0.003) * 0.3
-          const sparkle = Math.sin(i * 0.01) * 0.2 // Added sparkle
-          waterfallData[i] = noise * cascade + flow * 0.4 + sparkle * 0.1
+          waterfallData[i] = noise * cascade + flow * 0.4
         }
       }
 
@@ -41,6 +41,7 @@ const AudioPlayer = () => {
       const waterfallFilter = ctx.createBiquadFilter()
       waterfallFilter.type = "lowpass"
       waterfallFilter.frequency.setValueAtTime(1500, ctx.currentTime)
+      waterfallFilter.Q.setValueAtTime(0.7, ctx.currentTime)
 
       const waterfallGain = ctx.createGain()
       waterfallGain.gain.setValueAtTime(volume * 0.35, ctx.currentTime)
@@ -52,13 +53,14 @@ const AudioPlayer = () => {
 
       nodes.push({ source: waterfallNoise, gain: waterfallGain })
 
-      // 🍃 ENHANCED WIND WITH TREE CREAKING
+      // 🍃 GENTLE WIND THROUGH TREES - Continuous forest breeze
       const windNoise = ctx.createBufferSource()
       const windBuffer = ctx.createBuffer(2, ctx.sampleRate * 20, ctx.sampleRate)
 
       for (let channel = 0; channel < 2; channel++) {
         const windData = windBuffer.getChannelData(channel)
         for (let i = 0; i < windData.length; i++) {
+          // Create gentle wind through forest
           const noise = (Math.random() * 2 - 1) * 0.15
           const wind = Math.sin(i * 0.0002) * Math.sin(i * 0.0001) * 0.8
           const gust = Math.sin(i * 0.0005) * 0.3
@@ -72,10 +74,12 @@ const AudioPlayer = () => {
       const windFilter = ctx.createBiquadFilter()
       windFilter.type = "bandpass"
       windFilter.frequency.setValueAtTime(400, ctx.currentTime)
+      windFilter.Q.setValueAtTime(0.5, ctx.currentTime)
 
       const windGain = ctx.createGain()
       windGain.gain.setValueAtTime(volume * 0.25, ctx.currentTime)
 
+      // Add gentle wind modulation
       const windLFO = ctx.createOscillator()
       const windLFOGain = ctx.createGain()
       windLFO.frequency.setValueAtTime(0.08, ctx.currentTime)
@@ -91,17 +95,16 @@ const AudioPlayer = () => {
 
       nodes.push({ source: windNoise, gain: windGain, lfo: windLFO })
 
-      // 🦅 COOL BIRD SOUNDS - Enhanced with exotic species
-      const coolBirds = [
-        { name: "Loon", freq: 600, pattern: "haunting", volume: 0.15, delay: 3000 },
-        { name: "Hawk", freq: 1000, pattern: "screech", volume: 0.12, delay: 8000 },
-        { name: "Raven", freq: 400, pattern: "caw", volume: 0.14, delay: 12000 },
-        { name: "Nightingale", freq: 1800, pattern: "melodic", volume: 0.16, delay: 5000 },
-        { name: "Woodpecker", freq: 800, pattern: "drum", volume: 0.13, delay: 15000 },
-        { name: "Mockingbird", freq: 1400, pattern: "mimic", volume: 0.15, delay: 18000 },
+      // 🐦 FOREST BIRDS CHIRPING - Various species throughout the forest
+      const forestBirds = [
+        { name: "Wood Thrush", freq: 800, pattern: "flute", volume: 0.18, delay: 2000 },
+        { name: "Robin", freq: 1200, pattern: "cheerful", volume: 0.16, delay: 4000 },
+        { name: "Wren", freq: 1600, pattern: "trill", volume: 0.14, delay: 6000 },
+        { name: "Warbler", freq: 1400, pattern: "sweet", volume: 0.15, delay: 8000 },
+        { name: "Chickadee", freq: 1100, pattern: "chick", volume: 0.13, delay: 10000 },
       ]
 
-      const createCoolBird = (bird: any) => {
+      const createForestBird = (bird: any) => {
         setTimeout(() => {
           if (!audioContextRef.current) return
 
@@ -112,68 +115,58 @@ const AudioPlayer = () => {
           birdOsc.type = "sine"
           birdFilter.type = "bandpass"
           birdFilter.frequency.setValueAtTime(bird.freq, ctx.currentTime)
-          birdFilter.Q.setValueAtTime(8, ctx.currentTime)
+          birdFilter.Q.setValueAtTime(10, ctx.currentTime)
 
           const now = ctx.currentTime
 
           switch (bird.pattern) {
-            case "haunting": // Loon - mystical call
+            case "flute":
               birdOsc.frequency.setValueAtTime(bird.freq, now)
-              birdOsc.frequency.exponentialRampToValueAtTime(bird.freq * 0.5, now + 1.0)
-              birdOsc.frequency.exponentialRampToValueAtTime(bird.freq * 1.2, now + 2.0)
-              birdGain.gain.setValueAtTime(0, now)
-              birdGain.gain.linearRampToValueAtTime(volume * bird.volume, now + 0.3)
-              birdGain.gain.exponentialRampToValueAtTime(0.001, now + 2.5)
-              break
-
-            case "screech": // Hawk - sharp cry
-              birdOsc.frequency.setValueAtTime(bird.freq * 2, now)
-              birdOsc.frequency.exponentialRampToValueAtTime(bird.freq, now + 0.8)
+              birdOsc.frequency.exponentialRampToValueAtTime(bird.freq * 1.5, now + 0.3)
+              birdOsc.frequency.exponentialRampToValueAtTime(bird.freq * 0.8, now + 0.6)
               birdGain.gain.setValueAtTime(0, now)
               birdGain.gain.linearRampToValueAtTime(volume * bird.volume, now + 0.1)
-              birdGain.gain.exponentialRampToValueAtTime(0.001, now + 1.0)
+              birdGain.gain.exponentialRampToValueAtTime(0.001, now + 0.8)
               break
 
-            case "caw": // Raven - deep caw
-              for (let i = 0; i < 3; i++) {
-                const cawTime = now + i * 0.4
-                birdOsc.frequency.setValueAtTime(bird.freq, cawTime)
-                birdGain.gain.setValueAtTime(0, cawTime)
-                birdGain.gain.linearRampToValueAtTime(volume * bird.volume, cawTime + 0.05)
-                birdGain.gain.exponentialRampToValueAtTime(0.001, cawTime + 0.3)
-              }
-              break
-
-            case "melodic": // Nightingale - beautiful song
-              const melody = [1.0, 1.3, 1.6, 1.2, 0.8, 1.4, 1.0]
-              melody.forEach((mult, i) => {
-                const noteTime = now + i * 0.2
-                birdOsc.frequency.setValueAtTime(bird.freq * mult, noteTime)
-              })
-              birdGain.gain.setValueAtTime(0, now)
-              birdGain.gain.linearRampToValueAtTime(volume * bird.volume, now + 0.1)
-              birdGain.gain.exponentialRampToValueAtTime(0.001, now + 1.5)
-              break
-
-            case "drum": // Woodpecker - rhythmic drumming
-              for (let i = 0; i < 8; i++) {
-                const drumTime = now + i * 0.1
-                birdOsc.frequency.setValueAtTime(bird.freq, drumTime)
-                birdGain.gain.setValueAtTime(0, drumTime)
-                birdGain.gain.linearRampToValueAtTime(volume * bird.volume, drumTime + 0.02)
-                birdGain.gain.exponentialRampToValueAtTime(0.001, drumTime + 0.08)
-              }
-              break
-
-            case "mimic": // Mockingbird - varied calls
-              const mimicPattern = [1.0, 1.5, 0.7, 1.8, 0.9, 1.3]
-              mimicPattern.forEach((mult, i) => {
-                const mimicTime = now + i * 0.3
-                birdOsc.frequency.setValueAtTime(bird.freq * mult, mimicTime)
-              })
+            case "cheerful":
+              birdOsc.frequency.setValueAtTime(bird.freq, now)
+              birdOsc.frequency.linearRampToValueAtTime(bird.freq * 1.3, now + 0.2)
+              birdOsc.frequency.linearRampToValueAtTime(bird.freq * 0.9, now + 0.4)
+              birdOsc.frequency.linearRampToValueAtTime(bird.freq * 1.1, now + 0.6)
               birdGain.gain.setValueAtTime(0, now)
               birdGain.gain.linearRampToValueAtTime(volume * bird.volume, now + 0.05)
-              birdGain.gain.exponentialRampToValueAtTime(0.001, now + 1.8)
+              birdGain.gain.exponentialRampToValueAtTime(0.001, now + 0.7)
+              break
+
+            case "trill":
+              for (let i = 0; i < 8; i++) {
+                const trillTime = now + i * 0.06
+                birdOsc.frequency.setValueAtTime(bird.freq + (i % 2) * 150, trillTime)
+              }
+              birdGain.gain.setValueAtTime(0, now)
+              birdGain.gain.linearRampToValueAtTime(volume * bird.volume, now + 0.03)
+              birdGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6)
+              break
+
+            case "sweet":
+              birdOsc.frequency.setValueAtTime(bird.freq, now)
+              birdOsc.frequency.exponentialRampToValueAtTime(bird.freq * 1.4, now + 0.25)
+              birdOsc.frequency.exponentialRampToValueAtTime(bird.freq * 0.9, now + 0.5)
+              birdGain.gain.setValueAtTime(0, now)
+              birdGain.gain.linearRampToValueAtTime(volume * bird.volume, now + 0.08)
+              birdGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6)
+              break
+
+            case "chick":
+              const chickPattern = [1.0, 1.2, 0.8, 0.8]
+              chickPattern.forEach((mult, i) => {
+                const chickTime = now + i * 0.1
+                birdOsc.frequency.setValueAtTime(bird.freq * mult, chickTime)
+              })
+              birdGain.gain.setValueAtTime(0, now)
+              birdGain.gain.linearRampToValueAtTime(volume * bird.volume, now + 0.02)
+              birdGain.gain.exponentialRampToValueAtTime(0.001, now + 0.5)
               break
           }
 
@@ -182,189 +175,106 @@ const AudioPlayer = () => {
           birdGain.connect(ctx.destination)
 
           birdOsc.start(now)
-          birdOsc.stop(now + 3.0)
+          birdOsc.stop(now + 1.0)
 
-          // Schedule next call
-          const nextDelay = Math.random() * 20000 + 10000 // 10-30 seconds
-          createCoolBird(bird)
+          // Schedule next bird call
+          const nextDelay = Math.random() * 12000 + 6000 // 6-18 seconds
+          createForestBird(bird)
         }, bird.delay)
       }
 
-      coolBirds.forEach((bird) => createCoolBird(bird))
+      // Start forest birds
+      forestBirds.forEach((bird) => createForestBird(bird))
 
-      // 🌙 MYSTICAL FOREST CHIMES - Wind chimes effect
-      const createWindChimes = (delay: number) => {
+      // 🍂 OCCASIONAL LEAVES RUSTLING - Random rustling sounds
+      const createLeafRustle = (delay: number) => {
         setTimeout(() => {
           if (!audioContextRef.current) return
 
-          const chimeFreqs = [523, 659, 784, 880, 1047] // C major pentatonic
-          const randomChimes = Math.floor(Math.random() * 3) + 2 // 2-4 chimes
+          const rustleNoise = ctx.createBufferSource()
+          const rustleBuffer = ctx.createBuffer(2, ctx.sampleRate * 2, ctx.sampleRate)
 
-          for (let i = 0; i < randomChimes; i++) {
-            setTimeout(() => {
-              const chimeOsc = ctx.createOscillator()
-              const chimeGain = ctx.createGain()
-
-              chimeOsc.type = "sine"
-              chimeOsc.frequency.setValueAtTime(
-                chimeFreqs[Math.floor(Math.random() * chimeFreqs.length)],
-                ctx.currentTime,
-              )
-
-              const now = ctx.currentTime
-              chimeGain.gain.setValueAtTime(0, now)
-              chimeGain.gain.linearRampToValueAtTime(volume * 0.08, now + 0.1)
-              chimeGain.gain.exponentialRampToValueAtTime(0.001, now + 3.0)
-
-              chimeOsc.connect(chimeGain)
-              chimeGain.connect(ctx.destination)
-              chimeOsc.start(now)
-              chimeOsc.stop(now + 3.5)
-            }, i * 200)
+          for (let channel = 0; channel < 2; channel++) {
+            const rustleData = rustleBuffer.getChannelData(channel)
+            for (let i = 0; i < rustleData.length; i++) {
+              const noise = (Math.random() * 2 - 1) * 0.3
+              const rustle = Math.sin(i * 0.01) * Math.exp(-i * 0.00001) * 0.8
+              rustleData[i] = noise * rustle
+            }
           }
 
-          // Schedule next chimes
-          const nextDelay = Math.random() * 40000 + 30000 // 30-70 seconds
-          createWindChimes(nextDelay)
-        }, delay)
-      }
+          rustleNoise.buffer = rustleBuffer
 
-      createWindChimes(20000) // First chimes after 20 seconds
+          const rustleFilter = ctx.createBiquadFilter()
+          rustleFilter.type = "highpass"
+          rustleFilter.frequency.setValueAtTime(800, ctx.currentTime)
 
-      // 🦗 CRICKET SYMPHONY - Evening crickets
-      const createCrickets = () => {
-        const cricketOsc = ctx.createOscillator()
-        const cricketGain = ctx.createGain()
-        const cricketFilter = ctx.createBiquadFilter()
-
-        cricketOsc.type = "square"
-        cricketOsc.frequency.setValueAtTime(3000, ctx.currentTime)
-
-        cricketFilter.type = "bandpass"
-        cricketFilter.frequency.setValueAtTime(3000, ctx.currentTime)
-        cricketFilter.Q.setValueAtTime(5, ctx.currentTime)
-
-        cricketGain.gain.setValueAtTime(0, ctx.currentTime)
-        cricketGain.gain.linearRampToValueAtTime(volume * 0.06, ctx.currentTime + 10)
-
-        // Add cricket rhythm modulation
-        const cricketLFO = ctx.createOscillator()
-        const cricketLFOGain = ctx.createGain()
-        cricketLFO.frequency.setValueAtTime(8, ctx.currentTime) // 8 Hz chirping
-        cricketLFOGain.gain.setValueAtTime(volume * 0.03, ctx.currentTime)
-        cricketLFO.connect(cricketLFOGain)
-        cricketLFOGain.connect(cricketGain.gain)
-        cricketLFO.start()
-
-        cricketOsc.connect(cricketFilter)
-        cricketFilter.connect(cricketGain)
-        cricketGain.connect(ctx.destination)
-        cricketOsc.start()
-
-        nodes.push({ source: cricketOsc, gain: cricketGain, lfo: cricketLFO })
-      }
-
-      createCrickets()
-
-      // 🌲 TREE CREAKING - Occasional wood creaking
-      const createTreeCreak = (delay: number) => {
-        setTimeout(() => {
-          if (!audioContextRef.current) return
-
-          const creakOsc = ctx.createOscillator()
-          const creakGain = ctx.createGain()
-          const creakFilter = ctx.createBiquadFilter()
-
-          creakOsc.type = "sawtooth"
-          creakOsc.frequency.setValueAtTime(80, ctx.currentTime)
-
-          creakFilter.type = "lowpass"
-          creakFilter.frequency.setValueAtTime(200, ctx.currentTime)
-
+          const rustleGain = ctx.createGain()
           const now = ctx.currentTime
-          creakOsc.frequency.linearRampToValueAtTime(120, now + 1.0)
-          creakOsc.frequency.linearRampToValueAtTime(60, now + 2.0)
+          rustleGain.gain.setValueAtTime(0, now)
+          rustleGain.gain.linearRampToValueAtTime(volume * 0.12, now + 0.1)
+          rustleGain.gain.exponentialRampToValueAtTime(0.001, now + 1.5)
 
-          creakGain.gain.setValueAtTime(0, now)
-          creakGain.gain.linearRampToValueAtTime(volume * 0.1, now + 0.3)
-          creakGain.gain.exponentialRampToValueAtTime(0.001, now + 2.5)
+          rustleNoise.connect(rustleFilter)
+          rustleFilter.connect(rustleGain)
+          rustleGain.connect(ctx.destination)
+          rustleNoise.start()
 
-          creakOsc.connect(creakFilter)
-          creakFilter.connect(creakGain)
-          creakGain.connect(ctx.destination)
-
-          creakOsc.start(now)
-          creakOsc.stop(now + 3.0)
-
-          // Schedule next creak
-          const nextDelay = Math.random() * 50000 + 30000 // 30-80 seconds
-          createTreeCreak(nextDelay)
+          // Schedule next rustle
+          const nextDelay = Math.random() * 25000 + 15000 // 15-40 seconds
+          createLeafRustle(nextDelay)
         }, delay)
       }
 
-      createTreeCreak(25000) // First creak after 25 seconds
+      createLeafRustle(8000) // First rustle after 8 seconds
 
-      // 🦉 ENHANCED OWL CALLS - Multiple owl species
+      // 🦉 DISTANT OWL - Very occasional owl calls
       const createOwlCall = (delay: number) => {
         setTimeout(() => {
           if (!audioContextRef.current) return
-
-          const owlTypes = ["hoot", "screech", "barn"]
-          const owlType = owlTypes[Math.floor(Math.random() * owlTypes.length)]
 
           const owlOsc = ctx.createOscillator()
           const owlGain = ctx.createGain()
           const owlFilter = ctx.createBiquadFilter()
 
-          const now = ctx.currentTime
-
-          switch (owlType) {
-            case "hoot":
-              owlOsc.type = "sine"
-              owlOsc.frequency.setValueAtTime(400, now)
-              owlOsc.frequency.setValueAtTime(350, now + 0.3)
-              owlOsc.frequency.setValueAtTime(400, now + 0.6)
-              owlFilter.frequency.setValueAtTime(600, now)
-              break
-
-            case "screech":
-              owlOsc.type = "sawtooth"
-              owlOsc.frequency.setValueAtTime(800, now)
-              owlOsc.frequency.exponentialRampToValueAtTime(400, now + 1.0)
-              owlFilter.frequency.setValueAtTime(1000, now)
-              break
-
-            case "barn":
-              owlOsc.type = "square"
-              owlOsc.frequency.setValueAtTime(600, now)
-              owlOsc.frequency.linearRampToValueAtTime(500, now + 0.8)
-              owlFilter.frequency.setValueAtTime(800, now)
-              break
-          }
+          owlOsc.type = "sine"
+          owlOsc.frequency.setValueAtTime(400, ctx.currentTime)
 
           owlFilter.type = "lowpass"
-          owlFilter.Q.setValueAtTime(2, now)
+          owlFilter.frequency.setValueAtTime(600, ctx.currentTime)
+          owlFilter.Q.setValueAtTime(2, ctx.currentTime)
+
+          const now = ctx.currentTime
+          // Create "hoo-hoo" pattern
+          owlOsc.frequency.setValueAtTime(400, now)
+          owlOsc.frequency.setValueAtTime(350, now + 0.3)
+          owlOsc.frequency.setValueAtTime(400, now + 0.6)
+          owlOsc.frequency.setValueAtTime(350, now + 0.9)
 
           owlGain.gain.setValueAtTime(0, now)
-          owlGain.gain.linearRampToValueAtTime(volume * 0.1, now + 0.1)
-          owlGain.gain.exponentialRampToValueAtTime(0.001, now + 1.5)
+          owlGain.gain.linearRampToValueAtTime(volume * 0.08, now + 0.1)
+          owlGain.gain.setValueAtTime(volume * 0.08, now + 0.25)
+          owlGain.gain.setValueAtTime(0, now + 0.35)
+          owlGain.gain.linearRampToValueAtTime(volume * 0.08, now + 0.55)
+          owlGain.gain.setValueAtTime(volume * 0.08, now + 0.8)
+          owlGain.gain.exponentialRampToValueAtTime(0.001, now + 1.2)
 
           owlOsc.connect(owlFilter)
           owlFilter.connect(owlGain)
           owlGain.connect(ctx.destination)
 
           owlOsc.start(now)
-          owlOsc.stop(now + 2.0)
+          owlOsc.stop(now + 1.5)
 
-          // Schedule next owl
-          const nextDelay = Math.random() * 60000 + 40000 // 40-100 seconds
+          // Schedule next owl call - very infrequent
+          const nextDelay = Math.random() * 60000 + 45000 // 45-105 seconds
           createOwlCall(nextDelay)
         }, delay)
       }
 
-      createOwlCall(35000) // First owl after 35 seconds
+      createOwlCall(30000) // First owl after 30 seconds
 
-      // 🌟 DEEP FOREST RESONANCE WITH HARMONICS
+      // 🌲 DEEP FOREST RESONANCE - Low frequency forest atmosphere
       const forestResonance = ctx.createOscillator()
       const resonanceGain = ctx.createGain()
 
@@ -381,7 +291,7 @@ const AudioPlayer = () => {
       nodes.push({ source: forestResonance, gain: resonanceGain })
 
       soundNodesRef.current = nodes
-      console.log("🎵 Enhanced forest ambience with cool sounds started!")
+      console.log("🐦 Birds + 🌊 Stream + 🍃 Wind forest ambience started!")
     } catch (error) {
       console.error("Audio creation failed:", error)
       throw error
@@ -416,7 +326,7 @@ const AudioPlayer = () => {
         stopSounds()
         setIsPlaying(false)
       } else {
-        await createEnhancedForestAmbience()
+        await createForestAmbience()
         setIsPlaying(true)
       }
     } catch (error) {
@@ -429,7 +339,7 @@ const AudioPlayer = () => {
     <button
       onClick={togglePlay}
       className="fixed bottom-6 right-6 z-40 flex items-center justify-center w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all"
-      aria-label={isPlaying ? "Stop enhanced forest" : "Play enhanced forest"}
+      aria-label={isPlaying ? "Stop forest ambience" : "Play forest ambience"}
     >
       {isPlaying ? <Volume2 size={20} className="text-violet-600" /> : <VolumeX size={20} className="text-slate-500" />}
     </button>
