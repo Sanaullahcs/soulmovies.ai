@@ -312,7 +312,7 @@ export default function Home() {
       </section>
 
       {/* Enhanced Stats Section */}
-      <section className="py-24 md:py-32 bg-gradient-to-b from-white to-violet-50/50 relative overflow-hidden">
+      <section className="py-16 md:py-24 bg-gradient-to-b from-white to-violet-50/50 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-violet-50/20 via-transparent to-pink-50/20" />
 
         <div className="container max-w-7xl mx-auto px-4 md:px-8 relative z-10">
@@ -363,12 +363,12 @@ export default function Home() {
       {/* Enhanced About Section */}
       <section
         id="about-section"
-        className="py-24 md:py-32 bg-gradient-to-b from-violet-50/50 via-white to-violet-50/50 relative"
+        className="py-20 md:py-28 bg-gradient-to-b from-violet-50/50 via-white to-violet-50/50 relative"
       >
         <div className="container max-w-7xl mx-auto px-4 md:px-8">
           {/* Section Header */}
           <motion.div
-            className="max-w-5xl mx-auto text-center mb-24"
+            className="max-w-5xl mx-auto text-center mb-16"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -397,7 +397,7 @@ export default function Home() {
           </motion.div>
 
           {/* Team Grid */}
-          <div className="grid lg:grid-cols-2 gap-20 items-center mb-24">
+          <div className="grid lg:grid-cols-2 gap-20 items-center mb-16">
             {/* Team Member 1 */}
             <motion.div
               initial={{ opacity: 0, x: -60 }}
@@ -407,10 +407,11 @@ export default function Home() {
               className="relative"
             >
               <motion.div
-                className="relative h-[700px] rounded-[3rem] overflow-hidden shadow-2xl group bg-gradient-to-br from-violet-100 to-pink-100"
+                className="relative h-[700px] rounded-[3rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(124,58,237,0.3)] group bg-gradient-to-br from-violet-100 to-pink-100 border border-white/50"
                 whileHover={{ scale: 1.02, rotateY: 2 }}
                 transition={{ duration: 0.4 }}
               >
+                <div className="absolute inset-0 bg-gradient-to-br from-violet-600/10 to-pink-600/10 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <Image
                   src="/images/juan-carlos-calzada.png"
                   alt="Founder Juan Carlos Calzada"
@@ -418,6 +419,13 @@ export default function Home() {
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-violet-900/90 via-violet-900/30 to-transparent" />
+                <motion.div 
+                  className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-violet-500 to-pink-500"
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  viewport={{ once: true }}
+                />
                 <div className="absolute bottom-0 left-0 right-0 p-10">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -428,26 +436,21 @@ export default function Home() {
                     <h3 className="text-3xl font-black text-white mb-3">Juan Carlos Calzada</h3>
                     <p className="text-white/90 text-lg font-semibold mb-6">Founder & Emotional Wellness Guide</p>
                     <div className="flex items-center space-x-6 text-white/80 text-base">
-                      <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">15+ Years Experience</span>
-                      <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">Certified Therapist</span>
+                      <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10">15+ Years Experience</span>
+                      <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10">Certified Therapist</span>
                     </div>
                   </motion.div>
                 </div>
               </motion.div>
-
-              {/* Floating Quote */}
+              
               <motion.div
-                className="absolute -right-12 top-60 bg-white/95 backdrop-blur-xl rounded-3xl p-8 max-w-sm shadow-2xl border border-violet-100"
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05, rotate: 1 }}
-              >
-                <p className="text-slate-700 italic text-base leading-relaxed font-medium">
-                  "True transformation happens when we embrace vulnerability and authentic connection with ourselves."
-                </p>
-              </motion.div>
+                className="absolute -right-6 -bottom-6 w-32 h-32 bg-gradient-to-br from-violet-500/30 to-pink-500/30 rounded-full blur-2xl z-0"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.4, 0.6, 0.4],
+                }}
+                transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+              />
             </motion.div>
 
             {/* Content for Team Member 1 */}
@@ -624,7 +627,7 @@ export default function Home() {
 
               {/* Floating Quote */}
               <motion.div
-                className="absolute -left-12 top-20 bg-white/95 backdrop-blur-xl rounded-3xl p-8 max-w-sm shadow-2xl border border-violet-100"
+                className="absolute -left-12 top-5 bg-white/95 backdrop-blur-xl rounded-3xl p-8 max-w-sm shadow-2xl border border-violet-100 mb-[100px]"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
@@ -641,7 +644,7 @@ export default function Home() {
       </section>
 
       {/* Enhanced Services Section */}
-      <section className="py-24 md:py-32 bg-gradient-to-br from-slate-50 via-violet-50/30 to-pink-50/30 relative overflow-hidden">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-slate-50 via-violet-50/30 to-pink-50/30 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div
@@ -656,7 +659,7 @@ export default function Home() {
         <div className="container max-w-7xl mx-auto px-4 md:px-8 relative z-10">
           {/* Section Header */}
           <motion.div
-            className="max-w-5xl mx-auto text-center mb-24"
+            className="max-w-5xl mx-auto text-center mb-16"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -768,7 +771,7 @@ export default function Home() {
       </section>
 
       {/* Enhanced Testimonials Section */}
-      <section className="py-24 md:py-32 bg-gradient-to-b from-white via-violet-50/20 to-white relative overflow-hidden">
+      <section className="py-20 md:py-28 bg-gradient-to-b from-white via-violet-50/20 to-white relative overflow-hidden">
         {/* Floating Background Elements */}
         <div className="absolute inset-0 z-0">
           <motion.div
@@ -792,7 +795,7 @@ export default function Home() {
         <div className="container max-w-7xl mx-auto px-4 md:px-8 relative z-10">
           {/* Header */}
           <motion.div
-            className="text-center mb-24"
+            className="text-center mb-16"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -987,7 +990,7 @@ export default function Home() {
       </section>
 
       {/* Enhanced FAQ Section */}
-      <section className="py-24 md:py-32 bg-gradient-to-br from-slate-50 via-violet-50/30 to-pink-50/30 relative overflow-hidden">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-slate-50 via-violet-50/30 to-pink-50/30 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div
@@ -1001,7 +1004,7 @@ export default function Home() {
 
         <div className="container max-w-6xl mx-auto px-4 md:px-8 relative z-10">
           <motion.div
-            className="max-w-4xl mx-auto text-center mb-20"
+            className="max-w-4xl mx-auto text-center mb-16"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -1065,10 +1068,10 @@ export default function Home() {
       </section>
 
       {/* Enhanced Contact Section */}
-      <section className="py-24 md:py-32 bg-gradient-to-b from-white via-violet-50/30 to-white overflow-hidden">
+      <section className="py-20 md:py-28 bg-gradient-to-b from-white via-violet-50/30 to-white overflow-hidden">
         <div className="container max-w-7xl mx-auto px-4 md:px-8">
           <motion.div
-            className="max-w-5xl mx-auto text-center mb-24"
+            className="max-w-5xl mx-auto text-center mb-16"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -1200,319 +1203,5 @@ export default function Home() {
                     </motion.div>
                   </motion.div>
                 </form>
-              </motion.div>
+              </motion.div>\
             </motion.div>
-
-            {/* Right Card - Get In Touch */}
-            <motion.div
-              className="relative z-10"
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <motion.div
-                className="bg-white/90 backdrop-blur-xl rounded-[2.5rem] shadow-2xl p-12 border border-white/50 h-full flex flex-col group hover:shadow-3xl transition-all duration-500"
-                whileHover={{ y: -8, scale: 1.02 }}
-              >
-                <div className="flex items-center space-x-4 mb-10">
-                  <motion.div
-                    className="w-16 h-16 bg-gradient-to-br from-pink-500 to-violet-500 rounded-3xl flex items-center justify-center"
-                    whileHover={{ scale: 1.1, rotate: -5 }}
-                  >
-                    <MessageSquare size={24} className="text-white" />
-                  </motion.div>
-                  <h3 className="text-3xl font-black text-slate-800">Get In Touch</h3>
-                </div>
-
-                <form className="space-y-8 flex-grow" onSubmit={handleContactSubmit}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
-                    viewport={{
-                      once: true,
-                    }}
-                  >
-                    <label htmlFor="name" className="block text-lg font-bold text-slate-700 mb-4">
-                      Your name
-                    </label>
-                    <motion.input
-                      type="text"
-                      id="name"
-                      className="w-full px-8 py-5 rounded-3xl border-2 border-slate-200 focus:outline-none focus:ring-4 focus:ring-violet-500/20 focus:border-violet-500 shadow-lg transition-all duration-300 text-lg"
-                      placeholder="Enter your name"
-                      value={contactFormData.name}
-                      onChange={handleContactInputChange}
-                      required
-                      whileFocus={{ scale: 1.02 }}
-                    />
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <label htmlFor="email" className="block text-lg font-bold text-slate-700 mb-4">
-                      Your email
-                    </label>
-                    <motion.input
-                      type="email"
-                      id="email"
-                      className="w-full px-8 py-5 rounded-3xl border-2 border-slate-200 focus:outline-none focus:ring-4 focus:ring-violet-500/20 focus:border-violet-500 shadow-lg transition-all duration-300 text-lg"
-                      placeholder="Enter your email"
-                      value={contactFormData.email}
-                      onChange={handleContactInputChange}
-                      required
-                      whileFocus={{ scale: 1.02 }}
-                    />
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <label htmlFor="message" className="block text-lg font-bold text-slate-700 mb-4">
-                      Your message
-                    </label>
-                    <motion.textarea
-                      id="message"
-                      rows={4}
-                      className="w-full px-8 py-5 rounded-3xl border-2 border-slate-200 focus:outline-none focus:ring-4 focus:ring-violet-500/20 focus:border-violet-500 shadow-lg transition-all duration-300 resize-none text-lg"
-                      placeholder="How can we help you?"
-                      value={contactFormData.message}
-                      onChange={handleContactInputChange}
-                      required
-                      whileFocus={{ scale: 1.02 }}
-                    ></motion.textarea>
-                  </motion.div>
-
-                  <motion.div
-                    className="pt-8"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }} className="group">
-                      <Button
-                        type="submit"
-                        className="w-full bg-gradient-to-r from-pink-600 to-violet-600 hover:from-pink-700 hover:to-violet-700 text-white rounded-3xl text-xl px-10 py-6 h-auto shadow-2xl font-bold border-0 relative overflow-hidden"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 to-white/0 group-hover:from-white/20 group-hover:to-white/10 transition-all duration-500" />
-                        <span className="relative z-10 flex items-center justify-center">
-                          <MessageSquare
-                            size={20}
-                            className="mr-3 group-hover:scale-110 transition-transform duration-300"
-                          />
-                          Send via WhatsApp
-                        </span>
-                      </Button>
-                    </motion.div>
-                  </motion.div>
-                </form>
-
-                <motion.div
-                  className="mt-12 pt-10 border-t border-slate-200"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8, duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="grid grid-cols-2 gap-10">
-                    <div>
-                      <h4 className="text-lg font-black text-slate-800 mb-6 flex items-center">
-                        <Clock size={18} className="mr-3 text-violet-600" />
-                        Hours
-                      </h4>
-                      <p className="text-slate-600 leading-relaxed">
-                        Monday - Friday: 9am - 7pm
-                        <br />
-                        Saturday: 10am - 4pm
-                        <br />
-                        Sunday: Closed
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="text-lg font-black text-slate-800 mb-6 flex items-center">
-                        <MessageSquare size={18} className="mr-3 text-violet-600" />
-                        Contact
-                      </h4>
-                      <p className="text-slate-600 leading-relaxed">
-                        hello@soulmovies.ai
-                        <br />
-                        +1 (555) 123-4567
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-
-            {/* Decorative Elements */}
-            <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-violet-200/10 to-pink-200/10 rounded-full blur-3xl"></div>
-            <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-l from-pink-200/10 to-violet-200/10 rounded-full blur-3xl"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* Enhanced Final CTA Section */}
-      <section className="py-24 md:py-32 bg-gradient-to-br from-violet-900 via-purple-900 to-pink-900 relative overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0 z-0">
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-br from-violet-600/50 to-pink-600/50"
-            animate={{
-              background: [
-                "linear-gradient(135deg, rgba(139, 92, 246, 0.5) 0%, rgba(236, 72, 153, 0.5) 100%)",
-                "linear-gradient(135deg, rgba(236, 72, 153, 0.5) 0%, rgba(139, 92, 246, 0.5) 100%)",
-                "linear-gradient(135deg, rgba(139, 92, 246, 0.5) 0%, rgba(236, 72, 153, 0.5) 100%)",
-              ],
-            }}
-            transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-          />
-
-          {/* Floating Orbs */}
-          {!isMobile && (
-            <>
-              <motion.div
-                className="absolute top-20 left-20 w-40 h-40 bg-white/10 rounded-full blur-2xl"
-                animate={{
-                  y: [0, -40, 0],
-                  scale: [1, 1.3, 1],
-                  opacity: [0.3, 0.6, 0.3],
-                }}
-                transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-              />
-              <motion.div
-                className="absolute bottom-20 right-20 w-32 h-32 bg-white/10 rounded-full blur-xl"
-                animate={{
-                  y: [0, 30, 0],
-                  scale: [1.2, 1, 1.2],
-                  opacity: [0.4, 0.7, 0.4],
-                }}
-                transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 2 }}
-              />
-            </>
-          )}
-        </div>
-
-        <div className="container max-w-6xl mx-auto px-4 md:px-8 relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 60, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
-            viewport={{ once: true }}
-          >
-            <motion.div
-              className="inline-flex items-center space-x-3 bg-white/20 rounded-full px-6 py-3 mb-10"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <Sparkles size={18} className="text-white" />
-              <span className="text-white font-bold text-base">Start Today</span>
-            </motion.div>
-
-            <motion.h2
-              className="text-5xl md:text-8xl font-black text-white mb-12 leading-tight"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              viewport={{ once: true }}
-            >
-              Begin Your Journey To{" "}
-              <span className="block bg-gradient-to-r from-white to-violet-200 bg-clip-text text-transparent">
-                Inner Peace
-              </span>
-            </motion.h2>
-
-            <motion.p
-              className="text-2xl md:text-3xl text-white/95 max-w-5xl mx-auto mb-16 leading-relaxed font-light"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              Take the first step toward reconnecting with your true self and discovering a life of emotional balance,
-              authentic connection, and profound fulfillment.
-            </motion.p>
-
-            <motion.div
-              className="flex flex-col sm:flex-row gap-8 justify-center items-center"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Link href="/booking">
-                <motion.div whileHover={{ scale: 1.05, y: -4 }} whileTap={{ scale: 0.95 }} className="group">
-                  <Button className="bg-white text-violet-900 hover:bg-white/90 rounded-3xl text-xl px-20 py-7 h-auto shadow-2xl font-black border-0 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-violet-600/0 to-pink-600/0 group-hover:from-violet-600/10 group-hover:to-pink-600/10 transition-all duration-500" />
-                    <span className="relative z-10 flex items-center">
-                      Start Your Journey
-                      <ArrowRight
-                        size={22}
-                        className="ml-4 group-hover:translate-x-2 transition-transform duration-300"
-                      />
-                    </span>
-                  </Button>
-                </motion.div>
-              </Link>
-
-              <Link href="/contact">
-                <motion.div whileHover={{ scale: 1.05, y: -4 }} whileTap={{ scale: 0.95 }} className="group">
-                  <Button className="bg-white/10 text-white hover:bg-white/20 rounded-3xl text-xl px-20 py-7 h-auto shadow-2xl border-2 border-white/30 font-black backdrop-blur-md">
-                    <MessageSquare size={20} className="mr-4 group-hover:scale-110 transition-transform duration-300" />
-                    Talk To Us First
-                  </Button>
-                </motion.div>
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Enhanced WhatsApp Button */}
-      <motion.a
-        href="https://wa.me/923418349814"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-8 left-8 z-40 flex items-center justify-center w-18 h-18 rounded-3xl bg-gradient-to-r from-green-500 to-green-600 text-white shadow-2xl hover:shadow-3xl hover:from-green-600 hover:to-green-700 transition-all duration-300 group"
-        aria-label="Contact us on WhatsApp"
-        whileHover={{
-          scale: 1.15,
-          rotate: 5,
-          boxShadow: "0 25px 50px -12px rgba(34, 197, 94, 0.5)",
-        }}
-        whileTap={{ scale: 0.9 }}
-        initial={{ opacity: 0, scale: 0.8, y: 100 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 2, ease: [0.25, 0.46, 0.45, 0.94] }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-green-400/0 to-emerald-400/0 group-hover:from-green-400/30 group-hover:to-emerald-400/30 rounded-3xl transition-all duration-300"></div>
-        <motion.svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="32"
-          height="32"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="relative z-10"
-          whileHover={{ scale: 1.2 }}
-          transition={{ duration: 0.2 }}
-        >
-          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-        </motion.svg>
-      </motion.a>
-    </div>
-  )
-}
