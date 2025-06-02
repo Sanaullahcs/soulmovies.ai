@@ -562,7 +562,7 @@ export default function Home() {
                   viewport={{ once: true }}
                 >
                   <p className="text-xl text-slate-600 leading-relaxed">
-                    Mirium brings over 15 years of experience in mindfulness and meditation practices to SoulMovies.ai.
+                    Miriam brings over 15 years of experience in mindfulness and meditation practices to SoulMovies.ai.
                     Her journey began on the serene beaches of Bali, where she studied with master practitioners.
                   </p>
                   <p className="text-xl text-slate-600 leading-relaxed">
@@ -607,7 +607,7 @@ export default function Home() {
               >
                 <Image
                   src="/images/mirium-meditation.jpg"
-                  alt="Co-Founder Mirium"
+                  alt="Co-Founder Miriam"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
@@ -619,7 +619,7 @@ export default function Home() {
                     transition={{ delay: 0.3, duration: 0.6 }}
                     viewport={{ once: true }}
                   >
-                    <h3 className="text-3xl font-black text-white mb-3">Mirium</h3>
+                    <h3 className="text-3xl font-black text-white mb-3">Miriam</h3>
                     <p className="text-white/90 text-lg font-semibold mb-6">Co-Founder & Mindfulness Expert</p>
                     <div className="flex items-center space-x-6 text-white/80 text-base">
                       <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">Master Practitioner</span>
