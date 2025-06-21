@@ -29,9 +29,20 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Favicon and App Icons */}
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
+
         {/* Preload critical images */}
         <link rel="preload" href="/hero-bg.jpg" as="image" type="image/jpeg" />
         <link rel="preload" href="/services-hero-bg.jpg" as="image" type="image/jpeg" />
+
+        {/* Preload audio */}
+        <link rel="preload" href="/audio/pure-theta-4-7hz-with-emotional.mp3" as="audio" type="audio/mpeg" />
       </head>
       <body className={cn("min-h-screen bg-background font-sans antialiased no-horizontal-scroll", poppins.variable)}>
         <ThemeProvider attribute="class" defaultTheme="light">

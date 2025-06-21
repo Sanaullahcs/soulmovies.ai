@@ -3,17 +3,97 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { CheckIcon, Star, Clock, Users, Sparkles, Heart, Brain } from "lucide-react"
-import { motion } from "framer-motion"
+import { Card, CardContent } from "@/components/ui/card"
+import {
+  Play,
+  MessageCircle,
+  Sparkles,
+  Heart,
+  Brain,
+  Star,
+  CheckCircle,
+  ArrowRight,
+  Clock,
+  Users,
+  ChevronDown,
+} from "lucide-react"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { useRef } from "react"
 
 export default function ServicesPageClient() {
-  // Add animation variants for consistent animations
-  const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  })
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, -50])
+
+  const services = [
+    {
+      id: 0,
+      icon: MessageCircle,
+      title: "Guided Questionnaire",
+      subtitle: "Soul Discovery Path",
+      description:
+        "Embark on a profound journey of self-discovery through our intuitive questionnaire designed to unlock your soul's deepest wisdom.",
+      features: [
+        "Personalized question flow",
+        "Deep emotional exploration",
+        "Life pattern recognition",
+        "Soul purpose discovery",
+      ],
+      duration: "45-60 minutes",
+      price: "Starting at $297",
+      color: "violet",
+      gradient: "from-violet-500 to-purple-600",
+      image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1920&auto=format&fit=crop",
+    },
+    {
+      id: 1,
+      icon: Brain,
+      title: "Quantum Healing Hypnosis",
+      subtitle: "Higher Self Connection",
+      description:
+        "Experience a transformative session inspired by QHHT to connect directly with your Higher Self and access profound healing wisdom.",
+      features: [
+        "Deep hypnotic state guidance",
+        "Higher Self communication",
+        "Past life exploration",
+        "Quantum healing activation",
+      ],
+      duration: "3-4 hour session",
+      price: "Starting at $697",
+      color: "rose",
+      gradient: "from-rose-500 to-pink-600",
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1920&auto=format&fit=crop",
+    },
+  ]
+
+  const benefits = [
+    {
+      icon: Heart,
+      title: "Personalized Healing",
+      description: "Each SoulMovie is uniquely crafted based on your personal information and Higher Self guidance.",
+    },
+    {
+      icon: Sparkles,
+      title: "Higher Self Connection",
+      description: "Connect with your inner wisdom and receive guidance tailored specifically for your soul's journey.",
+    },
+    {
+      icon: Star,
+      title: "Transformative Experience",
+      description: "Experience profound shifts in consciousness through your custom-made meditation movie.",
+    },
+  ]
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
     },
   }
 
@@ -23,650 +103,288 @@ export default function ServicesPageClient() {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
+        delayChildren: 0.2,
       },
     },
   }
 
-  const cardHover = {
-    rest: { scale: 1, y: 0 },
-    hover: {
-      scale: 1.03,
-      y: -10,
-      transition: { duration: 0.3, ease: "easeOut" },
-    },
-  }
-
   return (
-    <main className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=1920&auto=format&fit=crop"
-            alt="Our Services Hero"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-purple-900/60 via-purple-800/40 to-purple-700/30" />
-        </div>
+    <div ref={containerRef} className="min-h-screen bg-white">
+      {/* Minimal Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 to-violet-50">
+        {/* Subtle Background */}
+        <motion.div className="absolute inset-0 z-0" style={{ y }}>
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-rose-500/5" />
+          {/* Minimal floating elements */}
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-violet-300/30 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -20, 0],
+                opacity: [0.3, 0.7, 0.3],
+              }}
+              transition={{
+                duration: 4 + Math.random() * 2,
+                repeat: Number.POSITIVE_INFINITY,
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+        </motion.div>
 
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div className="max-w-3xl" initial="hidden" animate="visible" variants={staggerContainer}>
-            <motion.h1 className="text-4xl md:text-5xl font-bold text-white mb-6" variants={fadeIn}>
-              Our Services
+        <div className="container relative z-10 px-6 text-center">
+          <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-4xl mx-auto">
+            <motion.div variants={fadeInUp} className="mb-8">
+              <span className="inline-block px-4 py-2 bg-violet-100/80 backdrop-blur-sm rounded-full text-violet-700 text-sm font-medium">
+                ✨ Transform Your Soul's Journey
+              </span>
+            </motion.div>
+
+            <motion.h1
+              variants={fadeInUp}
+              className="text-5xl md:text-7xl font-light text-slate-800 mb-4 leading-tight"
+            >
+              Your Custom
             </motion.h1>
-            <motion.p className="text-lg md:text-xl text-white/90 max-w-2xl mb-8 leading-relaxed" variants={fadeIn}>
-              Discover our premium services designed to help you create powerful soul movies that transform your life
-              and manifest your deepest desires.
+            <motion.div variants={fadeInUp} className="mt-4 mb-8">
+              <span className="text-5xl md:text-7xl bg-gradient-to-r from-violet-600 to-rose-600 bg-clip-text text-transparent font-medium">
+                SoulMovie
+              </span>
+              <span className="text-5xl md:text-7xl font-light text-slate-800 ml-4">Awaits</span>
+            </motion.div>
+
+            <motion.p variants={fadeInUp} className="text-xl text-slate-600 max-w-3xl mx-auto mb-12 leading-relaxed">
+              Experience personalized meditation movies crafted from your soul's wisdom. Choose your path to
+              transformation through our guided questionnaire or profound QHHT sessions.
             </motion.p>
-            <motion.div className="flex flex-wrap gap-4" variants={fadeIn}>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button className="bg-white text-violet-700 hover:bg-white/90">Explore Services</Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button className="bg-white text-violet-700 hover:bg-white/90">Book Consultation</Button>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
 
-      {/* Services Overview Section */}
-      <section className="py-16 md:py-24 bg-violet-50">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="text-center max-w-3xl mx-auto mb-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeIn}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-800">Our Services</h2>
-            <p className="text-lg text-slate-600">
-              We offer a range of personalized services to help you transform your life through the power of
-              visualization and emotional connection.
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-          >
-            {/* Service 1 */}
-            <motion.div
-              className="bg-white rounded-xl p-6 shadow-md border border-violet-100 h-full"
-              variants={fadeIn}
-              initial="rest"
-              whileHover="hover"
-              animate="rest"
-              variants={cardHover}
-            >
-              <div className="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center mb-4">
-                <Sparkles className="h-6 w-6 text-violet-600" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-800 mb-3">Personalized Soul Movies</h3>
-              <p className="text-slate-600 mb-4">
-                Custom-created visual experiences designed to align your conscious and subconscious mind, helping you
-                manifest your goals and transform your emotional state.
-              </p>
-              <ul className="space-y-2 mb-4">
-                <li className="flex items-start">
-                  <CheckIcon className="h-4 w-4 text-violet-500 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-slate-700 text-sm">Tailored to your specific goals</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckIcon className="h-4 w-4 text-violet-500 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-slate-700 text-sm">Custom soundtrack and visuals</span>
-                </li>
-              </ul>
-            </motion.div>
-
-            {/* Service 2 */}
-            <motion.div
-              className="bg-white rounded-xl p-6 shadow-md border border-violet-100 h-full"
-              variants={fadeIn}
-              initial="rest"
-              whileHover="hover"
-              animate="rest"
-              variants={cardHover}
-            >
-              <div className="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center mb-4">
-                <Heart className="h-6 w-6 text-violet-600" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-800 mb-3">Emotional Healing Sessions</h3>
-              <p className="text-slate-600 mb-4">
-                Guided sessions that help you process complex emotions, release blockages, and heal emotional wounds
-                through visual storytelling and mindfulness techniques.
-              </p>
-              <ul className="space-y-2 mb-4">
-                <li className="flex items-start">
-                  <CheckIcon className="h-4 w-4 text-violet-500 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-slate-700 text-sm">One-on-one guidance</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckIcon className="h-4 w-4 text-violet-500 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-slate-700 text-sm">Personalized healing approach</span>
-                </li>
-              </ul>
-            </motion.div>
-
-            {/* Service 3 */}
-            <motion.div
-              className="bg-white rounded-xl p-6 shadow-md border border-violet-100 h-full"
-              variants={fadeIn}
-              initial="rest"
-              whileHover="hover"
-              animate="rest"
-              variants={cardHover}
-            >
-              <div className="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center mb-4">
-                <Brain className="h-6 w-6 text-violet-600" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-800 mb-3">Manifestation Coaching</h3>
-              <p className="text-slate-600 mb-4">
-                Learn powerful visualization techniques and mindset shifts to manifest your desires and achieve your
-                goals with greater ease and alignment.
-              </p>
-              <ul className="space-y-2 mb-4">
-                <li className="flex items-start">
-                  <CheckIcon className="h-4 w-4 text-violet-500 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-slate-700 text-sm">Practical manifestation tools</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckIcon className="h-4 w-4 text-violet-500 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-slate-700 text-sm">Ongoing support and guidance</span>
-                </li>
-              </ul>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="text-center max-w-3xl mx-auto mb-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeIn}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-800">Choose Your Package</h2>
-            <p className="text-lg text-slate-600">
-              Professional soul movie creation tailored to your transformation goals.
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-          >
-            {/* Discovery Package */}
-            <motion.div
-              className="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 flex flex-col h-full"
-              variants={fadeIn}
-              initial="rest"
-              whileHover="hover"
-              animate="rest"
-              variants={cardHover}
-            >
-              <div className="p-6 bg-gradient-to-br from-slate-50 to-violet-50">
-                <h3 className="text-xl font-bold text-slate-800 mb-2">Discovery</h3>
-                <div className="flex items-end gap-1 mb-4">
-                  <span className="text-3xl font-bold text-violet-600">Free</span>
-                  <span className="text-slate-600 mb-1">consultation</span>
-                </div>
-                <p className="text-slate-600 mb-4">Explore your transformation goals with our experts.</p>
-              </div>
-
-              <div className="p-6 flex-grow">
-                <ul className="space-y-3 mb-6">
-                  {[
-                    "30-minute personal consultation",
-                    "Goal assessment & vision mapping",
-                    "Custom recommendations",
-                    "No purchase obligation",
-                  ].map((feature, index) => (
-                    <li key={index} className="flex items-start">
-                      <CheckIcon className="h-5 w-5 text-violet-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-slate-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="p-6 pt-0 mt-auto">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button className="w-full bg-violet-600 hover:bg-violet-700 text-white">Schedule Call</Button>
-                </motion.div>
-              </div>
-            </motion.div>
-
-            {/* Professional Package */}
-            <motion.div
-              className="bg-white rounded-xl shadow-lg overflow-hidden border border-violet-200 flex flex-col h-full relative"
-              variants={fadeIn}
-              initial="rest"
-              whileHover="hover"
-              animate="rest"
-              variants={cardHover}
-            >
-              <motion.div
-                className="absolute top-0 right-0 bg-violet-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg"
-                animate={{ y: [0, 3, 0] }}
-                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, repeatType: "reverse" }}
-              >
-                MOST POPULAR
-              </motion.div>
-              <div className="p-6 bg-gradient-to-br from-violet-100 to-rose-50">
-                <h3 className="text-xl font-bold text-slate-800 mb-2">Professional</h3>
-                <div className="flex items-end gap-1 mb-4">
-                  <span className="text-3xl font-bold text-violet-600">$297</span>
-                  <span className="text-slate-600 mb-1">one-time</span>
-                </div>
-                <p className="text-slate-600 mb-4">Complete soul movie with professional production quality.</p>
-              </div>
-
-              <div className="p-6 flex-grow">
-                <ul className="space-y-3 mb-6">
-                  {[
-                    "Custom 5-8 minute soul movie",
-                    "Professional soundtrack & effects",
-                    "2 revision rounds included",
-                    "5-day delivery guarantee",
-                    "Personal consultation session",
-                    "HD digital delivery",
-                  ].map((feature, index) => (
-                    <li key={index} className="flex items-start">
-                      <CheckIcon className="h-5 w-5 text-violet-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-slate-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="p-6 pt-0 mt-auto">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button className="w-full bg-gradient-to-r from-violet-600 to-rose-500 hover:from-violet-700 hover:to-rose-600 text-white">
-                    Get Started
+            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Link href="/booking">
+                  <Button className="bg-violet-600 text-white hover:bg-violet-700 rounded-xl px-8 py-4 h-auto shadow-lg transition-all font-medium">
+                    Begin Your Journey
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
-                </motion.div>
-              </div>
-            </motion.div>
+                </Link>
+              </motion.div>
 
-            {/* Premium Package */}
-            <motion.div
-              className="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 flex flex-col h-full"
-              variants={fadeIn}
-              initial="rest"
-              whileHover="hover"
-              animate="rest"
-              variants={cardHover}
-            >
-              <div className="p-6 bg-gradient-to-br from-violet-50 to-slate-50">
-                <h3 className="text-xl font-bold text-slate-800 mb-2">Premium</h3>
-                <div className="flex items-end gap-1 mb-4">
-                  <span className="text-3xl font-bold text-violet-600">$497</span>
-                  <span className="text-slate-600 mb-1">one-time</span>
-                </div>
-                <p className="text-slate-600 mb-4">Elite experience with unlimited revisions & priority support.</p>
-              </div>
-
-              <div className="p-6 flex-grow">
-                <ul className="space-y-3 mb-6">
-                  {[
-                    "Custom 8-12 minute soul movie",
-                    "Premium effects & transitions",
-                    "Unlimited revisions",
-                    "3-day priority delivery",
-                    "Two consultation sessions",
-                    "4K ultra-HD delivery",
-                    "Commercial usage rights",
-                    "Lifetime support included",
-                  ].map((feature, index) => (
-                    <li key={index} className="flex items-start">
-                      <CheckIcon className="h-5 w-5 text-violet-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-slate-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="p-6 pt-0 mt-auto">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button className="w-full bg-violet-600 hover:bg-violet-700 text-white">Choose Premium</Button>
-                </motion.div>
-              </div>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button
+                  variant="outline"
+                  className="border-slate-300 text-slate-700 hover:bg-slate-50 rounded-xl px-8 py-4 h-auto font-medium"
+                >
+                  <Play className="mr-2 h-4 w-4" />
+                  Watch Sample
+                </Button>
+              </motion.div>
             </motion.div>
           </motion.div>
         </div>
-      </section>
 
-      {/* Process Section */}
-      <section className="py-16 md:py-24 bg-violet-50">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="text-center max-w-3xl mx-auto mb-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeIn}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-800">Our Creative Process</h2>
-            <p className="text-lg text-slate-600">
-              We follow a thoughtful, collaborative approach to create your personalized soul movie
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-          >
-            {[
-              {
-                step: 1,
-                title: "Discovery",
-                description:
-                  "We begin with a deep conversation to understand your vision, emotions, and intentions for your soul movie.",
-                icon: <Users className="h-6 w-6 text-violet-600" />,
-              },
-              {
-                step: 2,
-                title: "Creation",
-                description:
-                  "Our artists craft a personalized visual journey using imagery, music, and effects that resonate with your vision.",
-                icon: <Sparkles className="h-6 w-6 text-violet-600" />,
-              },
-              {
-                step: 3,
-                title: "Refinement",
-                description:
-                  "We collaborate with you to refine the soul movie until it perfectly captures your intended experience.",
-                icon: <Star className="h-6 w-6 text-violet-600" />,
-              },
-              {
-                step: 4,
-                title: "Integration",
-                description:
-                  "We provide guidance on how to use your soul movie as a powerful tool for transformation in your daily life.",
-                icon: <Clock className="h-6 w-6 text-violet-600" />,
-              },
-            ].map((process, index) => (
-              <motion.div
-                key={index}
-                className="bg-white rounded-3xl p-6 shadow-md border border-violet-100 h-full flex flex-col"
-                variants={fadeIn}
-                whileHover={{
-                  y: -10,
-                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="w-14 h-14 mb-6 flex items-center justify-center rounded-2xl bg-violet-100 shadow-sm">
-                  {process.icon}
-                </div>
-                <div className="flex items-center mb-4">
-                  <div className="w-8 h-8 rounded-full bg-violet-600 text-white flex items-center justify-center text-sm font-medium mr-3">
-                    {process.step}
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-800">{process.title}</h3>
-                </div>
-                <p className="text-slate-600">{process.description}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="text-center max-w-3xl mx-auto mb-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeIn}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-800">Benefits of Soul Movies</h2>
-            <p className="text-lg text-slate-600">Discover how our soul movies can transform your life</p>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-          >
-            {[
-              {
-                title: "Enhanced Manifestation",
-                description:
-                  "Visualize your goals and desires with greater clarity and emotional resonance, accelerating the manifestation process.",
-              },
-              {
-                title: "Emotional Processing",
-                description:
-                  "Process complex emotions through visual storytelling, helping you release blockages and heal emotional wounds.",
-              },
-              {
-                title: "Increased Self-Awareness",
-                description:
-                  "Gain deeper insights into your subconscious patterns, beliefs, and desires through personalized visual journeys.",
-              },
-              {
-                title: "Improved Focus",
-                description:
-                  "Train your mind to focus on your goals and aspirations with greater intention and clarity.",
-              },
-              {
-                title: "Stress Reduction",
-                description: "Experience reduced stress and anxiety through regular engagement with your soul movie.",
-              },
-              {
-                title: "Personal Transformation",
-                description:
-                  "Accelerate your personal growth journey by aligning your conscious and subconscious mind.",
-              },
-            ].map((benefit, index) => (
-              <motion.div
-                key={index}
-                className="bg-white rounded-xl p-6 shadow-md border border-slate-200"
-                variants={fadeIn}
-                whileHover={{
-                  y: -5,
-                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                <h3 className="text-xl font-bold text-slate-800 mb-3">{benefit.title}</h3>
-                <p className="text-slate-600">{benefit.description}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-16 md:py-24 bg-violet-50">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="text-center max-w-3xl mx-auto mb-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeIn}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-800">What Our Clients Say</h2>
-            <p className="text-lg text-slate-600">Hear from people who have experienced our services</p>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-          >
-            {[
-              {
-                name: "Sarah Johnson",
-                role: "Entrepreneur",
-                image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop",
-                quote:
-                  "The soul movie created for me was truly transformative. I've seen remarkable changes in my business and personal life since incorporating it into my daily routine.",
-              },
-              {
-                name: "Michael Chen",
-                role: "Artist",
-                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop",
-                quote:
-                  "I was skeptical at first, but the results speak for themselves. My creative blocks disappeared and I've been more productive than ever before.",
-              },
-              {
-                name: "Aisha Patel",
-                role: "Therapist",
-                image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&auto=format&fit=crop",
-                quote:
-                  "As a therapist, I've recommended SoulMovies.ai to many of my clients. The results have been incredible, helping them process emotions in ways traditional therapy couldn't.",
-              },
-            ].map((testimonial, index) => (
-              <motion.div
-                key={index}
-                className="bg-white p-6 rounded-xl shadow-md"
-                variants={fadeIn}
-                whileHover={{
-                  y: -10,
-                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="flex items-center mb-4">
-                  <motion.div className="mr-4" whileHover={{ scale: 1.1 }} transition={{ duration: 0.3 }}>
-                    <Image
-                      src={testimonial.image || "/placeholder.svg"}
-                      alt={testimonial.name}
-                      width={60}
-                      height={60}
-                      className="rounded-full object-cover"
-                    />
-                  </motion.div>
-                  <div>
-                    <h4 className="font-semibold text-slate-800">{testimonial.name}</h4>
-                    <p className="text-violet-600 text-sm">{testimonial.role}</p>
-                  </div>
-                </div>
-                <div className="flex mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-slate-700 italic mb-4">"{testimonial.quote}"</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="text-center max-w-3xl mx-auto mb-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeIn}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-800">Frequently Asked Questions</h2>
-            <p className="text-lg text-slate-600">Find answers to common questions about our services</p>
-          </motion.div>
-
-          <motion.div
-            className="max-w-3xl mx-auto"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-          >
-            {[
-              {
-                question: "What exactly is a soul movie?",
-                answer:
-                  "A soul movie is a personalized visual experience created specifically for you, combining imagery, music, and effects that resonate with your goals, desires, and emotional state. It's designed to help you manifest your dreams, process emotions, and connect with your deeper self.",
-              },
-              {
-                question: "How long does it take to create a soul movie?",
-                answer:
-                  "The creation process typically takes 3-7 days depending on the package you choose. Our Premium and Ultimate packages include faster delivery times.",
-              },
-              {
-                question: "How do I use my soul movie once I receive it?",
-                answer:
-                  "We recommend watching your soul movie daily, preferably in a quiet space where you can fully immerse yourself in the experience. Many clients find it most effective to watch it first thing in the morning or right before bed when the mind is most receptive.",
-              },
-              {
-                question: "Can I request revisions to my soul movie?",
-                answer:
-                  "Yes, all packages include at least one round of revisions. Our Premium package includes two rounds, and our Ultimate package includes unlimited revisions to ensure your complete satisfaction.",
-              },
-              {
-                question: "Is there scientific evidence behind soul movies?",
-                answer:
-                  "Soul movies are based on established principles of visualization, mindfulness, and emotional processing. Research has shown that visualization techniques can positively impact goal achievement, stress reduction, and emotional well-being.",
-              },
-            ].map((faq, index) => (
-              <motion.div
-                key={index}
-                className="mb-6 border-b border-slate-200 pb-6 last:border-0"
-                variants={fadeIn}
-                whileHover={{ x: 5 }}
-                transition={{ duration: 0.2 }}
-              >
-                <h3 className="text-xl font-bold text-slate-800 mb-2">{faq.question}</h3>
-                <p className="text-slate-600">{faq.answer}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-violet-600 to-rose-500 text-white">
+        {/* Minimal Scroll Indicator */}
         <motion.div
-          className="container mx-auto px-4 text-center"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={fadeIn}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Life?</h2>
-          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            Take the first step towards manifesting your dreams and creating the life you desire.
-          </p>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            <Button className="bg-white text-violet-600 hover:bg-slate-100 px-8 py-3 text-lg rounded-full" asChild>
-              <Link href="/booking">Get Started Today</Link>
-            </Button>
-          </motion.div>
+          <ChevronDown className="h-6 w-6 text-slate-400" />
         </motion.div>
       </section>
-    </main>
+
+      {/* Minimal Services Section */}
+      <section className="py-24 bg-white">
+        <div className="container px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+            className="max-w-3xl mx-auto text-center mb-20"
+          >
+            <motion.div variants={fadeInUp} className="mb-6">
+              <span className="inline-block px-4 py-2 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">
+                Two Sacred Paths
+              </span>
+            </motion.div>
+            <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-light text-slate-800 mb-6">
+              Choose Your Path
+            </motion.h2>
+            <motion.p variants={fadeInUp} className="text-lg text-slate-600 leading-relaxed">
+              Each path connects you with your Higher Self to create a personalized meditation movie for your spiritual
+              journey.
+            </motion.p>
+          </motion.div>
+
+          {/* Clean Service Cards */}
+          <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {services.map((service, index) => (
+              <motion.div
+                key={service.id}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={fadeInUp}
+                className="group"
+              >
+                <Card className="h-full border-0 shadow-sm hover:shadow-lg transition-all duration-300 bg-white">
+                  <CardContent className="p-8">
+                    {/* Service Image */}
+                    <div className="relative h-48 rounded-lg overflow-hidden mb-6">
+                      <Image
+                        src={service.image || "/placeholder.svg"}
+                        alt={service.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+
+                      <motion.div
+                        className={`absolute top-4 left-4 w-12 h-12 rounded-lg bg-gradient-to-br ${service.gradient} flex items-center justify-center shadow-lg`}
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        <service.icon className="h-6 w-6 text-white" />
+                      </motion.div>
+                    </div>
+
+                    {/* Service Content */}
+                    <div className="space-y-4">
+                      <div>
+                        <span className={`text-xs font-medium text-${service.color}-600 uppercase tracking-wider`}>
+                          {service.subtitle}
+                        </span>
+                        <h3 className="text-2xl font-medium text-slate-800 mt-1">{service.title}</h3>
+                      </div>
+
+                      <p className="text-slate-600 leading-relaxed">{service.description}</p>
+
+                      {/* Features */}
+                      <div className="space-y-2">
+                        {service.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-center space-x-3">
+                            <CheckCircle className={`h-4 w-4 text-${service.color}-500`} />
+                            <span className="text-sm text-slate-600">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Duration & Price */}
+                      <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div className="flex items-center space-x-2 text-slate-500">
+                          <Clock className="h-4 w-4" />
+                          <span className="text-sm">{service.duration}</span>
+                        </div>
+                        <div className={`text-lg font-semibold text-${service.color}-600`}>{service.price}</div>
+                      </div>
+
+                      {/* CTA Button */}
+                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="pt-2">
+                        <Link href="/booking">
+                          <Button
+                            className={`w-full bg-gradient-to-r ${service.gradient} text-white rounded-lg py-3 h-auto shadow-sm hover:shadow-md transition-all font-medium`}
+                          >
+                            Choose This Path
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </Button>
+                        </Link>
+                      </motion.div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Minimal Benefits Section */}
+      <section className="py-24 bg-slate-50">
+        <div className="container px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+            className="max-w-3xl mx-auto text-center mb-16"
+          >
+            <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-light text-slate-800 mb-6">
+              Why SoulMovies Transform Lives
+            </motion.h2>
+            <motion.p variants={fadeInUp} className="text-lg text-slate-600 leading-relaxed">
+              Experience the profound impact of personalized meditation designed for your soul's unique journey.
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+          >
+            {benefits.map((benefit, index) => (
+              <motion.div key={index} variants={fadeInUp} className="text-center group">
+                <motion.div
+                  className="w-16 h-16 rounded-xl bg-white shadow-sm flex items-center justify-center mx-auto mb-4 group-hover:shadow-md transition-shadow"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <benefit.icon className="h-8 w-8 text-violet-600" />
+                </motion.div>
+
+                <h3 className="text-xl font-medium text-slate-800 mb-3">{benefit.title}</h3>
+                <p className="text-slate-600 leading-relaxed">{benefit.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Minimal CTA Section */}
+      <section className="py-24 bg-white">
+        <div className="container px-6 text-center">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+            className="max-w-3xl mx-auto"
+          >
+            <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-light text-slate-800 mb-6">
+              Ready to Create Your SoulMovie?
+            </motion.h2>
+
+            <motion.p variants={fadeInUp} className="text-lg text-slate-600 mb-12 leading-relaxed">
+              Begin your transformative journey today. Your Higher Self is waiting to guide you toward healing, growth,
+              and profound self-discovery.
+            </motion.p>
+
+            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center">
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Link href="/booking">
+                  <Button className="bg-violet-600 text-white hover:bg-violet-700 rounded-xl px-8 py-4 h-auto shadow-lg transition-all font-medium">
+                    Begin Your SoulMovie Journey
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </motion.div>
+
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button
+                  variant="outline"
+                  className="border-slate-300 text-slate-700 hover:bg-slate-50 rounded-xl px-8 py-4 h-auto font-medium"
+                >
+                  <Users className="mr-2 h-4 w-4" />
+                  Schedule Consultation
+                </Button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+    </div>
   )
 }

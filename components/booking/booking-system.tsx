@@ -68,7 +68,8 @@ export default function BookingSystem() {
     } else if (questionIndex < questions.length - 1) {
       setQuestionIndex((prev) => prev + 1)
     } else {
-      setCurrentStep("datetime")
+      // After completing all questions, redirect to Calendly
+      handleRedirectToCalendly()
     }
   }
 
@@ -76,6 +77,34 @@ export default function BookingSystem() {
     setExerciseIndex((prev) => prev + 1)
     setQuestionIndex((prev) => prev + 1)
     setCurrentStep("questionnaire")
+  }
+
+  const handleRedirectToCalendly = async () => {
+    try {
+      // Save the questionnaire data before redirecting
+      const bookingData = {
+        answers,
+        questions,
+        timestamp: new Date().toISOString(),
+        bookingId: `SM-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      }
+
+      // Send questionnaire data to your backend
+      await fetch("/api/save-questionnaire", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingData),
+      })
+
+      // Redirect to correct Calendly link
+      window.location.href = "https://calendly.com/soulmovies-ai/30min"
+    } catch (error) {
+      console.error("Error saving questionnaire:", error)
+      // Still redirect to Calendly even if saving fails
+      window.location.href = "https://calendly.com/soulmovies-ai/30min"
+    }
   }
 
   const handleDateTimeSubmit = (date: Date, timezone: string) => {
@@ -91,7 +120,7 @@ export default function BookingSystem() {
 
   const handleConfirmation = async () => {
     try {
-      // Format the data for WhatsApp
+      // Format the data for email
       const formattedDate = selectedDateTime?.toLocaleString("en-US", {
         weekday: "long",
         year: "numeric",
@@ -102,32 +131,35 @@ export default function BookingSystem() {
         hour12: true,
       })
 
-      // Prepare the message for WhatsApp
-      let message = `*New Booking Request*\n\n`
-      message += `*Name:* ${personalInfo.name}\n`
-      message += `*Email:* ${personalInfo.email}\n`
-      message += `*Phone:* ${personalInfo.phone}\n`
-      message += `*Date & Time:* ${formattedDate}\n`
-      message += `*Timezone:* ${selectedTimezone}\n\n`
-      message += `*Additional Concerns:* ${personalInfo.concerns || "None"}\n\n`
-      message += `*Questionnaire Responses:*\n`
+      // Prepare the booking data
+      const bookingData = {
+        personalInfo,
+        selectedDateTime: formattedDate,
+        selectedTimezone,
+        answers,
+        questions,
+        timestamp: new Date().toISOString(),
+        bookingId: `SM-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      }
 
-      // Add all question answers
-      questions.forEach((q) => {
-        message += `*${q.question}*\n${answers[q.id] || "Not answered"}\n\n`
+      // Send email via API route
+      const response = await fetch("/api/send-booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingData),
       })
 
-      // Encode the message for WhatsApp URL
-      const encodedMessage = encodeURIComponent(message)
+      if (!response.ok) {
+        throw new Error("Failed to send booking")
+      }
 
-      // Open WhatsApp with the pre-filled message
-      window.open(`https://wa.me/923418349814?text=${encodedMessage}`, "_blank")
-
-      // Set success state
-      setCurrentStep("success")
+      // Redirect to Calendly instead of showing success
+      window.location.href = "https://calendly.com/soulmovies-ai/30min"
     } catch (error) {
       console.error("Error sending booking:", error)
-      alert("There was an error processing your booking. Please try again.")
+      alert("There was an error processing your booking. Please try again or contact us directly.")
     }
   }
 
@@ -185,17 +217,10 @@ export default function BookingSystem() {
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <Check className="h-10 w-10 text-green-600" />
             </div>
-            <h2 className="text-2xl font-medium text-slate-800 mb-4">Booking Successful!</h2>
+            <h2 className="text-2xl font-medium text-slate-800 mb-4">Redirecting to Schedule...</h2>
             <p className="text-slate-600 mb-6">
-              Your session has been booked successfully. We've sent the details to our team via WhatsApp. You'll receive
-              a confirmation shortly.
+              Thank you for completing the questionnaire. You'll be redirected to schedule your session shortly.
             </p>
-            <Button
-              className="bg-violet-600 hover:bg-violet-700 text-white rounded-xl px-8 py-4 h-auto shadow-lg hover:shadow-xl transition-all border border-violet-500 font-medium"
-              onClick={() => (window.location.href = "/")}
-            >
-              Return to Home
-            </Button>
           </div>
         )
     }
@@ -204,15 +229,16 @@ export default function BookingSystem() {
   return (
     <div className="bg-white rounded-3xl shadow-md p-6 md:p-8">
       <div className="mb-8">
-        <h1 className="text-2xl md:text-3xl font-medium text-slate-800 mb-2">Book Your Session</h1>
+        <h1 className="text-2xl md:text-3xl font-medium text-slate-800 mb-2">Begin Your SoulMovie Journey</h1>
         <p className="text-slate-600">
-          Take a few moments to help us understand your needs before booking your personalized session.
+          Share your soul's calling with us so we can create a meditation movie uniquely designed for your
+          transformation.
         </p>
         <div className="mt-6">
           <Progress value={progress} className="h-2 bg-slate-100" />
           <div className="flex justify-between mt-2 text-xs text-slate-500">
-            <span>Start</span>
-            <span>Complete</span>
+            <span>Soul Discovery</span>
+            <span>Schedule Session</span>
           </div>
         </div>
       </div>
@@ -238,7 +264,7 @@ export default function BookingSystem() {
           {currentStep === "exercise" && (
             <Button
               onClick={handleExerciseComplete}
-              className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white"
+              className="flex items-center gap-2 bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white"
             >
               Continue <ChevronRight size={16} />
             </Button>

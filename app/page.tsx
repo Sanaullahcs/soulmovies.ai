@@ -1,8 +1,6 @@
 "use client"
 import Image from "next/image"
 import type React from "react"
-
-import Link from "next/link"
 import { motion } from "framer-motion"
 import {
   Heart,
@@ -12,11 +10,17 @@ import {
   Compass,
   ChevronDown,
   MessageSquare,
-  Star,
   Play,
   Users,
   Award,
   Clock,
+  Star,
+  Film,
+  Zap,
+  Eye,
+  Palette,
+  Music,
+  Waves,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import FloatingParticles from "@/components/floating-particles"
@@ -29,25 +33,35 @@ function useScrollOptimization() {
   useEffect(() => {
     let scrollTimeout: NodeJS.Timeout
     let isScrolling = false
-    const html = document.documentElement
 
     const handleScroll = () => {
       if (!isScrolling) {
-        html.classList.add("is-scrolling")
+        document.documentElement.classList.add("is-scrolling")
         isScrolling = true
       }
 
       clearTimeout(scrollTimeout)
       scrollTimeout = setTimeout(() => {
-        html.classList.remove("is-scrolling")
+        document.documentElement.classList.remove("is-scrolling")
         isScrolling = false
-      }, 100)
+      }, 50)
     }
 
-    window.addEventListener("scroll", handleScroll, { passive: true })
+    let ticking = false
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll()
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
+    window.addEventListener("scroll", throttledScroll, { passive: true })
 
     return () => {
-      window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("scroll", throttledScroll)
       clearTimeout(scrollTimeout)
     }
   }, [])
@@ -97,6 +111,14 @@ export default function Home() {
     window.location.href = "/booking"
   }
 
+  const handleScheduleConsultation = () => {
+    window.open("https://calendly.com/soulmovies-ai/30min", "_blank")
+  }
+
+  const handleWatchStories = () => {
+    window.location.href = "/stories"
+  }
+
   const faqs = [
     {
       question: "What is emotional support and how can it help me?",
@@ -135,7 +157,7 @@ export default function Home() {
         {/* Animated Background */}
         <div className="absolute inset-0 z-0">
           <motion.div
-            className="absolute inset-0"
+            className="absolute inset-0 will-change-transform"
             initial={{ scale: 1.1, opacity: 0.8 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 2, ease: "easeOut" }}
@@ -157,7 +179,7 @@ export default function Home() {
           {!isMobile && (
             <>
               <motion.div
-                className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-br from-violet-400/20 to-pink-400/20 rounded-full blur-2xl"
+                className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-br from-violet-400/20 to-pink-400/20 rounded-full blur-2xl will-change-transform"
                 animate={{
                   y: [0, -30, 0],
                   scale: [1, 1.2, 1],
@@ -166,7 +188,7 @@ export default function Home() {
                 transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
               />
               <motion.div
-                className="absolute top-40 right-32 w-24 h-24 bg-gradient-to-br from-pink-400/20 to-violet-400/20 rounded-full blur-xl"
+                className="absolute top-40 right-32 w-24 h-24 bg-gradient-to-br from-pink-400/20 to-violet-400/20 rounded-full blur-xl will-change-transform"
                 animate={{
                   y: [0, 40, 0],
                   scale: [1.2, 1, 1.2],
@@ -175,7 +197,7 @@ export default function Home() {
                 transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 1 }}
               />
               <motion.div
-                className="absolute bottom-32 left-40 w-40 h-40 bg-gradient-to-br from-violet-300/15 to-pink-300/15 rounded-full blur-3xl"
+                className="absolute bottom-32 left-40 w-40 h-40 bg-gradient-to-br from-violet-300/15 to-pink-300/15 rounded-full blur-3xl will-change-transform"
                 animate={{
                   y: [0, -20, 0],
                   x: [0, 20, 0],
@@ -205,7 +227,7 @@ export default function Home() {
               <span className="block bg-gradient-to-r from-white via-violet-200 to-white bg-clip-text text-transparent">
                 Transform
               </span>
-              <span className="block bg-gradient-to-r from-violet-300 via-pink-300 to-violet-300 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-violet-300 via-pink-300 to-violet-300 bg-clip-text text-transparent mt-4">
                 Your Soul
               </span>
             </motion.h1>
@@ -229,28 +251,27 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.1, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <Link href="/booking">
-              <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }} className="group">
-                <Button className="bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white rounded-3xl text-xl px-16 py-6 h-auto shadow-2xl font-bold border-0 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 to-white/0 group-hover:from-white/20 group-hover:to-white/10 transition-all duration-500" />
-                  <span className="relative z-10 flex items-center">
-                    Start Your Journey
-                    <ArrowRight
-                      size={20}
-                      className="ml-3 group-hover:translate-x-1 transition-transform duration-300"
-                    />
-                  </span>
-                </Button>
-              </motion.div>
-            </Link>
-            <Link href="/stories">
-              <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }} className="group">
-                <Button className="bg-white/10 text-white hover:bg-white/20 rounded-3xl text-xl px-16 py-6 h-auto shadow-2xl border-2 border-white/30 font-bold backdrop-blur-md">
-                  <Play size={18} className="mr-3 group-hover:scale-110 transition-transform duration-300" />
-                  Watch Stories
-                </Button>
-              </motion.div>
-            </Link>
+            <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }} className="group">
+              <Button
+                onClick={handleBookNow}
+                className="bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white rounded-3xl text-xl px-16 py-6 h-auto shadow-2xl font-bold border-0 relative overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 to-white/0 group-hover:from-white/20 group-hover:to-white/10 transition-all duration-500" />
+                <span className="relative z-10 flex items-center">
+                  Start Your Journey
+                  <ArrowRight size={20} className="ml-3 group-hover:translate-x-1 transition-transform duration-300" />
+                </span>
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }} className="group">
+              <Button
+                onClick={handleWatchStories}
+                className="bg-white/10 text-white hover:bg-white/20 rounded-3xl text-xl px-16 py-6 h-auto shadow-2xl border-2 border-white/30 font-bold backdrop-blur-md"
+              >
+                <Play size={18} className="mr-3 group-hover:scale-110 transition-transform duration-300" />
+                Watch Stories
+              </Button>
+            </motion.div>
           </motion.div>
 
           {/* Social Proof */}
@@ -289,9 +310,9 @@ export default function Home() {
             <motion.div
               className="flex flex-col items-center cursor-pointer group"
               onClick={() => {
-                const aboutSection = document.getElementById("about-section")
-                if (aboutSection) {
-                  aboutSection.scrollIntoView({ behavior: "smooth" })
+                const statsSection = document.querySelector(".py-12.md\\:py-16.bg-gradient-to-b")
+                if (statsSection) {
+                  statsSection.scrollIntoView({ behavior: "smooth" })
                 }
               }}
               whileHover={{ scale: 1.1 }}
@@ -312,7 +333,7 @@ export default function Home() {
       </section>
 
       {/* Enhanced Stats Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-white to-violet-50/50 relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-white to-violet-50/50 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-violet-50/20 via-transparent to-pink-50/20" />
 
         <div className="container max-w-7xl mx-auto px-4 md:px-8 relative z-10">
@@ -360,22 +381,293 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Enhanced About Section */}
-      <section
-        id="about-section"
-        className="py-20 md:py-28 bg-gradient-to-b from-violet-50/50 via-white to-violet-50/50 relative"
-      >
-        <div className="container max-w-7xl mx-auto px-4 md:px-8">
-          {/* Section Header */}
+      {/* NEW: Personalized SoulMovie Creation Section */}
+      <section className="py-12 md:py-16 bg-gradient-to-br from-violet-50/30 via-white to-pink-50/30 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
           <motion.div
-            className="max-w-5xl mx-auto text-center mb-16"
+            className="absolute top-0 left-0 w-full h-full"
+            style={{
+              backgroundImage: `radial-gradient(circle at 20% 80%, violet 1px, transparent 1px), radial-gradient(circle at 80% 20%, pink 1px, transparent 1px)`,
+              backgroundSize: "60px 60px, 40px 40px",
+            }}
+            animate={{
+              backgroundPosition: ["0% 0%, 0% 0%", "100% 100%, -100% -100%"],
+            }}
+            transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+          />
+        </div>
+
+        <div className="container max-w-7xl mx-auto px-4 md:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Content */}
+            <motion.div
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="space-y-8"
+            >
+              <div>
+                <motion.div
+                  className="inline-flex items-center space-x-3 bg-gradient-to-r from-violet-100 to-pink-100 rounded-full px-6 py-3 mb-6"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  <Film size={18} className="text-violet-600" />
+                  <span className="text-violet-700 font-bold text-base">Personalized SoulMovies</span>
+                </motion.div>
+                <h2 className="text-4xl md:text-6xl font-black text-slate-800 mb-6 leading-tight">
+                  Your Story,{" "}
+                  <span className="bg-gradient-to-r from-violet-600 via-pink-500 to-violet-600 bg-clip-text text-transparent">
+                    Your Healing
+                  </span>
+                </h2>
+                <p className="text-xl text-slate-600 leading-relaxed mb-8">
+                  Experience the power of personalized visual meditation through custom-crafted SoulMovies designed
+                  specifically for your unique healing journey and emotional transformation.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { icon: Eye, title: "Visual Meditation", desc: "Immersive visual experiences" },
+                  { icon: Palette, title: "Custom Crafted", desc: "Tailored to your needs" },
+                  { icon: Music, title: "Healing Soundscapes", desc: "Therapeutic audio design" },
+                  { icon: Waves, title: "Emotional Flow", desc: "Guided emotional release" },
+                ].map((item, index) => (
+                  <motion.div
+                    key={index}
+                    className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-violet-100/50 group"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 + 0.4, duration: 0.6 }}
+                    viewport={{ once: true }}
+                    whileHover={{ y: -5, scale: 1.02 }}
+                  >
+                    <div className="w-12 h-12 bg-gradient-to-br from-violet-500 to-pink-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                      <item.icon size={20} className="text-white" />
+                    </div>
+                    <h4 className="text-lg font-bold text-slate-800 mb-2">{item.title}</h4>
+                    <p className="text-slate-600 text-sm">{item.desc}</p>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.6 }}
+                viewport={{ once: true }}
+                className="pt-4"
+              >
+                <Button
+                  onClick={handleBookNow}
+                  className="bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white rounded-2xl text-lg px-10 py-4 h-auto shadow-lg hover:shadow-xl transition-all duration-300 font-bold border-0 group"
+                >
+                  <span className="flex items-center">
+                    Create My SoulMovie
+                    <ArrowRight
+                      size={18}
+                      className="ml-3 group-hover:translate-x-1 transition-transform duration-300"
+                    />
+                  </span>
+                </Button>
+              </motion.div>
+            </motion.div>
+
+            {/* Visual Element */}
+            <motion.div
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="relative"
+            >
+              <motion.div
+                className="relative h-[500px] rounded-[2rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(124,58,237,0.3)] group bg-gradient-to-br from-violet-100 to-pink-100 border border-white/50"
+                whileHover={{ scale: 1.02, rotateY: 2 }}
+                transition={{ duration: 0.4 }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-violet-600/20 to-pink-600/20 z-10"></div>
+                <Image
+                  src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1920&auto=format&fit=crop"
+                  alt="Personalized meditation visualization"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+
+                {/* Floating Elements */}
+                <motion.div
+                  className="absolute top-8 left-8 w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center"
+                  animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
+                  transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                >
+                  <Film size={24} className="text-white" />
+                </motion.div>
+
+                <motion.div
+                  className="absolute top-8 right-8 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center"
+                  animate={{ y: [0, 10, 0], rotate: [0, -5, 0] }}
+                  transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 1 }}
+                >
+                  <Sparkles size={20} className="text-white" />
+                </motion.div>
+
+                <motion.div
+                  className="absolute bottom-8 left-8 w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center"
+                  animate={{ y: [0, -8, 0], scale: [1, 1.1, 1] }}
+                  transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 2 }}
+                >
+                  <Heart size={22} className="text-white" />
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* NEW: Interactive Journey Section */}
+      <section className="py-12 md:py-16 bg-gradient-to-b from-white via-violet-50/20 to-white relative">
+        <div className="container max-w-7xl mx-auto px-4 md:px-8">
+          {/* Header */}
+          <motion.div
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
             viewport={{ once: true, margin: "-100px" }}
           >
             <motion.div
-              className="inline-flex items-center space-x-3 bg-gradient-to-r from-violet-100 to-pink-100 rounded-full px-6 py-3 mb-8"
+              className="inline-flex items-center space-x-3 bg-gradient-to-r from-violet-100 to-pink-100 rounded-full px-6 py-3 mb-6"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <Zap size={18} className="text-violet-600" />
+              <span className="text-violet-700 font-bold text-base">Your Journey</span>
+            </motion.div>
+            <h2 className="text-4xl md:text-6xl font-black text-slate-800 mb-6 leading-tight">
+              How It{" "}
+              <span className="bg-gradient-to-r from-violet-600 via-pink-500 to-violet-600 bg-clip-text text-transparent">
+                Works
+              </span>
+            </h2>
+            <p className="text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto">
+              Your transformation journey is unique. Follow these simple steps to begin your personalized healing
+              experience.
+            </p>
+          </motion.div>
+
+          {/* Journey Steps */}
+          <div className="relative">
+            {/* Connection Line */}
+            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-violet-200 via-pink-200 to-violet-200 transform -translate-y-1/2 hidden lg:block" />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[
+                {
+                  step: "01",
+                  title: "Discovery Call",
+                  description: "Share your story and goals in a safe, supportive environment",
+                  icon: MessageSquare,
+                  color: "from-violet-500 to-purple-600",
+                },
+                {
+                  step: "02",
+                  title: "Personalized Assessment",
+                  description: "Complete our guided questionnaire to understand your unique needs",
+                  icon: Compass,
+                  color: "from-pink-500 to-rose-600",
+                },
+                {
+                  step: "03",
+                  title: "Custom SoulMovie",
+                  description: "Receive your personalized meditation movie crafted just for you",
+                  icon: Film,
+                  color: "from-violet-600 to-indigo-600",
+                },
+                {
+                  step: "04",
+                  title: "Ongoing Support",
+                  description: "Continue your journey with regular check-ins and guidance",
+                  icon: Heart,
+                  color: "from-pink-600 to-violet-600",
+                },
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  className="relative text-center group"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -8 }}
+                >
+                  {/* Step Number */}
+                  <motion.div
+                    className="relative z-10 w-20 h-20 mx-auto mb-6 bg-white rounded-3xl shadow-xl flex items-center justify-center border-4 border-violet-100 group-hover:border-violet-200 transition-all duration-300"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                  >
+                    <span className="text-2xl font-black bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent">
+                      {item.step}
+                    </span>
+                  </motion.div>
+
+                  {/* Icon */}
+                  <motion.div
+                    className={`w-16 h-16 mx-auto mb-6 bg-gradient-to-br ${item.color} rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}
+                    whileHover={{ scale: 1.1, rotate: -5 }}
+                  >
+                    <item.icon size={24} className="text-white" />
+                  </motion.div>
+
+                  {/* Content */}
+                  <h3 className="text-xl font-black text-slate-800 mb-4 group-hover:text-violet-700 transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-slate-600 leading-relaxed">{item.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA */}
+          <motion.div
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <Button
+              onClick={handleScheduleConsultation}
+              className="bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white rounded-3xl text-xl px-12 py-6 h-auto shadow-xl hover:shadow-2xl transition-all duration-300 font-bold border-0 group"
+            >
+              <span className="flex items-center">
+                Start Your Journey Today
+                <ArrowRight size={20} className="ml-3 group-hover:translate-x-1 transition-transform duration-300" />
+              </span>
+            </Button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Enhanced About Section */}
+      <section className="py-12 md:py-16 bg-gradient-to-b from-violet-50/50 via-white to-violet-50/50 relative">
+        <div className="container max-w-7xl mx-auto px-4 md:px-8">
+          {/* Section Header */}
+          <motion.div
+            className="max-w-5xl mx-auto text-center mb-12"
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <motion.div
+              className="inline-flex items-center space-x-3 bg-gradient-to-r from-violet-100 to-pink-100 rounded-full px-6 py-3 mb-6"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -384,21 +676,21 @@ export default function Home() {
               <Heart size={18} className="text-violet-600" />
               <span className="text-violet-700 font-bold text-base">Our Story</span>
             </motion.div>
-            <h2 className="text-5xl md:text-7xl font-black text-slate-800 mb-10 leading-tight">
+            <h2 className="text-4xl md:text-6xl font-black text-slate-800 mb-8 leading-tight">
               Healing Hearts,{" "}
               <span className="bg-gradient-to-r from-violet-600 via-pink-500 to-violet-600 bg-clip-text text-transparent">
                 Transforming Lives
               </span>
             </h2>
-            <p className="text-2xl text-slate-600 leading-relaxed font-light">
+            <p className="text-xl text-slate-600 leading-relaxed font-light">
               Founded with a vision to create a sanctuary where individuals can reconnect with their true selves,
               SoulMovies.ai was born from a deep understanding of the human need for emotional connection and growth.
             </p>
           </motion.div>
 
           {/* Team Grid */}
-          <div className="grid lg:grid-cols-2 gap-20 items-center mb-16">
-            {/* Team Member 1 */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Team Member */}
             <motion.div
               initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -407,7 +699,7 @@ export default function Home() {
               className="relative"
             >
               <motion.div
-                className="relative h-[700px] rounded-[3rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(124,58,237,0.3)] group bg-gradient-to-br from-violet-100 to-pink-100 border border-white/50"
+                className="relative h-[600px] rounded-[3rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(124,58,237,0.3)] group bg-gradient-to-br from-violet-100 to-pink-100 border border-white/50"
                 whileHover={{ scale: 1.02, rotateY: 2 }}
                 transition={{ duration: 0.4 }}
               >
@@ -426,7 +718,7 @@ export default function Home() {
                   transition={{ duration: 0.8, delay: 0.6 }}
                   viewport={{ once: true }}
                 />
-                <div className="absolute bottom-0 left-0 right-0 p-10">
+                <div className="absolute bottom-0 left-0 right-0 p-8">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -435,212 +727,81 @@ export default function Home() {
                   >
                     <h3 className="text-3xl font-black text-white mb-3">Juan Carlos Calzada</h3>
                     <p className="text-white/90 text-lg font-semibold mb-6">Founder & Emotional Wellness Guide</p>
-                    <div className="flex items-center space-x-6 text-white/80 text-base">
-                      <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10">
-                        15+ Years Experience
-                      </span>
-                      <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10">
-                        Certified Therapist
-                      </span>
+                    <div className="flex space-x-3">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star key={star} size={20} className="text-yellow-400 fill-current" />
+                      ))}
                     </div>
                   </motion.div>
                 </div>
               </motion.div>
-
-              <motion.div
-                className="absolute -right-6 -bottom-6 w-32 h-32 bg-gradient-to-br from-violet-500/30 to-pink-500/30 rounded-full blur-2xl z-0"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.4, 0.6, 0.4],
-                }}
-                transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-              />
             </motion.div>
 
-            {/* Content for Team Member 1 */}
+            {/* Content */}
             <motion.div
               initial={{ opacity: 0, x: 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <div className="space-y-10">
-                <motion.h3
-                  className="text-4xl font-black text-slate-800"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  Our Heart-Centered Philosophy
-                </motion.h3>
-
-                <motion.div
-                  className="space-y-8"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  <p className="text-xl text-slate-600 leading-relaxed">
-                    At SoulMovies.ai, Juan Carlos brings a unique blend of emotional intelligence and innovative
-                    therapeutic approaches. His background in psychology and personal transformation has helped
-                    countless individuals reconnect with their authentic selves.
-                  </p>
-                  <p className="text-xl text-slate-600 leading-relaxed">
-                    We understand that each person's journey is unique, which is why we offer personalized guidance
-                    tailored to your specific needs and goals, combining evidence-based practices with compassionate
-                    support.
-                  </p>
-                </motion.div>
-
-                {/* Key Features */}
-                <motion.div
-                  className="grid grid-cols-2 gap-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6, duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  {["Personalized Approach", "Certified Practitioners", "Holistic Methods", "Safe Environment"].map(
-                    (feature, index) => (
-                      <motion.div key={index} className="flex items-center space-x-3 group" whileHover={{ x: 5 }}>
-                        <div className="w-3 h-3 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full group-hover:scale-125 transition-transform"></div>
-                        <span className="text-slate-700 font-semibold text-lg">{feature}</span>
-                      </motion.div>
-                    ),
-                  )}
-                </motion.div>
-
-                <motion.div
-                  className="pt-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7, duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  <Link
-                    href="/about"
-                    className="inline-flex items-center text-xl font-bold text-violet-600 hover:text-violet-700 transition-colors group"
-                  >
-                    <span>Learn more about our journey</span>
-                    <motion.div className="ml-3" whileHover={{ x: 6 }} transition={{ duration: 0.2 }}>
-                      <ArrowRight size={22} />
-                    </motion.div>
-                  </Link>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Team Member 2 - Reversed Layout */}
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
-            {/* Content for Team Member 2 */}
-            <motion.div
-              initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
               viewport={{ once: true, margin: "-100px" }}
-              className="lg:order-1"
+              className="space-y-8"
             >
-              <div className="space-y-10">
-                <motion.h3
-                  className="text-4xl font-black text-slate-800"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  Mindfulness & Meditation Expertise
-                </motion.h3>
-
-                <motion.div
-                  className="space-y-8"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  <p className="text-xl text-slate-600 leading-relaxed">
-                    Miriam brings over 15 years of experience in mindfulness and meditation practices to SoulMovies.ai.
-                    Her journey began on the serene beaches of Bali, where she studied with master practitioners.
-                  </p>
-                  <p className="text-xl text-slate-600 leading-relaxed">
-                    Together with our team, she's created a unique approach that combines traditional wisdom with
-                    cutting-edge techniques to help individuals navigate life's challenges with grace and inner
-                    strength.
-                  </p>
-                </motion.div>
-
-                <motion.div
-                  className="pt-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7, duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  <Link
-                    href="/about"
-                    className="inline-flex items-center text-xl font-bold text-violet-600 hover:text-violet-700 transition-colors group"
-                  >
-                    <span>Discover our methodology</span>
-                    <motion.div className="ml-3" whileHover={{ x: 6 }} transition={{ duration: 0.2 }}>
-                      <ArrowRight size={22} />
-                    </motion.div>
-                  </Link>
-                </motion.div>
+              <div className="space-y-6">
+                <h3 className="text-3xl font-black text-slate-800 leading-tight">
+                  Meet Your{" "}
+                  <span className="bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent">
+                    Transformation Guide
+                  </span>
+                </h3>
+                <p className="text-xl text-slate-600 leading-relaxed">
+                  With over 5 years of experience in emotional wellness and personal transformation, Juan Carlos brings
+                  a unique blend of professional expertise and genuine compassion to every session.
+                </p>
               </div>
-            </motion.div>
 
-            {/* Team Member 2 */}
-            <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="lg:order-2 relative"
-            >
-              <motion.div
-                className="relative h-[700px] rounded-[3rem] overflow-hidden shadow-2xl group bg-gradient-to-br from-pink-100 to-violet-100"
-                whileHover={{ scale: 1.02, rotateY: -2 }}
-                transition={{ duration: 0.4 }}
-              >
-                <Image
-                  src="/images/mirium-meditation.jpg"
-                  alt="Co-Founder Miriam"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-violet-900/90 via-violet-900/30 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {[
+                  { icon: Brain, title: "Certified Practitioner", desc: "Advanced training in emotional wellness" },
+                  { icon: Heart, title: "Empathetic Approach", desc: "Deep understanding of human emotions" },
+                  { icon: Compass, title: "Personalized Guidance", desc: "Tailored strategies for each individual" },
+                  { icon: Sparkles, title: "Transformative Results", desc: "Proven track record of success" },
+                ].map((item, index) => (
                   <motion.div
+                    key={index}
+                    className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-violet-100/50 group"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 0.6 }}
+                    transition={{ delay: index * 0.1 + 0.4, duration: 0.6 }}
                     viewport={{ once: true }}
+                    whileHover={{ y: -5, scale: 1.02 }}
                   >
-                    <h3 className="text-3xl font-black text-white mb-3">Miriam</h3>
-                    <p className="text-white/90 text-lg font-semibold mb-6">Co-Founder & Mindfulness Expert</p>
-                    <div className="flex items-center space-x-6 text-white/80 text-base">
-                      <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">Master Practitioner</span>
-                      <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">Published Author</span>
+                    <div className="w-14 h-14 bg-gradient-to-br from-violet-500 to-pink-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                      <item.icon size={24} className="text-white" />
                     </div>
+                    <h4 className="text-lg font-bold text-slate-800 mb-2">{item.title}</h4>
+                    <p className="text-slate-600">{item.desc}</p>
                   </motion.div>
-                </div>
-              </motion.div>
+                ))}
+              </div>
 
-              {/* Floating Quote */}
               <motion.div
-                className="absolute -left-12 top-5 bg-white/95 backdrop-blur-xl rounded-3xl p-8 max-w-sm shadow-2xl border border-violet-100 mb-[100px]"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.6 }}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.05, rotate: -1 }}
+                className="pt-6"
               >
-                <p className="text-slate-700 italic text-base leading-relaxed font-medium">
-                  "True meditation is not an escape from life, but a deeper connection with the present moment."
-                </p>
+                <Button
+                  onClick={handleScheduleConsultation}
+                  className="bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white rounded-2xl text-lg px-10 py-4 h-auto shadow-lg hover:shadow-xl transition-all duration-300 font-bold border-0 group"
+                >
+                  <span className="flex items-center">
+                    Schedule Free Consultation
+                    <ArrowRight
+                      size={18}
+                      className="ml-3 group-hover:translate-x-1 transition-transform duration-300"
+                    />
+                  </span>
+                </Button>
               </motion.div>
             </motion.div>
           </div>
@@ -648,13 +809,12 @@ export default function Home() {
       </section>
 
       {/* Enhanced Services Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-slate-50 via-violet-50/30 to-pink-50/30 relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
+      <section className="py-12 md:py-16 bg-gradient-to-br from-slate-50 via-violet-50/30 to-pink-50/30 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-30">
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: `radial-gradient(circle at 25% 25%, violet 2px, transparent 2px)`,
+              backgroundImage: `radial-gradient(circle at 25% 25%, violet 1px, transparent 1px)`,
               backgroundSize: "50px 50px",
             }}
           />
@@ -670,7 +830,7 @@ export default function Home() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <motion.div
-              className="inline-flex items-center space-x-3 bg-gradient-to-r from-violet-100 to-pink-100 rounded-full px-6 py-3 mb-8"
+              className="inline-flex items-center space-x-3 bg-gradient-to-r from-violet-100 to-pink-100 rounded-full px-6 py-3 mb-6"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -679,70 +839,121 @@ export default function Home() {
               <Sparkles size={18} className="text-violet-600" />
               <span className="text-violet-700 font-bold text-base">Our Services</span>
             </motion.div>
-            <h2 className="text-5xl md:text-7xl font-black text-slate-800 mb-10 leading-tight">
-              How We{" "}
+            <h2 className="text-4xl md:text-6xl font-black text-slate-800 mb-8 leading-tight">
+              Your Path to{" "}
               <span className="bg-gradient-to-r from-violet-600 via-pink-500 to-violet-600 bg-clip-text text-transparent">
-                Transform Lives
+                Inner Peace
               </span>
             </h2>
-            <p className="text-2xl text-slate-600 leading-relaxed font-light">
-              Our comprehensive support services are designed to guide you on your journey toward emotional well-being
-              and personal growth through proven methodologies and personalized care.
+            <p className="text-xl text-slate-600 leading-relaxed font-light">
+              Discover our comprehensive range of services designed to support your emotional well-being and personal
+              transformation journey.
             </p>
           </motion.div>
 
-          {/* Service Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+          {/* Services Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {[
               {
-                title: "Personalized Emotional Support",
-                description:
-                  "One-on-one sessions tailored to your unique emotional needs, providing a safe space for expression and healing.",
-                icon: Heart,
-                gradient: "from-violet-500 to-purple-600",
-              },
-              {
-                title: "Heart & Mind Harmony",
-                description:
-                  "Techniques to align your emotional and mental states, creating balance and inner peace in your daily life.",
-                icon: Brain,
-                gradient: "from-pink-500 to-rose-600",
-              },
-              {
-                title: "Mindfulness & Meditation",
-                description:
-                  "Guided practices to help you stay present, reduce stress, and cultivate a deeper connection with yourself.",
-                icon: Sparkles,
-                gradient: "from-violet-600 to-indigo-600",
-              },
-              {
-                title: "Personal Growth Guidance",
-                description:
-                  "Structured support to help you overcome obstacles, set meaningful goals, and achieve your full potential.",
+                title: "Guided Questionnaire Path",
+                description: "Personalized assessment to understand your unique emotional landscape and needs.",
                 icon: Compass,
-                gradient: "from-pink-600 to-violet-600",
+                color: "from-violet-500 to-purple-600",
+                features: ["Deep self-discovery", "Personalized insights", "Clear direction"],
+              },
+              {
+                title: "Quantum Healing Hypnosis",
+                description:
+                  "Advanced healing techniques to access your subconscious and facilitate deep transformation.",
+                icon: Brain,
+                color: "from-pink-500 to-rose-600",
+                features: ["Subconscious healing", "Past life regression", "Energy alignment"],
+              },
+              {
+                title: "Custom SoulMovie Creation",
+                description: "Personalized meditation movies crafted specifically for your healing journey.",
+                icon: Play,
+                color: "from-violet-600 to-indigo-600",
+                features: ["Tailored content", "Visual meditation", "Lasting transformation"],
+              },
+              {
+                title: "Higher Self Connection",
+                description: "Guided sessions to connect with your inner wisdom and authentic self.",
+                icon: Sparkles,
+                color: "from-pink-600 to-violet-600",
+                features: ["Inner wisdom access", "Authentic self discovery", "Spiritual guidance"],
+              },
+              {
+                title: "Personal Transformation",
+                description: "Comprehensive support for your journey of personal growth and healing.",
+                icon: Heart,
+                color: "from-violet-500 to-pink-500",
+                features: ["Holistic approach", "Ongoing support", "Measurable progress"],
+              },
+              {
+                title: "Emotional Support Sessions",
+                description: "One-on-one sessions providing compassionate support for life's challenges.",
+                icon: MessageSquare,
+                color: "from-rose-500 to-pink-600",
+                features: ["Active listening", "Empathetic guidance", "Safe space"],
               },
             ].map((service, index) => (
               <motion.div
                 key={index}
-                className="group"
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -12, scale: 1.02 }}
+                className="group relative"
+                initial={{ opacity: 0, y: 30, scale: 0.98 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.4, delay: index * 0.05, ease: [0.25, 0.46, 0.45, 0.94] }}
+                viewport={{ once: true, margin: "-30px" }}
+                whileHover={{ y: -6, scale: 1.01 }}
               >
-                <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/50 h-full group-hover:shadow-2xl transition-all duration-500">
+                <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_40px_rgb(124,58,237,0.15)] transition-all duration-500 border border-white/60 h-full relative overflow-hidden group-hover:border-violet-200/50">
+                  {/* Background Gradient */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-3xl`}
+                  />
+
+                  {/* Icon */}
                   <motion.div
-                    className={`w-16 h-16 bg-gradient-to-br ${service.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+                    className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
                     whileHover={{ rotate: 5 }}
                   >
                     <service.icon size={28} className="text-white" />
                   </motion.div>
-                  <h3 className="text-xl font-black text-slate-800 mb-4 group-hover:text-violet-700 transition-colors">
+
+                  {/* Content */}
+                  <h3 className="text-2xl font-black text-slate-800 mb-4 group-hover:text-violet-700 transition-colors duration-300">
                     {service.title}
                   </h3>
-                  <p className="text-slate-600 leading-relaxed">{service.description}</p>
+                  <p className="text-slate-600 mb-6 leading-relaxed">{service.description}</p>
+
+                  {/* Features */}
+                  <ul className="space-y-2 mb-6">
+                    {service.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center text-sm text-slate-600">
+                        <div className="w-2 h-2 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full mr-3" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Learn More Button */}
+                  <motion.button
+                    onClick={() => {
+                      const contactSection = document.querySelector("section:last-child")
+                      if (contactSection) {
+                        contactSection.scrollIntoView({ behavior: "smooth" })
+                      }
+                    }}
+                    className="text-violet-600 font-bold text-sm flex items-center group-hover:text-pink-600 transition-colors duration-300"
+                    whileHover={{ x: 5 }}
+                  >
+                    Learn More
+                    <ArrowRight
+                      size={16}
+                      className="ml-2 group-hover:translate-x-1 transition-transform duration-300"
+                    />
+                  </motion.button>
                 </div>
               </motion.div>
             ))}
@@ -753,29 +964,24 @@ export default function Home() {
             className="text-center"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true }}
           >
-            <Link href="/services">
-              <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }} className="group inline-block">
-                <Button className="bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white rounded-3xl text-xl px-16 py-6 h-auto shadow-2xl font-bold border-0 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 to-white/0 group-hover:from-white/20 group-hover:to-white/10 transition-all duration-500" />
-                  <span className="relative z-10 flex items-center">
-                    Explore All Services
-                    <ArrowRight
-                      size={20}
-                      className="ml-3 group-hover:translate-x-1 transition-transform duration-300"
-                    />
-                  </span>
-                </Button>
-              </motion.div>
-            </Link>
+            <Button
+              onClick={() => (window.location.href = "/services")}
+              className="bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white rounded-3xl text-xl px-12 py-6 h-auto shadow-xl hover:shadow-2xl transition-all duration-300 font-bold border-0 group"
+            >
+              <span className="flex items-center">
+                Explore All Services
+                <ArrowRight size={20} className="ml-3 group-hover:translate-x-1 transition-transform duration-300" />
+              </span>
+            </Button>
           </motion.div>
         </div>
       </section>
 
       {/* Enhanced Testimonials Section */}
-      <section className="py-20 md:py-28 bg-gradient-to-b from-white via-violet-50/20 to-white relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-white via-violet-50/20 to-white relative overflow-hidden">
         {/* Floating Background Elements */}
         <div className="absolute inset-0 z-0">
           <motion.div
@@ -799,7 +1005,7 @@ export default function Home() {
         <div className="container max-w-7xl mx-auto px-4 md:px-8 relative z-10">
           {/* Header */}
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -807,7 +1013,7 @@ export default function Home() {
           >
             {/* Decorative Element */}
             <motion.div
-              className="flex justify-center mb-10"
+              className="flex justify-center mb-8"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -815,23 +1021,23 @@ export default function Home() {
             >
               <div className="relative">
                 <motion.div
-                  className="w-24 h-24 bg-gradient-to-br from-violet-500/20 to-pink-500/20 rounded-[2rem] flex items-center justify-center backdrop-blur-sm border border-violet-200/50 shadow-2xl"
+                  className="w-20 h-20 bg-gradient-to-br from-violet-500/20 to-pink-500/20 rounded-[2rem] flex items-center justify-center backdrop-blur-sm border border-violet-200/50 shadow-2xl"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                 >
-                  <Heart size={36} className="text-violet-600" />
+                  <Heart size={32} className="text-violet-600" />
                 </motion.div>
                 <motion.div
-                  className="absolute -top-3 -right-3 w-10 h-10 bg-gradient-to-br from-pink-400 to-violet-500 rounded-full flex items-center justify-center"
+                  className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-pink-400 to-violet-500 rounded-full flex items-center justify-center"
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
                 >
-                  <Star size={18} className="text-white" />
+                  <Star size={16} className="text-white" />
                 </motion.div>
               </div>
             </motion.div>
 
             <motion.h2
-              className="text-5xl md:text-7xl font-black text-slate-800 mb-10 leading-tight"
+              className="text-4xl md:text-6xl font-black text-slate-800 mb-8 leading-tight"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -843,7 +1049,7 @@ export default function Home() {
                   Heal & Inspire
                 </span>
                 <motion.div
-                  className="absolute -bottom-3 left-0 right-0 h-2 bg-gradient-to-r from-violet-400/60 to-pink-400/60 rounded-full"
+                  className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-violet-400/60 to-pink-400/60 rounded-full"
                   initial={{ scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
                   transition={{ duration: 0.8, delay: 0.6 }}
@@ -859,7 +1065,7 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.5 }}
               viewport={{ once: true }}
             >
-              <p className="text-2xl text-slate-600 leading-relaxed font-light mb-8">
+              <p className="text-xl text-slate-600 leading-relaxed font-light mb-6">
                 Hear from individuals who have experienced profound transformation through our guidance and support.
                 Their journeys illuminate the path to healing and self-discovery.
               </p>
@@ -886,7 +1092,7 @@ export default function Home() {
           </motion.div>
 
           {/* Testimonial Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {[
               {
                 name: "Emma Thompson",
@@ -975,47 +1181,31 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <Link href="/stories">
-              <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }} className="group inline-block">
-                <Button className="bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white rounded-3xl text-xl px-16 py-6 h-auto shadow-2xl font-bold border-0 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 to-white/0 group-hover:from-white/20 group-hover:to-white/10 transition-all duration-500" />
-                  <span className="relative z-10 flex items-center">
-                    Read More Stories
-                    <ArrowRight
-                      size={20}
-                      className="ml-3 group-hover:translate-x-1 transition-transform duration-300"
-                    />
-                  </span>
-                </Button>
-              </motion.div>
-            </Link>
+            <Button
+              onClick={handleWatchStories}
+              className="bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white rounded-3xl text-xl px-12 py-6 h-auto shadow-xl hover:shadow-2xl transition-all duration-300 font-bold border-0 group"
+            >
+              <span className="flex items-center">
+                Read More Stories
+                <ArrowRight size={20} className="ml-3 group-hover:translate-x-1 transition-transform duration-300" />
+              </span>
+            </Button>
           </motion.div>
         </div>
       </section>
 
       {/* Enhanced FAQ Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-slate-50 via-violet-50/30 to-pink-50/30 relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `radial-gradient(circle at 75% 75%, pink 2px, transparent 2px)`,
-              backgroundSize: "60px 60px",
-            }}
-          />
-        </div>
-
-        <div className="container max-w-6xl mx-auto px-4 md:px-8 relative z-10">
+      <section className="py-12 md:py-16 bg-gradient-to-br from-violet-50/50 via-white to-pink-50/50 relative">
+        <div className="container max-w-5xl mx-auto px-4 md:px-8">
           <motion.div
-            className="max-w-4xl mx-auto text-center mb-16"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
             viewport={{ once: true, margin: "-100px" }}
           >
             <motion.div
-              className="inline-flex items-center space-x-3 bg-gradient-to-r from-violet-100 to-pink-100 rounded-full px-6 py-3 mb-8"
+              className="inline-flex items-center space-x-3 bg-gradient-to-r from-violet-100 to-pink-100 rounded-full px-6 py-3 mb-6"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -1024,303 +1214,188 @@ export default function Home() {
               <MessageSquare size={18} className="text-violet-600" />
               <span className="text-violet-700 font-bold text-base">FAQ</span>
             </motion.div>
-            <h2 className="text-5xl md:text-7xl font-black text-slate-800 mb-10 leading-tight">
-              We're{" "}
+            <h2 className="text-4xl md:text-6xl font-black text-slate-800 mb-6 leading-tight">
+              Questions &{" "}
               <span className="bg-gradient-to-r from-violet-600 via-pink-500 to-violet-600 bg-clip-text text-transparent">
-                Here For You
+                Answers
               </span>
             </h2>
-            <p className="text-2xl text-slate-600 leading-relaxed font-light">
-              Find answers to commonly asked questions about our services and approach. Still have questions? We're here
-              to help.
+            <p className="text-xl text-slate-600 leading-relaxed">
+              Find answers to common questions about our services and approach to emotional wellness.
             </p>
           </motion.div>
 
           <motion.div
-            className="mb-16"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true }}
           >
             <FaqAccordion faqs={faqs} />
-          </motion.div>
-
-          <motion.div
-            className="text-center"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <p className="text-xl text-slate-600 mb-12 font-medium">
-              Still have questions? We're here to help you on your journey.
-            </p>
-            <Link href="/contact">
-              <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }} className="group inline-block">
-                <Button className="bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white rounded-3xl text-xl px-16 py-6 h-auto shadow-2xl font-bold border-0 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 to-white/0 group-hover:from-white/20 group-hover:to-white/10 transition-all duration-500" />
-                  <span className="relative z-10 flex items-center">
-                    Talk To Us
-                    <MessageSquare size={20} className="ml-3 group-hover:scale-110 transition-transform duration-300" />
-                  </span>
-                </Button>
-              </motion.div>
-            </Link>
           </motion.div>
         </div>
       </section>
 
       {/* Enhanced Contact Section */}
-      <section className="py-20 md:py-28 bg-gradient-to-b from-white via-violet-50/30 to-white overflow-hidden">
-        <div className="container max-w-7xl mx-auto px-4 md:px-8">
+      <section className="py-12 md:py-16 bg-gradient-to-br from-slate-900 via-violet-900 to-slate-900 relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 z-0">
           <motion.div
-            className="max-w-5xl mx-auto text-center mb-16"
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            viewport={{ once: true }}
-          >
-            <motion.div
-              className="inline-flex items-center space-x-3 bg-gradient-to-r from-violet-100 to-pink-100 rounded-full px-6 py-3 mb-8"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <Heart size={18} className="text-violet-600" />
-              <span className="text-violet-700 font-bold text-base">Get Started</span>
-            </motion.div>
-            <h2 className="text-5xl md:text-7xl font-black text-slate-800 mb-10 leading-tight">
-              Begin Your{" "}
-              <span className="bg-gradient-to-r from-violet-600 via-pink-500 to-violet-600 bg-clip-text text-transparent">
-                Transformation
-              </span>
-            </h2>
-            <p className="text-2xl text-slate-600 leading-relaxed font-light">
-              Take the first step toward emotional well-being and personal growth. Choose how you'd like to connect with
-              us.
-            </p>
-          </motion.div>
+            className="absolute top-0 left-0 w-full h-full opacity-20"
+            style={{
+              backgroundImage: `radial-gradient(circle at 20% 80%, violet 1px, transparent 1px), radial-gradient(circle at 80% 20%, pink 1px, transparent 1px)`,
+              backgroundSize: "60px 60px, 40px 40px",
+            }}
+            animate={{
+              backgroundPosition: ["0% 0%, 0% 0%", "100% 100%, -100% -100%"],
+            }}
+            transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+          />
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 relative">
-            {/* Left Card - Book Session */}
+        <div className="container max-w-7xl mx-auto px-4 md:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Content */}
             <motion.div
-              className="relative z-10"
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="text-white"
+            >
+              <motion.div
+                className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 mb-8"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                <Heart size={18} className="text-violet-300" />
+                <span className="text-violet-200 font-bold text-base">Get In Touch</span>
+              </motion.div>
+
+              <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">
+                Ready to Begin Your{" "}
+                <span className="bg-gradient-to-r from-violet-300 via-pink-300 to-violet-300 bg-clip-text text-transparent">
+                  Transformation?
+                </span>
+              </h2>
+
+              <p className="text-xl text-white/80 leading-relaxed mb-12">
+                Take the first step towards emotional wellness and personal growth. We're here to support you every step
+                of the way on your journey to inner peace and self-discovery.
+              </p>
+
+              {/* Contact Options */}
+              <div className="space-y-6 mb-12">
+                {[
+                  {
+                    icon: MessageSquare,
+                    title: "WhatsApp Chat",
+                    description: "Quick response via WhatsApp",
+                    action: () => window.open("https://wa.me/923418349814", "_blank"),
+                  },
+                  {
+                    icon: Heart,
+                    title: "Free Consultation",
+                    description: "Schedule a 30-minute discovery call",
+                    action: handleScheduleConsultation,
+                  },
+                ].map((option, index) => (
+                  <motion.div
+                    key={index}
+                    className="flex items-center space-x-4 p-4 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 cursor-pointer group"
+                    onClick={option.action}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 + 0.4, duration: 0.6 }}
+                    viewport={{ once: true }}
+                    whileHover={{ x: 8, scale: 1.02 }}
+                  >
+                    <div className="w-14 h-14 bg-gradient-to-br from-violet-500 to-pink-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <option.icon size={24} className="text-white" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-bold text-white mb-1">{option.title}</h4>
+                      <p className="text-white/70">{option.description}</p>
+                    </div>
+                    <ArrowRight
+                      size={20}
+                      className="text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all duration-300 ml-auto"
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Contact Form */}
+            <motion.div
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
               viewport={{ once: true, margin: "-100px" }}
             >
-              <motion.div
-                className="bg-white/90 backdrop-blur-xl rounded-[2.5rem] shadow-2xl p-12 border border-white/50 h-full flex flex-col group hover:shadow-3xl transition-all duration-500"
-                whileHover={{ y: -8, scale: 1.02 }}
-              >
-                <div className="flex items-center space-x-4 mb-10">
-                  <motion.div
-                    className="w-16 h-16 bg-gradient-to-br from-violet-500 to-pink-500 rounded-3xl flex items-center justify-center"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                  >
-                    <Heart size={24} className="text-white" />
-                  </motion.div>
-                  <h3 className="text-3xl font-black text-slate-800">Book A Session</h3>
-                </div>
-
-                <form className="space-y-8 flex-grow">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <label htmlFor="service" className="block text-lg font-bold text-slate-700 mb-4">
-                      Select a service
+              <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl">
+                <h3 className="text-2xl font-black text-white mb-8">Send us a message</h3>
+                <form onSubmit={handleContactSubmit} className="space-y-6">
+                  <div>
+                    <label htmlFor="name" className="block text-white/80 font-semibold mb-3">
+                      Your Name
                     </label>
-                    <motion.select
-                      id="service"
-                      className="w-full px-8 py-5 rounded-3xl border-2 border-slate-200 focus:outline-none focus:ring-4 focus:ring-violet-500/20 focus:border-violet-500 bg-white shadow-lg transition-all duration-300 text-lg"
-                      whileFocus={{ scale: 1.02 }}
-                    >
-                      <option value="">Choose a service...</option>
-                      <option value="emotional-support">Personalized Emotional Support</option>
-                      <option value="heart-mind">Heart & Mind Harmony</option>
-                      <option value="mindfulness">Mindfulness & Meditation</option>
-                      <option value="growth">Personal Growth Guidance</option>
-                    </motion.select>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <label htmlFor="date" className="block text-lg font-bold text-slate-700 mb-4">
-                      Preferred date
-                    </label>
-                    <motion.input
-                      type="date"
-                      id="date"
-                      className="w-full px-8 py-5 rounded-3xl border-2 border-slate-200 focus:outline-none focus:ring-4 focus:ring-violet-500/20 focus:border-violet-500 shadow-lg transition-all duration-300 text-lg"
-                      whileFocus={{ scale: 1.02 }}
-                    />
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <label htmlFor="time" className="block text-lg font-bold text-slate-700 mb-4">
-                      Preferred time
-                    </label>
-                    <motion.input
-                      type="time"
-                      id="time"
-                      className="w-full px-8 py-5 rounded-3xl border-2 border-slate-200 focus:outline-none focus:ring-4 focus:ring-violet-500/20 focus:border-violet-500 shadow-lg transition-all duration-300 text-lg"
-                      whileFocus={{ scale: 1.02 }}
-                    />
-                  </motion.div>
-
-                  <motion.div
-                    className="pt-8 mt-auto"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }} className="group">
-                      <Button
-                        className="w-full bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white rounded-3xl text-xl px-10 py-6 h-auto shadow-2xl font-bold border-0 relative overflow-hidden"
-                        onClick={handleBookNow}
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 to-white/0 group-hover:from-white/20 group-hover:to-white/10 transition-all duration-500" />
-                        <span className="relative z-10 flex items-center justify-center">
-                          Book Your Session
-                          <ArrowRight
-                            size={20}
-                            className="ml-3 group-hover:translate-x-1 transition-transform duration-300"
-                          />
-                        </span>
-                      </Button>
-                    </motion.div>
-                  </motion.div>
-                </form>
-              </motion.div>
-            </motion.div>
-
-            {/* Right Card - Quick Contact */}
-            <motion.div
-              className="relative z-10"
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <motion.div
-                className="bg-white/90 backdrop-blur-xl rounded-[2.5rem] shadow-2xl p-12 border border-white/50 h-full flex flex-col group hover:shadow-3xl transition-all duration-500"
-                whileHover={{ y: -8, scale: 1.02 }}
-              >
-                <div className="flex items-center space-x-4 mb-10">
-                  <motion.div
-                    className="w-16 h-16 bg-gradient-to-br from-pink-500 to-violet-500 rounded-3xl flex items-center justify-center"
-                    whileHover={{ scale: 1.1, rotate: -5 }}
-                  >
-                    <MessageSquare size={24} className="text-white" />
-                  </motion.div>
-                  <h3 className="text-3xl font-black text-slate-800">Quick Contact</h3>
-                </div>
-
-                <form onSubmit={handleContactSubmit} className="space-y-8 flex-grow">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <label htmlFor="name" className="block text-lg font-bold text-slate-700 mb-4">
-                      Your name
-                    </label>
-                    <motion.input
+                    <input
                       type="text"
                       id="name"
                       value={contactFormData.name}
                       onChange={handleContactInputChange}
-                      className="w-full px-8 py-5 rounded-3xl border-2 border-slate-200 focus:outline-none focus:ring-4 focus:ring-violet-500/20 focus:border-violet-500 bg-white shadow-lg transition-all duration-300 text-lg"
-                      placeholder="Enter your name"
                       required
-                      whileFocus={{ scale: 1.02 }}
+                      className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent backdrop-blur-sm transition-all duration-300"
+                      placeholder="Enter your full name"
                     />
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <label htmlFor="email" className="block text-lg font-bold text-slate-700 mb-4">
-                      Email address
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-white/80 font-semibold mb-3">
+                      Email Address
                     </label>
-                    <motion.input
+                    <input
                       type="email"
                       id="email"
                       value={contactFormData.email}
                       onChange={handleContactInputChange}
-                      className="w-full px-8 py-5 rounded-3xl border-2 border-slate-200 focus:outline-none focus:ring-4 focus:ring-violet-500/20 focus:border-violet-500 bg-white shadow-lg transition-all duration-300 text-lg"
-                      placeholder="Enter your email"
                       required
-                      whileFocus={{ scale: 1.02 }}
+                      className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent backdrop-blur-sm transition-all duration-300"
+                      placeholder="your.email@example.com"
                     />
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <label htmlFor="message" className="block text-lg font-bold text-slate-700 mb-4">
-                      Message
+                  </div>
+                  <div>
+                    <label htmlFor="message" className="block text-white/80 font-semibold mb-3">
+                      Your Message
                     </label>
-                    <motion.textarea
+                    <textarea
                       id="message"
                       value={contactFormData.message}
                       onChange={handleContactInputChange}
-                      rows={4}
-                      className="w-full px-8 py-5 rounded-3xl border-2 border-slate-200 focus:outline-none focus:ring-4 focus:ring-violet-500/20 focus:border-violet-500 bg-white shadow-lg transition-all duration-300 text-lg resize-none"
-                      placeholder="Tell us how we can help you..."
                       required
-                      whileFocus={{ scale: 1.02 }}
+                      rows={5}
+                      className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent backdrop-blur-sm transition-all duration-300 resize-none"
+                      placeholder="Tell us how we can help you on your journey..."
                     />
-                  </motion.div>
-
-                  <motion.div
-                    className="pt-8 mt-auto"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 0.6 }}
-                    viewport={{ once: true }}
+                  </div>
+                  <motion.button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white rounded-2xl text-lg px-8 py-4 font-bold shadow-xl hover:shadow-2xl transition-all duration-300 group"
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }} className="group">
-                      <Button
-                        type="submit"
-                        className="w-full bg-gradient-to-r from-pink-600 to-violet-600 hover:from-pink-700 hover:to-violet-700 text-white rounded-3xl text-xl px-10 py-6 h-auto shadow-2xl font-bold border-0 relative overflow-hidden"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 to-white/0 group-hover:from-white/20 group-hover:to-white/10 transition-all duration-500" />
-                        <span className="relative z-10 flex items-center justify-center">
-                          Send Message
-                          <MessageSquare
-                            size={20}
-                            className="ml-3 group-hover:scale-110 transition-transform duration-300"
-                          />
-                        </span>
-                      </Button>
-                    </motion.div>
-                  </motion.div>
+                    <span className="flex items-center justify-center">
+                      Send Message
+                      <ArrowRight
+                        size={20}
+                        className="ml-3 group-hover:translate-x-1 transition-transform duration-300"
+                      />
+                    </span>
+                  </motion.button>
                 </form>
-              </motion.div>
+              </div>
             </motion.div>
           </div>
         </div>

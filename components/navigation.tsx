@@ -44,6 +44,10 @@ const Navigation = () => {
     window.location.href = "/booking"
   }
 
+  const handleScheduleConsultation = () => {
+    window.open("https://calendly.com/soulmovies-ai/30min", "_blank")
+  }
+
   const navItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
@@ -68,7 +72,7 @@ const Navigation = () => {
         className={cn(
           "fixed top-0 w-full z-50 transition-all duration-700 ease-out border-b border-transparent",
           isScrolled || isInnerPage
-            ? "bg-white/80 backdrop-blur-2xl shadow-xl border-violet-100/30"
+            ? "bg-white/90 backdrop-blur-2xl shadow-xl border-violet-100/30"
             : "bg-transparent backdrop-blur-sm",
         )}
         style={{
@@ -79,9 +83,10 @@ const Navigation = () => {
         <div className="container mx-auto max-w-7xl flex items-center justify-between px-3 py-2">
           {/* Logo */}
           <Link href="/" className="flex items-center group relative z-10">
-            <div
+            <motion.div
               className="relative h-10 w-10 md:h-12 md:w-12 transition-all duration-500 group-hover:scale-105 group-hover:rotate-2"
               style={{ marginTop: "8px" }}
+              whileHover={{ scale: 1.05, rotate: 2 }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-violet-400/20 to-pink-400/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
               <Image
@@ -92,7 +97,7 @@ const Navigation = () => {
                 className="object-contain relative z-10 drop-shadow-lg"
                 priority
               />
-            </div>
+            </motion.div>
             <div className="ml-3 flex flex-col">
               <span
                 className={cn(
@@ -119,55 +124,58 @@ const Navigation = () => {
               const isActive = isActivePath(item.path)
 
               return (
-                <Link
-                  key={item.name}
-                  href={item.path}
-                  className={cn(
-                    "text-sm font-semibold transition-all duration-300 relative py-2 px-3 rounded-xl group hover:scale-105 hover:-translate-y-0.5",
-                    isActive
-                      ? isScrolled || isInnerPage
-                        ? "text-violet-700 bg-gradient-to-r from-violet-50 to-pink-50 shadow-lg"
-                        : "text-white bg-white/15 backdrop-blur-sm shadow-lg"
-                      : isScrolled || isInnerPage
-                        ? "text-slate-700 hover:text-violet-700 hover:bg-gradient-to-r hover:from-violet-50/50 hover:to-pink-50/50"
-                        : "text-white/90 hover:text-white hover:bg-white/10 backdrop-blur-sm",
-                  )}
-                  onClick={() => window.scrollTo(0, 0)}
-                >
-                  {item.name}
-                  {isActive && (
-                    <motion.div
-                      className="absolute bottom-1 left-1/2 w-1.5 h-1.5 bg-current rounded-full"
-                      layoutId="navIndicator"
-                      initial={{ x: "-50%", scale: 0 }}
-                      animate={{ x: "-50%", scale: 1 }}
-                      transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
-                    />
-                  )}
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/5 group-hover:to-pink-400/5 transition-all duration-300"></div>
-                </Link>
+                <motion.div key={item.name} whileHover={{ scale: 1.05, y: -1 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    href={item.path}
+                    className={cn(
+                      "text-sm font-semibold transition-all duration-300 relative py-2 px-3 rounded-xl group",
+                      isActive
+                        ? isScrolled || isInnerPage
+                          ? "text-violet-700 bg-gradient-to-r from-violet-50 to-pink-50 shadow-lg"
+                          : "text-white bg-white/15 backdrop-blur-sm shadow-lg"
+                        : isScrolled || isInnerPage
+                          ? "text-slate-700 hover:text-violet-700 hover:bg-gradient-to-r hover:from-violet-50/50 hover:to-pink-50/50"
+                          : "text-white/90 hover:text-white hover:bg-white/10 backdrop-blur-sm",
+                    )}
+                    onClick={() => window.scrollTo(0, 0)}
+                  >
+                    {item.name}
+                    {isActive && (
+                      <motion.div
+                        className="absolute bottom-1 left-1/2 w-1.5 h-1.5 bg-current rounded-full"
+                        layoutId="navIndicator"
+                        initial={{ x: "-50%", scale: 0 }}
+                        animate={{ x: "-50%", scale: 1 }}
+                        transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
+                      />
+                    )}
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/5 group-hover:to-pink-400/5 transition-all duration-300"></div>
+                  </Link>
+                </motion.div>
               )
             })}
           </nav>
 
           <div className="flex items-center gap-3 md:gap-4">
-            <Button
-              onClick={handleBookNow}
-              className={cn(
-                "hidden lg:inline-flex h-auto rounded-2xl px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-base font-semibold border-0 relative overflow-hidden group",
-                isScrolled || isInnerPage
-                  ? "bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 text-white"
-                  : "bg-white/20 backdrop-blur-md hover:bg-white/30 text-white border border-white/30",
-              )}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/20 group-hover:to-pink-400/20 transition-all duration-300"></div>
-              <span className="relative z-10">Book Now</span>
-            </Button>
+            <motion.div whileHover={{ scale: 1.02, y: -1 }} whileTap={{ scale: 0.98 }}>
+              <Button
+                onClick={handleBookNow}
+                className={cn(
+                  "hidden lg:inline-flex h-auto rounded-2xl px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 text-base font-semibold border-0 relative overflow-hidden group",
+                  isScrolled || isInnerPage
+                    ? "bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white"
+                    : "bg-white/20 backdrop-blur-md hover:bg-white/30 text-white border border-white/30",
+                )}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/20 group-hover:to-pink-400/20 transition-all duration-300"></div>
+                <span className="relative z-10">Book Now</span>
+              </Button>
+            </motion.div>
 
             {/* Mobile Menu Button */}
-            <button
+            <motion.button
               className={cn(
-                "lg:hidden flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 group relative overflow-hidden hover:scale-110",
+                "lg:hidden flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 group relative overflow-hidden",
                 isScrolled || isInnerPage
                   ? "text-slate-800 hover:bg-violet-50 hover:text-violet-700"
                   : "text-white hover:bg-white/10 backdrop-blur-sm",
@@ -175,6 +183,8 @@ const Navigation = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
               aria-expanded={isMenuOpen}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
               <motion.div
                 className="relative"
@@ -184,7 +194,7 @@ const Navigation = () => {
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </motion.div>
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-400/0 to-pink-400/0 group-hover:from-violet-400/10 group-hover:to-pink-400/10 transition-all duration-300"></div>
-            </button>
+            </motion.button>
           </div>
         </div>
       </header>
@@ -235,19 +245,6 @@ const Navigation = () => {
                     duration: 15,
                     repeat: Number.POSITIVE_INFINITY,
                     ease: "linear",
-                  }}
-                />
-                <motion.div
-                  className="absolute top-1/2 left-1/2 w-24 h-24 bg-gradient-to-br from-violet-400/10 to-pink-400/10 rounded-full blur-2xl"
-                  animate={{
-                    x: [-50, 50, -50],
-                    y: [-50, 50, -50],
-                    scale: [1, 1.5, 1],
-                  }}
-                  transition={{
-                    duration: 12,
-                    repeat: Number.POSITIVE_INFINITY,
-                    ease: "easeInOut",
                   }}
                 />
               </div>
@@ -303,7 +300,7 @@ const Navigation = () => {
                       <Link
                         href={item.path}
                         className={cn(
-                          "group flex items-center justify-between p-3 rounded-xl transition-all duration-300 relative overflow-hidden hover:scale-105 hover:-translate-y-0.5",
+                          "group flex items-center justify-between p-3 rounded-xl transition-all duration-300 relative overflow-hidden",
                           isActive
                             ? "bg-gradient-to-r from-violet-600/80 to-pink-600/80 text-white shadow-lg"
                             : "text-white/90 hover:bg-white/10 hover:text-white",
@@ -345,8 +342,8 @@ const Navigation = () => {
                 })}
               </div>
 
-              {/* Book Now Button */}
-              <div className="p-4 border-t border-white/10">
+              {/* Action Buttons */}
+              <div className="p-4 border-t border-white/10 space-y-3">
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
                   <Button
                     onClick={() => {
@@ -360,9 +357,22 @@ const Navigation = () => {
                       className="relative z-10 flex items-center justify-center space-x-2"
                       whileHover={{ scale: 1.05 }}
                     >
-                      <span>Book Now</span>
+                      <span>Book Session</span>
                       <Sparkles size={16} />
                     </motion.span>
+                  </Button>
+                </motion.div>
+
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
+                  <Button
+                    onClick={() => {
+                      handleScheduleConsultation()
+                      setIsMenuOpen(false)
+                    }}
+                    variant="outline"
+                    className="w-full border-white/30 text-white hover:bg-white/10 font-medium py-4 px-6 rounded-2xl backdrop-blur-sm transition-all duration-300"
+                  >
+                    Schedule Consultation
                   </Button>
                 </motion.div>
               </div>
