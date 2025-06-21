@@ -31,39 +31,13 @@ import { useState, useEffect } from "react"
 // Smooth scroll optimization
 function useScrollOptimization() {
   useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout
-    let isScrolling = false
-
+    // Simplified scroll handling - remove complex throttling
     const handleScroll = () => {
-      if (!isScrolling) {
-        document.documentElement.classList.add("is-scrolling")
-        isScrolling = true
-      }
-
-      clearTimeout(scrollTimeout)
-      scrollTimeout = setTimeout(() => {
-        document.documentElement.classList.remove("is-scrolling")
-        isScrolling = false
-      }, 50)
+      // Minimal scroll handling
     }
 
-    let ticking = false
-    const throttledScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll()
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    window.addEventListener("scroll", throttledScroll, { passive: true })
-
-    return () => {
-      window.removeEventListener("scroll", throttledScroll)
-      clearTimeout(scrollTimeout)
-    }
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 }
 
@@ -157,7 +131,7 @@ export default function Home() {
         {/* Animated Background */}
         <div className="absolute inset-0 z-0">
           <motion.div
-            className="absolute inset-0 will-change-transform"
+            className="absolute inset-0"
             initial={{ scale: 1.1, opacity: 0.8 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 2, ease: "easeOut" }}
@@ -174,37 +148,13 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
         </div>
 
-        {/* Floating Orbs */}
+        {/* Simplified Floating Orbs with CSS animations */}
         <div className="absolute inset-0 z-5 overflow-hidden">
           {!isMobile && (
             <>
-              <motion.div
-                className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-br from-violet-400/20 to-pink-400/20 rounded-full blur-2xl will-change-transform"
-                animate={{
-                  y: [0, -30, 0],
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.6, 0.3],
-                }}
-                transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-              />
-              <motion.div
-                className="absolute top-40 right-32 w-24 h-24 bg-gradient-to-br from-pink-400/20 to-violet-400/20 rounded-full blur-xl will-change-transform"
-                animate={{
-                  y: [0, 40, 0],
-                  scale: [1.2, 1, 1.2],
-                  opacity: [0.4, 0.7, 0.4],
-                }}
-                transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 1 }}
-              />
-              <motion.div
-                className="absolute bottom-32 left-40 w-40 h-40 bg-gradient-to-br from-violet-300/15 to-pink-300/15 rounded-full blur-3xl will-change-transform"
-                animate={{
-                  y: [0, -20, 0],
-                  x: [0, 20, 0],
-                  scale: [1, 1.1, 1],
-                }}
-                transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 2 }}
-              />
+              <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-br from-violet-400/20 to-pink-400/20 rounded-full blur-2xl animate-pulse" />
+              <div className="absolute top-40 right-32 w-24 h-24 bg-gradient-to-br from-pink-400/20 to-violet-400/20 rounded-full blur-xl animate-bounce" />
+              <div className="absolute bottom-32 left-40 w-40 h-40 bg-gradient-to-br from-violet-300/15 to-pink-300/15 rounded-full blur-3xl animate-pulse" />
             </>
           )}
         </div>
