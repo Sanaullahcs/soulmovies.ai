@@ -10,7 +10,7 @@ const AudioPlayer = () => {
 
   useEffect(() => {
     // Create audio element
-    audioRef.current = new Audio("/audio/pure-theta-4-7hz-with-emotional.mp3")
+    audioRef.current = new Audio("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pure-theta-4-7hz-with-emotional-nj777IWXu9Q3BfPGvDCIuPyP0ldNLI.mp3")
     audioRef.current.loop = true
     audioRef.current.volume = volume
 
