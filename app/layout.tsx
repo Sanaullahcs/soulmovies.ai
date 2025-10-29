@@ -1,17 +1,17 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Inter, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import AIChatbot from "@/components/ai-chatbot"
 
-const geist = Geist({
+const inter = Inter({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 })
 
-const geistMono = Geist_Mono({
+const jetbrainsMono = JetBrains_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 })
@@ -29,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geist.variable} ${geistMono.variable} bg-white antialiased`}>
+      <body className={`${inter.variable} ${jetbrainsMono.variable} bg-white antialiased`}>
         <Navigation />
         <main className="min-h-screen">{children}</main>
         <Footer />
