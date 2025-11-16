@@ -1,33 +1,12 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
-import { Volume2, VolumeX, Play, Pause } from "lucide-react"
+import { useState, useRef } from "react"
+import { Volume2, VolumeX, Play, Pause } from 'lucide-react'
 
 const AudioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [volume, setVolume] = useState(0.3)
   const audioRef = useRef<HTMLAudioElement | null>(null)
-
-  useEffect(() => {
-    // Create audio element
-    audioRef.current = new Audio("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pure-theta-4-7hz-with-emotional-nj777IWXu9Q3BfPGvDCIuPyP0ldNLI.mp3")
-    audioRef.current.loop = true
-    audioRef.current.volume = volume
-
-    // Cleanup on unmount
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause()
-        audioRef.current = null
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume
-    }
-  }, [volume])
 
   const togglePlay = async () => {
     if (!audioRef.current) return
@@ -46,8 +25,27 @@ const AudioPlayer = () => {
     }
   }
 
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value)
+    setVolume(newVolume)
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume
+    }
+  }
+
   return (
     <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-2">
+      {/* Hidden audio element - Using native audio element instead of new Audio() */}
+      <audio
+        ref={audioRef}
+        loop
+        crossOrigin="anonymous"
+        onEnded={() => setIsPlaying(false)}
+      >
+        <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pure-theta-4-7hz-with-emotional-nj777IWXu9Q3BfPGvDCIuPyP0ldNLI.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+
       {/* Volume Control */}
       {isPlaying && (
         <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg flex items-center gap-2">
@@ -58,7 +56,7 @@ const AudioPlayer = () => {
             max="1"
             step="0.1"
             value={volume}
-            onChange={(e) => setVolume(Number.parseFloat(e.target.value))}
+            onChange={handleVolumeChange}
             className="w-16 h-1 bg-violet-200 rounded-lg appearance-none cursor-pointer slider"
           />
           <Volume2 size={14} className="text-violet-600" />
