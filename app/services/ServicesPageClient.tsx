@@ -4,19 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  Play,
-  MessageCircle,
-  Sparkles,
-  Heart,
-  Brain,
-  Star,
-  CheckCircle,
-  ArrowRight,
-  Clock,
-  Users,
-  ChevronDown,
-} from "lucide-react"
+import { Play, MessageCircle, Sparkles, Heart, Brain, Star, CheckCircle, ArrowRight, Clock, Users, ChevronDown } from 'lucide-react'
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
 
@@ -33,15 +21,15 @@ export default function ServicesPageClient() {
     {
       id: 0,
       icon: MessageCircle,
-      title: "Guided Questionnaire",
-      subtitle: "Soul Discovery Path",
+      title: "Share Your Soul",
+      subtitle: "Personal Discovery Path",
       description:
-        "Embark on a profound journey of self-discovery through our intuitive questionnaire designed to unlock your soul's deepest wisdom.",
+        "Tell us what matters most to you. We listen with complete presence and transform your words into a Soul Movie that reflects your deepest essence.",
       features: [
-        "Personalized question flow",
-        "Deep emotional exploration",
-        "Life pattern recognition",
-        "Soul purpose discovery",
+        "Share your authentic story",
+        "Feel truly understood",
+        "Personal transformation begins",
+        "Your soul recognized",
       ],
       duration: "45-60 minutes",
       price: "Starting at $297",

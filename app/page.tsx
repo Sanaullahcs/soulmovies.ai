@@ -2,26 +2,7 @@
 import Image from "next/image"
 import type React from "react"
 import { motion } from "framer-motion"
-import {
-  Heart,
-  ArrowRight,
-  Sparkles,
-  Brain,
-  Compass,
-  ChevronDown,
-  MessageSquare,
-  Play,
-  Users,
-  Award,
-  Clock,
-  Star,
-  Film,
-  Zap,
-  Eye,
-  Palette,
-  Music,
-  Waves,
-} from "lucide-react"
+import { Heart, ArrowRight, Sparkles, Brain, Compass, ChevronDown, MessageSquare, Play, Users, Award, Clock, Star, Film, Zap, Eye, Palette, Music, Waves } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import FloatingParticles from "@/components/floating-particles"
 import AudioPlayer from "@/components/audio-player"
@@ -90,7 +71,7 @@ export default function Home() {
   }
 
   const handleWatchStories = () => {
-    window.location.href = "/stories"
+    window.open("https://3qvjbtv4.paperform.co/", "_blank")
   }
 
   const faqs = [
@@ -218,8 +199,8 @@ export default function Home() {
                 onClick={handleWatchStories}
                 className="bg-white/10 text-white hover:bg-white/20 rounded-3xl text-xl px-16 py-6 h-auto shadow-2xl border-2 border-white/30 font-bold backdrop-blur-md"
               >
-                <Play size={18} className="mr-3 group-hover:scale-110 transition-transform duration-300" />
-                Watch Stories
+                <Sparkles size={18} className="mr-3 group-hover:scale-110 transition-transform duration-300" />
+                Speak Your Soul
               </Button>
             </motion.div>
           </motion.div>
@@ -520,29 +501,29 @@ export default function Home() {
               {[
                 {
                   step: "01",
-                  title: "Discovery Call",
-                  description: "Share your story and goals in a safe, supportive environment",
+                  title: "Share Your Story",
+                  description: "Tell us what moves your soul in a safe, caring space",
                   icon: MessageSquare,
                   color: "from-violet-500 to-purple-600",
                 },
                 {
                   step: "02",
-                  title: "Personalized Assessment",
-                  description: "Complete our guided questionnaire to understand your unique needs",
+                  title: "We Listen Deeply",
+                  description: "Your feelings are understood and honored through every word",
                   icon: Compass,
                   color: "from-pink-500 to-rose-600",
                 },
                 {
                   step: "03",
-                  title: "Custom SoulMovie",
-                  description: "Receive your personalized meditation movie crafted just for you",
+                  title: "Your Soul Movie",
+                  description: "We transform your essence into something beautifully personal",
                   icon: Film,
                   color: "from-violet-600 to-indigo-600",
                 },
                 {
                   step: "04",
-                  title: "Ongoing Support",
-                  description: "Continue your journey with regular check-ins and guidance",
+                  title: "Experience Healing",
+                  description: "Your story becomes the medicine your soul has been seeking",
                   icon: Heart,
                   color: "from-pink-600 to-violet-600",
                 },
